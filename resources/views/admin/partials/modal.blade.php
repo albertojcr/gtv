@@ -1,0 +1,18 @@
+@unless(request()->is('admin/places/*'))
+    @include('admin.places.create')
+@endunless
+@unless(request()->is('admin/photographies/*'))
+    @include('admin.photographies.create')
+@endunless
+@unless(request()->is('admin/pointsofinterest/*'))
+    @include('admin.pointsofinterest.create')
+@endunless
+@unless(request()->is('admin/visits/*'))
+    @include('admin.visits.create')
+@endunless
+@unless(request()->is('admin/thematicareas/*'))
+    @include('admin.thematicareas.create')
+@endunless
+@unless(request()->is('admin/videos/*'))
+    @include('admin.videos.create')
+@endunless

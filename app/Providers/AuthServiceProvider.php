@@ -1,0 +1,38 @@
+<?php
+
+namespace App\Providers;
+
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
+
+class AuthServiceProvider extends ServiceProvider
+{
+    /**
+     * The policy mappings for the application.
+     *
+     * @var array
+     */
+    protected $policies = [
+        'App\User' => 'App\Policies\UserPolicy',
+        'App\Photography' => 'App\Policies\PhotographyPolicy',
+        'App\Place' => 'App\Policies\PlacePolicy',
+        'App\PointOfInterest' => 'App\Policies\PointOfInterestPolicy',
+        'App\ThematicArea' => 'App\Policies\ThematicAreaPolicy',
+        'App\Video' => 'App\Policies\VideoPolicy',
+        'Spatie\Permission\Models\Role' => 'App\Policies\RolePolicy'
+    ];
+
+    /**
+     * Register any authentication / authorization services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $this->registerPolicies();
+
+        Gate::before(function ($user, $ability) {
+            return $user->hasRole('Super Admin') ? true : null;
+        });
+    }
+}
