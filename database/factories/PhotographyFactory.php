@@ -2,6 +2,8 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+namespace Database\Factories;
+
 use App\Photography;
 use App\PointOfInterest;
 use App\ThematicArea;
