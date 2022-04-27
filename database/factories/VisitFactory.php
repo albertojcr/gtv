@@ -2,6 +2,8 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+namespace Database\Factories;
+
 use App\PointOfInterest;
 use App\Visit;
 use Faker\Generator as Faker;
