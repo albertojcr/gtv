@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use App\Visit;
 use Illuminate\Support\Str;
@@ -7,7 +9,7 @@ use Illuminate\Support\Str;
 class VisitsTableSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Run the database seeders.
      *
      * @return void
      */
