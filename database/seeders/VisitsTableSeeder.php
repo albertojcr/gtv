@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Visit;
 use Illuminate\Database\Seeder;
-use App\Visit;
 use Illuminate\Support\Str;
 
 class VisitsTableSeeder extends Seeder

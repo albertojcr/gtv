@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Photography;
+use App\Models\Photography;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;

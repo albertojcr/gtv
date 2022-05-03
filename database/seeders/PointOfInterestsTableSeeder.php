@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\PointOfInterest;
-use App\ThematicArea;
+use App\Models\PointOfInterest;
+use App\Models\ThematicArea;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;

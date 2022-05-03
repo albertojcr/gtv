@@ -4,9 +4,9 @@
 
 namespace Database\Factories;
 
-use App\Place;
-use App\PointOfInterest;
-use App\User;
+use App\Models\Place;
+use App\Models\PointOfInterest;
+use App\Models\User;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 

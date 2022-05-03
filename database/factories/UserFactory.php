@@ -4,8 +4,8 @@
 
 namespace Database\Factories;
 
-use App\ThematicArea;
-use App\User;
+use App\Models\ThematicArea;
+use App\Models\User;
 use Faker\Generator as Faker;
 
 /*

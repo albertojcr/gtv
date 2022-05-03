@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\VideoItem;
+use App\Models\Video;
+use App\Models\VideoItem;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -15,10 +16,11 @@ class Video_itemsTableSeeder extends Seeder
      */
     public function run()
     {
-        $video_item = factory(VideoItem::class, 30)->make();
-        $video_item->each(function($v) {
-            $v->url = Str::slug($v->video->name);
-            $v->save();
+        $video_items = factory(VideoItem::class, 30)->make();
+
+        $video_items->each(function($video_item) {
+            $video_item->url = Str::slug($video_item->video->description);
+            $video_item->save();
         });
     }
 }

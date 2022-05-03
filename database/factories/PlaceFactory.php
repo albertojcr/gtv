@@ -4,11 +4,11 @@
 
 namespace Database\Factories;
 
-use App\Place;
-use App\User;
+use App\Models\Place;
+use App\Models\User;
 use Faker\Generator as Faker;
 
-$factory->define(\App\Place::class, function (Faker $faker) {
+$factory->define(\App\Models\Place::class, function (Faker $faker) {
     $user = User::all()->pluck('id')->toArray();
     return [
         'name'=> $faker->city,

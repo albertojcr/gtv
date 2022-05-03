@@ -24,7 +24,7 @@ class UpdateVideosRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'name' => 'required | max: 100',
+            'description' => 'required | max: 100',
             'order' => 'required',
             'point_of_interest_id' => 'required',
             'thematic_area_id' => 'required'
@@ -40,8 +40,8 @@ class UpdateVideosRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'El nombre del video es requerido',
-            'name.max' => 'Tamaño maximo para el nombre del video es de 100 caracteres',
+            'description.required' => 'La descripción del video es requerida',
+            'description.max' => 'Tamaño maximo para la descripción del video es de 100 caracteres',
             'route.mimes' => 'El formato de video debe ser .mp4 o .mpeg o .webm',
             'route.max' => 'Tamaño maximo de video 100 MB',
             'order.required' => 'El campo orden es requerido',

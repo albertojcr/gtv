@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Video;
+use App\Models\Video;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class VideosTableSeeder extends Seeder
 {
@@ -18,10 +17,10 @@ class VideosTableSeeder extends Seeder
     {
         Storage::disk('public')->deleteDirectory('videos');
 
-        $video = factory(Video::class,10)->make();
-        $video->each(function($v) {
+        factory(Video::class,10)->create();
+/*        $videos->each(function($v) {
             $v->url = Str::slug($v->name);
             $v->save();
-        });
+        });*/
     }
 }

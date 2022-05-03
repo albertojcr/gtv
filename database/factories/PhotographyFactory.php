@@ -4,10 +4,10 @@
 
 namespace Database\Factories;
 
-use App\Photography;
-use App\PointOfInterest;
-use App\ThematicArea;
-use App\User;
+use App\Models\Photography;
+use App\Models\PointOfInterest;
+use App\Models\ThematicArea;
+use App\Models\User;
 use Faker\Generator as Faker;
 
 $factory->define(Photography::class, function (Faker $faker) {

@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\ThematicArea;
+use App\Models\ThematicArea;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 

@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Photography;
-use App\User;
+use App\Models\Photography;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class PhotographyPolicy
@@ -18,8 +18,8 @@ class PhotographyPolicy
     /**
      * Determine whether the user can view the photography.
      *
-     * @param  \App\User  $user
-     * @param  \App\Photography  $photography
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Photography  $photography
      * @return mixed
      */
     public function view(User $user, Photography $photography)
@@ -30,7 +30,7 @@ class PhotographyPolicy
     /**
      * Determine whether the user can create photographies.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function create(User $user)
@@ -41,8 +41,8 @@ class PhotographyPolicy
     /**
      * Determine whether the user can update the photography.
      *
-     * @param  \App\User  $user
-     * @param  \App\Photography  $photography
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Photography  $photography
      * @return mixed
      */
     public function update(User $user)
@@ -53,8 +53,8 @@ class PhotographyPolicy
     /**
      * Determine whether the user can delete the photography.
      *
-     * @param  \App\User  $user
-     * @param  \App\Photography  $photography
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Photography  $photography
      * @return mixed
      */
     public function delete(User $user)

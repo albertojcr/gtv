@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -9,16 +9,21 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class Video extends Model
+class Photography extends Model
 {
     use SoftDeletes;
 
     protected $fillable = ['name', 'url', 'route', 'point_of_interest_id', 'order', 'published', 'date_create', 'last_update', 'creator', 'updater', 'thematic_area_id'];
     protected $dates = ['date_create', 'last_update'];
 
-    public function video_items()
+    public function point_of_interest()
     {
-        return $this->hasMany(VideoItem::class);
+        return $this->belongsTo(PointOfInterest::class);
+    }
+
+    public function thematic_area()
+    {
+        return $this->belongsTo(ThematicArea::class);
     }
 
     public function userCreator()
@@ -31,45 +36,15 @@ class Video extends Model
         return $this->belongsTo(User::class, 'updater');
     }
 
-    public function PointOfInterest()
-    {
-        return $this->belongsTo(PointOfInterest::class);
-    }
-
-    public function thematic_area()
-    {
-        return $this->belongsTo(ThematicArea::class);
-    }
-
-    public static function boot()
-    {
-        parent::boot();
-
-        static::updating(function($video) {
-            if(Request::has('route')) {
-                $file_name = $video->url . '.mp4';
-                $video->route = Request::file('route')->storeAs('public/videos', $file_name);
-            }
-            $video->updater = auth()->user()->id;
-            $video->last_update = Carbon::now();
-        });
-
-        static::deleting(function($video){
-            Storage::disk('public')->delete($video->route);
-            $video->video_items()->delete();
-        });
-    }
-
     public static function create(array $attributes = [])
     {
         $attributes['creator'] = auth()->user()->id;
         $attributes['date_create'] = Carbon::now();
+        $photography = static::query()->create($attributes);
 
-        $video = static::query()->create($attributes);
+        $photography->generateSlug();
 
-        $video->generateSlug();
-
-        return $video;
+        return $photography;
     }
 
     public function generateSlug()
@@ -84,13 +59,22 @@ class Video extends Model
         $this->save();
     }
 
-    public function getRouteKeyName()
+    public static function boot()
     {
-        return 'url';
-    }
-    public static function countNewVideos()
-    {
-        return (int)count(Video::whereDate('created_at', Carbon::today())->get());
+        parent::boot();
+
+        static::updating(function($photography) {
+            if(Request::has('route')) {
+                $file_name = $photography->url . '.png';
+                $photography->route = Request::file('route')->storeAs('public/photos', $file_name);
+            }
+            $photography->updater = auth()->user()->id;
+            $photography->last_update = Carbon::now();
+        });
+
+        static::deleting(function($photography){
+            Storage::disk('public')->delete($photography->route);
+        });
     }
 
     public function scopeAllowed($query)
@@ -103,5 +87,15 @@ class Video extends Model
         }else{
             return $query->where('creator', auth()->id())->orWhere('updater', auth()->id());
         }
+    }
+
+    public static function countNewPhotos()
+    {
+        return (int)count(Photography::whereDate('created_at', Carbon::today())->get());
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'url';
     }
 }

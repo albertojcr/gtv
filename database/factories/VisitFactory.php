@@ -4,8 +4,8 @@
 
 namespace Database\Factories;
 
-use App\PointOfInterest;
-use App\Visit;
+use App\Models\PointOfInterest;
+use App\Models\Visit;
 use Faker\Generator as Faker;
 
 $factory->define(Visit::class, function (Faker $faker) {

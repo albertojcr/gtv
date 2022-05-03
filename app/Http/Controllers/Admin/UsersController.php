@@ -6,16 +6,15 @@ use App\Events\AdminInformed;
 use App\Events\UserWasRegisted;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateUsersRequest;
-use App\Photography;
-use App\Place;
-use App\ThematicArea;
-use App\User;
-use App\Video;
+use App\Models\Photography;
+use App\Models\ThematicArea;
+use App\Models\User;
+use App\Models\Video;
+use Hashids\Hashids;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
-use Hashids\Hashids;
 
 class UsersController extends Controller
 {

@@ -1,7 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
+use App\Notifications\MyResetPassword;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Auth\Events\Login;
@@ -11,7 +12,6 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Traits\HasRoles;
-use App\Notifications\MyResetPassword;
 
 class User extends Authenticatable
 {

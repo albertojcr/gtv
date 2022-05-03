@@ -4,8 +4,8 @@
 
 namespace Database\Factories;
 
-use App\Video;
-use App\VideoItem;
+use App\Models\Video;
+use App\Models\VideoItem;
 use Faker\Generator as Faker;
 
 $factory->define(VideoItem::class, function (Faker $faker) {
