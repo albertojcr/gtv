@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Str;
 
 class VideoItem extends Model
 {
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
-    protected $fillable = ['video_id', 'url', 'quality', 'format', 'orientation', 'language'];
+    protected $guarded = [];
 
     public function video()
     {
@@ -30,25 +30,6 @@ class VideoItem extends Model
     {
         $videoItem = static::query()->create($attributes);
 
-        $videoItem->generateSlug();
-
         return $videoItem;
-    }
-
-    public function generateSlug()
-    {
-        $url = Str::slug($this->video->name);
-
-        if(static::whereUrl($url)->exists()) {
-            $url .= '--' . static::where('url', 'like', $url . '-%')->count();
-        }
-
-        $this->url = $url;
-        $this->save();
-    }
-
-    public function getRouteKeyName()
-    {
-        return 'url';
     }
 }

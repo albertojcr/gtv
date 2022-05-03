@@ -27,7 +27,6 @@ class UpdateVideoItemsRequest extends FormRequest
             'quality' => 'required | max: 45',
             'format' => 'required | max: 45',
             'orientation' => 'required | max: 100',
-            'language' => 'required | max: 5'
         ];
     }
 
@@ -40,8 +39,6 @@ class UpdateVideoItemsRequest extends FormRequest
             'format.max' => 'Tamaño maximo 45 caracteres',
             'orientation.required' => 'El campo orientacion debe ser requerido',
             'orientation.max' => 'Tamaño maximo 100 caracteres',
-            'language.required' => 'El campo lenguaje debe ser requerido',
-            'language.max' => 'Tamaño maximo 5 caracteres',
         ];
     }
 }

@@ -30,7 +30,6 @@
                             <th>Calidad</th>
                             <th>Formato</th>
                             <th>Orientacion</th>
-                            <th class="text-center">Idioma</th>
                             <th>Acciones</th>
                             </thead>
                             <tbody>
@@ -43,7 +42,6 @@
                                     <td>{{ $video->video_items()->pluck('quality')->first() }}</td>
                                     <td>{{ $video->video_items()->pluck('format')->first() }}</td>
                                     <td>{{ $video->video_items()->pluck('orientation')->first() }}</td>
-                                    <td class="text-center">{{ $video->video_items()->pluck('language')->first() }}</td>
                                     <td>
                                         <a href="{{ route('admin.videos.show', $video) }}" rel="tooltip" class="btn btn-info btn-icon btn-sm">
                                             <i class="fa fa-video"></i>

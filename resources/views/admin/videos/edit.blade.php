@@ -91,7 +91,7 @@
                                 </div>
 
                                 <div class="form-check text-center">
-                                    <a href="{{ route('admin.videoitems.edit', $video->video_items->pluck('url')->first()) }}" class="btn btn-info">Editar caracteristicas de video</a>
+                                    <a href="{{ route('admin.videoitems.edit', $video->video_items->first()->id) }}" class="btn btn-info">Editar caracteristicas de video</a>
                                 </div>
                             </div>
                         </div>
