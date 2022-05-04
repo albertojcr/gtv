@@ -56,7 +56,7 @@
                         </div>
 
                         <div class="text-center">
-                            <a href="{{ route('admin.videos.edit', $videoitem->video->url) }}" class="btn btn-info">Volver</a>
+                            <a href="{{ route('admin.videos.edit', $videoitem->video) }}" class="btn btn-info">Volver</a>
                         </div>
                     </div>
                 </div>

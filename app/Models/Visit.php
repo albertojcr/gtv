@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 class Visit extends Model
 {
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $guarded = [];
     protected $dates = ['hour'];
@@ -18,21 +19,7 @@ class Visit extends Model
     {
         $visit = static::query()->create($attributes);
 
-        $visit->generateSlug();
-
         return $visit;
-    }
-
-    public function generateSlug()
-    {
-        $url = Str::slug($this->deviceid);
-
-        if(static::whereUrl($url)->exists()) {
-            $url .= '--' . static::where('url', 'like', $url . '-%')->count();
-        }
-
-        $this->url = $url;
-        $this->save();
     }
 
     public function point_of_interest()
@@ -56,10 +43,5 @@ class Visit extends Model
 
     public static function getPointsOfInterestMostVisit(){
         return Visit::query()->get()->groupBy('point_of_interest_id')->take(5)->sort();
-    }
-
-    public function getRouteKeyName()
-    {
-        return 'id';
     }
 }
