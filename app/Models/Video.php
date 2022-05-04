@@ -14,7 +14,7 @@ class Video extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $guarded = ['id'];
+    protected $guarded = [];
     protected $dates = ['date_create', 'last_update'];
 
     public function video_items()
