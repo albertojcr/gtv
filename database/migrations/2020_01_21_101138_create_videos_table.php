@@ -26,8 +26,6 @@ class CreateVideosTable extends Migration
             $table->foreignId('thematic_area_id')->nullable()->references('id')->on('thematic_areas');
             $table->string('description', 2000);
 
-            $table->string('url', 245)->nullable();
-
             $table->timestamps();
             $table->softDeletes();
         });

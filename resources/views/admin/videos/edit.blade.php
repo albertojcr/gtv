@@ -89,7 +89,7 @@
                                 <div class="form-check text-center">
                                     <button type="submit" class="btn btn-primary">Enviar</button>
                                 </div>
-
+                                {{--{{ dd($video->video_items->first()) }}--}}
                                 <div class="form-check text-center">
                                     <a href="{{ route('admin.videoitems.edit', $video->video_items->first()) }}" class="btn btn-info">Editar caracteristicas de video</a>
                                 </div>

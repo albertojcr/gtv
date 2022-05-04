@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class Video extends Model
 {
@@ -48,7 +47,7 @@ class Video extends Model
 
         static::updating(function($video) {
             if(Request::has('route')) {
-                $file_name = $video->url . '.mp4';
+                $file_name = $video->route;
                 $video->route = Request::file('route')->storeAs('public/videos', $file_name);
             }
             $video->updater = auth()->user()->id;
@@ -68,27 +67,9 @@ class Video extends Model
 
         $video = static::query()->create($attributes);
 
-        $video->generateSlug();
-
         return $video;
     }
 
-    public function generateSlug()
-    {
-        $url = Str::slug($this->description);
-
-        if(static::whereUrl($url)->exists()) {
-            $url .= '--' . static::where('url', 'like', $url . '-%')->count();
-        }
-
-        $this->url = $url;
-        $this->save();
-    }
-
-    public function getRouteKeyName()
-    {
-        return 'url';
-    }
     public static function countNewVideos()
     {
         return (int)count(Video::whereDate('created_at', Carbon::today())->get());

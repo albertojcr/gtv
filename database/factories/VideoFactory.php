@@ -30,6 +30,5 @@ $factory->define(Video::class, function (Faker $faker) {
             'code_id' => $faker->randomDigitNotZero(),
             'thematic_area_id' => $faker->randomElement(ThematicArea::all()->pluck('id')->toArray()),
             'description' => $description,
-            'url' => $slug,
         ];
 });
