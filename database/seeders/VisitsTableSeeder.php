@@ -15,10 +15,6 @@ class VisitsTableSeeder extends Seeder
      */
     public function run()
     {
-        $visits = factory(Visit::class, 30)->make();
-        $visits->each(function($v) {
-            $v->url = Str::slug($v->deviceid);
-            $v->save();
-        });
+        factory(Visit::class, 30)->create();
     }
 }

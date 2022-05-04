@@ -11,7 +11,7 @@ class Visit extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['hour', 'deviceid', 'url', 'appversion', 'useragent', 'ssoo', 'ssooversion', 'latitude', 'longitude', 'point_of_interest_id'];
+    protected $guarded = [];
     protected $dates = ['hour'];
 
     public static function create(array $attributes = [])
@@ -60,6 +60,6 @@ class Visit extends Model
 
     public function getRouteKeyName()
     {
-        return 'url';
+        return 'id';
     }
 }
