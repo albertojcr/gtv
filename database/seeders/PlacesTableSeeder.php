@@ -19,7 +19,6 @@ class PlacesTableSeeder extends Seeder
     {
         $places = factory(Place::class,10)->create();
         $places->each(function($p) {
-            $p->url = Str::slug($p->name);
             $p->save();
             $user = User::all()->pluck('id')->toArray();
             $p->users()->attach(Arr::random($user, 2));

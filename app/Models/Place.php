@@ -3,15 +3,15 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Str;
 
 class Place extends Model
 {
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name', 'url', 'description', 'place_id', 'date_create', 'last_update', 'creator', 'updater'];
+    protected $guarded = [];
     protected $dates = ['date_create', 'last_update'];
 
     public function users()
@@ -46,21 +46,7 @@ class Place extends Model
 
         $place = static::query()->create($attributes);
 
-        $place->generateSlug();
-
         return $place;
-    }
-
-    public function generateSlug()
-    {
-        $url = Str::slug($this->name);
-
-        if(static::whereUrl($url)->exists()) {
-            $url .= '--' . static::where('url', 'like', $url . '-%')->count();
-        }
-
-        $this->url = $url;
-        $this->save();
     }
 
     public static function boot()
@@ -96,11 +82,6 @@ class Place extends Model
     public function existsPlaceUserId($id)
     {
         return $this->users()->where('place_id', '=', $this->id)->where('user_id', '=', $id)->exists();
-    }
-
-    public function getRouteKeyName()
-    {
-         return 'url';
     }
 
     public function scopeAllowed($query)
