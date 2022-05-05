@@ -10,7 +10,7 @@ class ThematicArea extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['name','description'];
+    protected $guarded = [];
 
     public function pointsOfInterest(){
         return $this->belongsToMany(PointOfInterest::class)->withPivot('thematic_area_id', 'title', 'description', 'language');
@@ -58,21 +58,7 @@ class ThematicArea extends Model
     {
         $thematic_area = static::query()->create($attributes);
 
-        $thematic_area->generateSlug();
-
         return $thematic_area;
-    }
-
-    public function generateSlug()
-    {
-        $url = Str::slug($this->name);
-
-        if(static::whereUrl($url)->exists()) {
-            $url .= '--' . static::where('url', 'like', $url . '-%')->count();
-        }
-
-        $this->url = $url;
-        $this->save();
     }
 
     public function scopeAllowed($query)
@@ -80,10 +66,5 @@ class ThematicArea extends Model
         if(auth()->user()->can('view', $this)) {
             return $query;
         }
-    }
-
-    public function getRouteKeyName()
-    {
-        return 'url';
     }
 }

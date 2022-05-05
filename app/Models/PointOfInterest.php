@@ -27,7 +27,7 @@ class PointOfInterest extends Model
 
     public function thematicAreas()
     {
-        return $this->belongsToMany(ThematicArea::class)->withPivot('point_of_interest_id', 'title', 'description', 'language');
+        return $this->belongsToMany(ThematicArea::class)->withPivot('point_of_interest_id', 'title', 'description');
     }
 
     public function photographies()
@@ -60,7 +60,7 @@ class PointOfInterest extends Model
         return $pointOfInterest;
     }
 
-    public function syncthematicAreas($thematicAreas, $title, $description, $language)
+    public function syncthematicAreas($thematicAreas, $title, $description)
     {
         $this->thematicAreas()->detach();
 
@@ -68,14 +68,12 @@ class PointOfInterest extends Model
             $this->thematicAreas()->attach($thematicAreas, [
                 'title' => $title,
                 'description' => $description,
-                'language' => $language
             ]);
         }
 
         return $this->thematicAreas()->updateExistingPivot($thematicAreas, [
             'title' => $title,
             'description' => $description,
-            'language' => $language
         ]);
     }
 

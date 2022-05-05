@@ -15,10 +15,6 @@ class ThematicAreasTableSeeder extends Seeder
      */
     public function run()
     {
-        $thematic_areas = factory(ThematicArea::class,10)->make();
-        $thematic_areas->each(function($v) {
-            $v->url = Str::slug($v->name);
-            $v->save();
-        });
+        factory(ThematicArea::class,10)->create();
     }
 }

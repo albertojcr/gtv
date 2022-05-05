@@ -59,7 +59,7 @@ class PointsOfInterestController extends Controller
             'place_id' => $request->get('place_id'),
         ]);
 
-        $pointsofinterest->syncthematicAreas($request->thematicAreas, $request->title, $request->description, $request->language);
+        $pointsofinterest->syncthematicAreas($request->thematicAreas, $request->title, $request->description);
 
         return redirect()->route('admin.pointsofinterest.index', compact('pointsofinterest'))->with('flash', 'El punto de interés ' . $pointsofinterest->qr . ' ha sido editado correctamente');
     }

@@ -26,7 +26,6 @@ class PointOfInterestsTableSeeder extends Seeder
                 [
                     'title' => $faker->sentence,
                     'description' => $faker->text,
-                    'language' => $faker->languageCode
                 ]);
         });
     }
