@@ -19,14 +19,12 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(User::class, function (Faker $faker) {
+$factory->define(User::class, function (Faker $faker) { // TODO corregir factory, tira Array to string conversion
     return [
         'login' => $faker->userName,
-        'name' => $faker->firstName,
-        'surnames' => $faker->lastName . ' ' . $faker->lastName,
+        'password' => '123456',
+        'salt' => 'salt-here',
         'email' => $faker->unique()->safeEmail,
-        'password' => '123456', // password
-        'thematic_area_id' => $faker->randomElement(ThematicArea::all()->pluck('id')->toArray()),
-        'active' => $faker->boolean()
+        'profile' => $faker->words(2),
     ];
 });

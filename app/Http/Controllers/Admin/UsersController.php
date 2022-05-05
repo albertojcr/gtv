@@ -40,8 +40,6 @@ class UsersController extends Controller
         $data = $this->validate($request, [
             'login' => 'required | unique:users',
             'email' => 'required | string | unique:users',
-            'name' => 'required',
-            'surnames' => 'required'
         ], [
             'login.required' => 'El nombre de usuario es requerido',
             'login.unique' => 'El nombre de usuario ya existe en nuestros registros',
@@ -49,8 +47,6 @@ class UsersController extends Controller
             'email.string' => 'El correo no es valido',
             'email.email' => 'El correo no es valido',
             'email.unique' => 'El correo electronico ya existe en nuestros registros',
-            'name.required' => 'El nombre es requerido',
-            'surnames.required' => 'El campo apellidos es requerido',
         ]);
 
         $data['password'] = Str::random(8);
