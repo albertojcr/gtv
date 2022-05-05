@@ -14,12 +14,8 @@ class CreateUserPlaceTable extends Migration
     public function up()
     {
         Schema::create('place_user', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->on('users')->references('id');
-            $table->index(["user_id"], 'fk_place_has_user_user1_idx');
-            $table->unsignedBigInteger('place_id');
-            $table->foreign('place_id')->on('places')->references('id')->onDelete('cascade');
-            $table->index(["place_id"], 'fk_place_has_user_place1_idx');
+            $table->foreignId('place_id')->references('id')->on('places')->onDelete('cascade');
+            $table->foreignId('user_id')->references('id')->on('users');
         });
     }
 
