@@ -51,7 +51,13 @@ class PointsOfInterestController extends Controller
     {
         $this->authorize('update', $pointsofinterest);
 
-        $pointsofinterest->update($request->all());
+        $pointsofinterest->update([
+            'qr' => $request->get('qr'),
+            'distance' => $request->get('distance'),
+            'latitude' => $request->get('latitude'),
+            'longitude' => $request->get('longitude'),
+            'place_id' => $request->get('place_id'),
+        ]);
 
         $pointsofinterest->syncthematicAreas($request->thematicAreas, $request->title, $request->description, $request->language);
 

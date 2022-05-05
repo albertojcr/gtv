@@ -17,19 +17,17 @@ class PointOfInterestsTableSeeder extends Seeder
      */
     public function run()
     {
-        $pointsInterest = factory(PointOfInterest::class, 20)->make();
-        $pointsInterest->each(function($p) {
+        $pointsOfInterest = factory(PointOfInterest::class, 20)->make();
+        $pointsOfInterest->each(function($pointOfInterest) {
             $faker = \Faker\Factory::create();
-            $p->url = Str::slug($p->qr);
-            $p->save();
+            $pointOfInterest->save();
             $thematicAreas= ThematicArea::all()->pluck('id')->toArray();
-            $p->thematicAreas()->attach(Arr::random($thematicAreas, 2),
+            $pointOfInterest->thematicAreas()->attach(Arr::random($thematicAreas, 2),
                 [
-                    'title' =>  $faker->sentence,
-                    'description'   =>  $faker->text,
-                    'language'  =>$faker->languageCode
+                    'title' => $faker->sentence,
+                    'description' => $faker->text,
+                    'language' => $faker->languageCode
                 ]);
         });
-
     }
 }
