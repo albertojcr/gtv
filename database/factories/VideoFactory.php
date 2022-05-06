@@ -20,7 +20,7 @@ $factory->define(Video::class, function (Faker $faker) {
         $slug = Str::slug($description);
 
         return [
-            'route' => $slug . '.mp4',
+            'route' => $slug . '.mp4', // TODO reemplazar por video de verdad en el seeder
             'point_of_interest_id' => $faker->randomElement(PointOfInterest::all()->pluck('id')->toArray()),
             'order'=> $faker->randomDigit,
             'date_create' => Carbon::now(),
