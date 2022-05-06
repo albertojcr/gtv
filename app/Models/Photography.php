@@ -13,7 +13,7 @@ class Photography extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['name', 'url', 'route', 'point_of_interest_id', 'order', 'published', 'date_create', 'last_update', 'creator', 'updater', 'thematic_area_id'];
+    protected $guarded = [];
     protected $dates = ['date_create', 'last_update'];
 
     public function point_of_interest()
@@ -42,21 +42,7 @@ class Photography extends Model
         $attributes['date_create'] = Carbon::now();
         $photography = static::query()->create($attributes);
 
-        $photography->generateSlug();
-
         return $photography;
-    }
-
-    public function generateSlug()
-    {
-        $url = Str::slug($this->name);
-
-        if(static::whereUrl($url)->exists()) {
-            $url .= '--' . static::where('url', 'like', $url . '-%')->count();
-        }
-
-        $this->url = $url;
-        $this->save();
     }
 
     public static function boot()
@@ -92,10 +78,5 @@ class Photography extends Model
     public static function countNewPhotos()
     {
         return (int)count(Photography::whereDate('created_at', Carbon::today())->get());
-    }
-
-    public function getRouteKeyName()
-    {
-        return 'url';
     }
 }
