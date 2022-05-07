@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\ThematicArea;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Permission;
@@ -77,39 +79,47 @@ class UsersTableSeeder extends Seeder
             $chartCountPhotosAndVideosPermission,$charRankingtPermission
             ]);
 
-        $user = new User;
-        $user->login = 'superadmin';
-        $user->password = '123456';
-        $user->salt = 'salt-here';
-        $user->email = 'superadmin@mail.com';
-        $user->profile = 'Profile description here';
-        $user->save();
-        $user->assignRole($superAdminRole);
+        $superAdmin = new User;
+        $superAdmin->login = 'superadmin';
+        $superAdmin->password = '123456';
+        $superAdmin->salt = 'salt-here';
+        $superAdmin->email = 'superadmin@mail.com';
+        $superAdmin->profile = 'Profile description here';
+        $superAdmin->save();
+        $superAdmin->assignRole($superAdminRole);
 
-        $user = new User;
-        $user->login = 'admin';
-        $user->password = '123456';
-        $user->salt = 'salt-here';
-        $user->email = 'admin@mail.com';
-        $user->profile = 'Profile description here';
-        $user->save();
-        $user->assignRole($adminRole);
+        $admin = new User;
+        $admin->login = 'admin';
+        $admin->password = '123456';
+        $admin->salt = 'salt-here';
+        $admin->email = 'admin@mail.com';
+        $admin->profile = 'Profile description here';
+        $admin->save();
+        $admin->assignRole($adminRole);
 
-        $user = new User;
-        $user->login = 'teacher';
-        $user->password = '123456';
-        $user->salt = 'salt-here';
-        $user->email = 'teacher@mail.com';
-        $user->profile = 'Profile description here';
-        $user->save();
-        $user->assignRole($teacherRole);
+        $teacher = new User;
+        $teacher->login = 'teacher';
+        $teacher->password = '123456';
+        $teacher->salt = 'salt-here';
+        $teacher->email = 'teacher@mail.com';
+        $teacher->profile = 'Profile description here';
+        $teacher->save();
+        $teacher->assignRole($teacherRole);
 
-        $user = new User;
-        $user->login = 'student';
-        $user->password = '123456';
-        $user->salt = 'salt-here';
-        $user->email = 'student@gmail.com';
-        $user->save();
-        $user->assignRole($studentRole);
+        $student = new User;
+        $student->login = 'student';
+        $student->password = '123456';
+        $student->salt = 'salt-here';
+        $student->email = 'student@gmail.com';
+        $student->save();
+        $student->assignRole($studentRole);
+
+        $thematicAreas = ThematicArea::all()->pluck('id')->toArray();
+        foreach ($thematicAreas as $key => $value) {
+            $admin->thematics_area()->attach($value, [
+                'date' => Carbon::now(),
+                'active' => true,
+            ]);
+        }
     }
 }

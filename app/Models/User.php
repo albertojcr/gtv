@@ -44,9 +44,9 @@ class User extends Authenticatable
         return $this->hasMany(PointOfInterest::class, 'creator');
     }
 
-    public function thematic_area()
+    public function thematics_area()
     {
-        return $this->belongsTo(ThematicArea::class);
+        return $this->belongsToMany(ThematicArea::class)->withPivot(['date', 'active']);
     }
 
     public function videos()

@@ -18,6 +18,6 @@ class PhotographiesTableSeeder extends Seeder
     {
         Storage::disk('public')->deleteDirectory('photos');
 
-        $photography = factory(Photography::class, 30)->create();
+        factory(Photography::class, 30)->create();
     }
 }
