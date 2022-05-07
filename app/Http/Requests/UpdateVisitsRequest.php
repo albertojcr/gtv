@@ -24,28 +24,28 @@ class UpdateVisitsRequest extends FormRequest
     public function rules()
     {
         return [
+            'hour' => 'required',
             'deviceid' => 'required | max:85',
             'appversion' => 'required | max:45',
             'useragent' => 'required | max:95',
-            'hour' => 'required',
             'ssoo' => 'required | max:45',
             'ssooversion' => 'required | max:45',
             'latitude' => 'required',
             'longitude' => 'required',
-            'point_of_interest_id' => 'required'
+            'point_of_interest_id' => 'required',
         ];
     }
 
     public function messages()
     {
         return [
+            'hour.required' => 'El campo hora es requerido',
             'deviceid.required' => 'El campo nombre de dispositivo es requerido',
             'deviceid.max' => 'Tamaño maximo 85 caracteres',
             'appversion.required' => 'El campo version de la app es requerido',
             'appversion.max' => 'Tamaño maximo 45 caracteres',
             'useragent.required' => 'El campo usuario de dispositivo es requerido',
             'useragent.max' => 'Tamaño maximo 95 caracteres',
-            'hour.required' => 'El campo hora es requerido',
             'ssoo.required' => 'El campo Sistema Operativo es requerido',
             'ssoo.max' => 'Tamaño maximo 45 caracteres',
             'ssooversion.required' => 'El campo version de sistema operativo es requerido',

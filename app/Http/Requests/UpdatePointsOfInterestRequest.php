@@ -32,7 +32,6 @@ class UpdatePointsOfInterestRequest extends FormRequest
             'thematicAreas' => 'required',
             'title' => 'required',
             'description' => 'required | max: 200',
-            'language' => 'required | max: 5'
         ];
     }
 
@@ -49,8 +48,6 @@ class UpdatePointsOfInterestRequest extends FormRequest
             'title.required' => 'El campo titulo debe ser requerido',
             'description.required' => 'El campo lenguaje debe ser requerido',
             'description.max' => 'Tamaño maximo 200 caracteres',
-            'language.required' => 'El campo lenguaje debe ser requerido',
-            'language.max' => 'Tamaño maximo 5 caracteres',
         ];
     }
 }
