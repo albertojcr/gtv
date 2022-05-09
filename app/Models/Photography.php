@@ -16,22 +16,22 @@ class Photography extends Model
     protected $guarded = [];
     protected $dates = ['date_create', 'last_update'];
 
-    public function point_of_interest()
+    public function pointOfinterest()
     {
         return $this->belongsTo(PointOfInterest::class);
     }
 
-    public function thematic_area()
+    public function thematicArea()
     {
         return $this->belongsTo(ThematicArea::class);
     }
 
-    public function userCreator()
+    public function creator()
     {
         return $this->belongsTo(User::class, 'creator');
     }
 
-    public function userUpdater()
+    public function updater()
     {
         return $this->belongsTo(User::class, 'updater');
     }

@@ -16,17 +16,17 @@ class Video extends Model
     protected $guarded = [];
     protected $dates = ['date_create', 'last_update'];
 
-    public function video_items()
+    public function videoItems()
     {
         return $this->hasMany(VideoItem::class);
     }
 
-    public function userCreator()
+    public function creator()
     {
         return $this->belongsTo(User::class, 'creator');
     }
 
-    public function userUpdater()
+    public function updater()
     {
         return $this->belongsTo(User::class, 'updater');
     }
@@ -36,7 +36,7 @@ class Video extends Model
         return $this->belongsTo(PointOfInterest::class);
     }
 
-    public function thematic_area()
+    public function thematicArea()
     {
         return $this->belongsTo(ThematicArea::class);
     }

@@ -15,12 +15,12 @@ class PointOfInterest extends Model
     protected $guarded = [];
     protected $dates = ['created_at','updated_at','creation_date', 'last_update_date'];
 
-    public function userCreator()
+    public function creator()
     {
         return $this->belongsTo(User::class, 'creator');
     }
 
-    public function userUpdater()
+    public function updater()
     {
         return $this->belongsTo(User::class, 'updater');
     }

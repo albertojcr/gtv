@@ -24,17 +24,17 @@ class Place extends Model
         return $this->belongsTo(Place::class, 'place_id');
     }
 
-    public function userCreator()
+    public function creator()
     {
         return $this->belongsTo(User::class, 'creator');
     }
 
-    public function userUpdater()
+    public function updater()
     {
         return $this->belongsTo(User::class, 'updater');
     }
 
-    public function points_of_interest()
+    public function pointsOfInterest()
     {
         return $this->hasMany(PointOfInterest::class);
     }

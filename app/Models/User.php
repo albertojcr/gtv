@@ -39,12 +39,12 @@ class User extends Authenticatable
         return $this->hasMany(Photography::class, 'creator');
     }
 
-    public function points_of_interest()
+    public function pointsOfInterest()
     {
         return $this->hasMany(PointOfInterest::class, 'creator');
     }
 
-    public function thematics_area()
+    public function thematicAreas()
     {
         return $this->belongsToMany(ThematicArea::class)->withPivot(['date', 'active']);
     }

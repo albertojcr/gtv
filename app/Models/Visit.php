@@ -22,7 +22,7 @@ class Visit extends Model
         return $visit;
     }
 
-    public function point_of_interest()
+    public function pointOfInterest()
     {
         return $this->belongsTo(PointOfInterest::class);
     }
