@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Charts\GraphicChart;
-use App\Photography;
-use App\PointOfInterest;
-use App\User;
-use App\Video;
-use App\Visit;
-use Carbon\Carbon;
 use App\Http\Controllers\Controller;
+use App\Models\Photography;
+use App\Models\PointOfInterest;
+use App\Models\User;
+use App\Models\Video;
+use App\Models\Visit;
 
 class AdminController extends Controller
 {

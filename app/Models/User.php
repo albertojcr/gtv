@@ -1,7 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
+use App\Notifications\MyResetPassword;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Auth\Events\Login;
@@ -11,7 +12,6 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Traits\HasRoles;
-use App\Notifications\MyResetPassword;
 
 class User extends Authenticatable
 {
@@ -39,14 +39,14 @@ class User extends Authenticatable
         return $this->hasMany(Photography::class, 'creator');
     }
 
-    public function points_of_interest()
+    public function pointsOfInterest()
     {
         return $this->hasMany(PointOfInterest::class, 'creator');
     }
 
-    public function thematic_area()
+    public function thematicAreas()
     {
-        return $this->belongsTo(ThematicArea::class);
+        return $this->belongsToMany(ThematicArea::class)->withPivot(['date', 'active']);
     }
 
     public function videos()

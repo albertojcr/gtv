@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateVideoItemsRequest;
-use App\Video;
-use App\VideoItem;
+use App\Models\Video;
+use App\Models\VideoItem;
 
 class VideoItemsController extends Controller
 {

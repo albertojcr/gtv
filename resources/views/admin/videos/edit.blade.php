@@ -21,10 +21,10 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group has-label">
-                                    <label for="name">Nombre del vídeo:</label>
-                                    <input type="text" name="name" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                                           placeholder="Escribe el nombre del vídeo" value="{{ old('name', $video->name) }}">
-                                    {!! $errors->first('name','<span class="form-text text-danger">:message</span>') !!}
+                                    <label for="description">Descripción del vídeo:</label>
+                                    <input type="text" name="description" class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}"
+                                           placeholder="Escribe la descripción del vídeo" value="{{ old('description', $video->description) }}">
+                                    {!! $errors->first('description','<span class="form-text text-danger">:message</span>') !!}
                                 </div>
 
                                 <div class="form-group has-label">
@@ -89,9 +89,9 @@
                                 <div class="form-check text-center">
                                     <button type="submit" class="btn btn-primary">Enviar</button>
                                 </div>
-
+                                {{--{{ dd($video->video_items->first()) }}--}}
                                 <div class="form-check text-center">
-                                    <a href="{{ route('admin.videoitems.edit', $video->video_items->pluck('url')->first()) }}" class="btn btn-info">Editar caracteristicas de video</a>
+                                    <a href="{{ route('admin.videoitems.edit', $video->video_items->first()) }}" class="btn btn-info">Editar caracteristicas de video</a>
                                 </div>
                             </div>
                         </div>

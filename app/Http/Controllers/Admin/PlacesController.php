@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Place;
-use App\User;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Place;
+use App\Models\User;
+use Illuminate\Http\Request;
 
 class PlacesController extends Controller
 {

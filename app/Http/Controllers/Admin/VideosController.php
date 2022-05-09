@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateVideosRequest;
-use App\PointOfInterest;
-use App\ThematicArea;
-use App\Video;
-use App\VideoItem;
+use App\Models\PointOfInterest;
+use App\Models\ThematicArea;
+use App\Models\Video;
+use App\Models\VideoItem;
 use Illuminate\Http\Request;
 
 class VideosController extends Controller
@@ -23,8 +23,8 @@ class VideosController extends Controller
         $this->authorize('create', new Video());
 
         $request->validate([
-            'name'=>'required'], [
-            'name.required' => 'El nombre del video es requerido'
+            'description' => 'required'], [
+            'description.required' => 'La descripción del video es requerida'
         ]);
 
         $video = Video::create($request->all());
@@ -56,7 +56,7 @@ class VideosController extends Controller
 
         $video->update($request->all());
 
-        return redirect()->route('admin.videos.edit', compact('video'))->with('flash', 'El video ' . $video->name . ' ha sido editado correctamente');
+        return redirect()->route('admin.videos.edit', compact('video'))->with('flash', 'El video ' . $video->description . ' ha sido editado correctamente');
     }
 
     public function destroy(Video $video)
@@ -65,6 +65,6 @@ class VideosController extends Controller
 
         $video->delete();
 
-        return redirect()->route('admin.videos.index')->with('flash', 'El video ' . $video->name . ' ha sido borrado correctamente');
+        return redirect()->route('admin.videos.index')->with('flash', 'El video ' . $video->description . ' ha sido borrado correctamente');
     }
 }

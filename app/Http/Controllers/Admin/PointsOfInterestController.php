@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdatePointsOfInterestRequest;
-use App\Place;
-use App\PointOfInterest;
-use App\ThematicArea;
-use App\User;
+use App\Models\Place;
+use App\Models\PointOfInterest;
+use App\Models\ThematicArea;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PointsOfInterestController extends Controller
@@ -51,9 +51,15 @@ class PointsOfInterestController extends Controller
     {
         $this->authorize('update', $pointsofinterest);
 
-        $pointsofinterest->update($request->all());
+        $pointsofinterest->update([
+            'qr' => $request->get('qr'),
+            'distance' => $request->get('distance'),
+            'latitude' => $request->get('latitude'),
+            'longitude' => $request->get('longitude'),
+            'place_id' => $request->get('place_id'),
+        ]);
 
-        $pointsofinterest->syncthematicAreas($request->thematicAreas, $request->title, $request->description, $request->language);
+        $pointsofinterest->syncthematicAreas($request->thematicAreas, $request->title, $request->description);
 
         return redirect()->route('admin.pointsofinterest.index', compact('pointsofinterest'))->with('flash', 'El punto de interés ' . $pointsofinterest->qr . ' ha sido editado correctamente');
     }

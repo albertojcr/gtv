@@ -2,13 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Place;
-use App\User;
+use App\Models\Place;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 
-class PlacesTableSeeder extends Seeder
+class PlaceSeeder extends Seeder
 {
     /**
      * Run the database seeders.
@@ -19,7 +18,6 @@ class PlacesTableSeeder extends Seeder
     {
         $places = factory(Place::class,10)->create();
         $places->each(function($p) {
-            $p->url = Str::slug($p->name);
             $p->save();
             $user = User::all()->pluck('id')->toArray();
             $p->users()->attach(Arr::random($user, 2));

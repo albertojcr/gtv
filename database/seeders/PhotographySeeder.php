@@ -2,12 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Photography;
+use App\Models\Photography;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
-class PhotographiesTableSeeder extends Seeder
+class PhotographySeeder extends Seeder
 {
     /**
      * Run the database seeders.
@@ -18,10 +17,6 @@ class PhotographiesTableSeeder extends Seeder
     {
         Storage::disk('public')->deleteDirectory('photos');
 
-        $photography = factory(Photography::class, 30)->make();
-        $photography->each(function($p) {
-            $p->url = Str::slug($p->name);
-            $p->save();
-        });
+        factory(Photography::class, 30)->create();
     }
 }

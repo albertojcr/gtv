@@ -24,10 +24,10 @@
                         </div>
                         <div class="col-md-6">
                             <div class="text-left">
-                                <p><span class="font-weight-bold">Nombre del vídeo:</span> {{ $video->name }}</p>
+                                <p><span class="font-weight-bold">Descripción del vídeo:</span> {{ $video->description }}</p>
                                 <p><span class="font-weight-bold">Orden:</span> {{ $video->order }}</p>
                                 <p><span class="font-weight-bold">Publicado:</span> {{ $video->published == '1' ? 'Sí' : 'No' }}</p>
-                                <p><span class="font-weight-bold">Punto de interés:</span> {{ $video->PointOfInterest ? $video->PointOfInterest->qr : '' }}</p>
+                                <p><span class="font-weight-bold">Punto de interés:</span> {{ $video->pointOfInterest ? $video->pointOfInterest->qr : '' }}</p>
                                 <p><span class="font-weight-bold">Área temática:</span> {{ $video->thematic_area ? $video->thematic_area->name : '' }}</p>
                                 <p><span class="font-weight-bold">Creado por:</span> {{ $video->userCreator->login }} {{ $video->date_create->diffForHumans() }}</p>
                                 <p><span class="font-weight-bold">Editado por:</span> {{ $video->userUpdater->login }} {{ $video->last_update->diffForHumans() }}</p>

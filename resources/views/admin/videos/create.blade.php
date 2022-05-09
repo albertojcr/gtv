@@ -11,10 +11,10 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group has-label">
-                        <label for="name">Nombre del vídeo:</label>
-                        <input type="text" name="name" id="videos-name" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                               placeholder="Escribe el nombre del vídeo" value="{{ old('name') }}" required>
-                        {!! $errors->first('name','<span class="form-text text-danger">:message</span>') !!}
+                        <label for="description">Descripción del vídeo:</label>
+                        <input type="text" name="description" id="videos-description" class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}"
+                               placeholder="Escribe la descripción del vídeo" value="{{ old('description') }}" required>
+                        {!! $errors->first('description','<span class="form-text text-danger">:message</span>') !!}
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -34,7 +34,7 @@
             window.location.hash = '#';
         });
         $('#createVideos').on('shown.bs.modal', function () {
-            $('#videos-name').focus();
+            $('#videos-description').focus();
             window.location.hash = '#video';
         });
     </script>
