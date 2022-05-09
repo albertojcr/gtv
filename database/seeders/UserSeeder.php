@@ -117,7 +117,7 @@ class UserSeeder extends Seeder
 
         $thematicAreas = ThematicArea::all()->pluck('id')->toArray();
         foreach ($thematicAreas as $key => $value) {
-            $admin->thematics_area()->attach($value, [
+            $admin->thematicAreas()->attach($value, [
                 'date' => Carbon::now(),
                 'active' => true,
             ]);
