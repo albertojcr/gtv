@@ -15,15 +15,15 @@ class CreateVisitsTable extends Migration
     {
         Schema::create('visits', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('hour')->nullable();
+            $table->dateTime('hour');
             $table->string('deviceid',85);
-            $table->string('appversion',45)->nullable();
-            $table->string('useragent',95)->nullable();
-            $table->string('ssoo',45)->nullable();
-            $table->string('ssooversion',45)->nullable();
-            $table->decimal('latitude',10,8)->nullable();
-            $table->decimal('longitude',11,8)->nullable();
-            $table->foreignId('point_of_interest_id')->nullable()->references('id')->on('point_of_interests')->onDelete('cascade');
+            $table->string('appversion',45);
+            $table->string('useragent',95);
+            $table->string('ssoo',45);
+            $table->string('ssooversion',45);
+            $table->decimal('latitude',10,8);
+            $table->decimal('longitude',11,8);
+            $table->foreignId('point_of_interest_id')->references('id')->on('point_of_interests')->onDelete('cascade');
 
             $table->timestamps();
             $table->softDeletes();

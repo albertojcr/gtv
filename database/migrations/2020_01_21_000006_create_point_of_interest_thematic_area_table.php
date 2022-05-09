@@ -5,8 +5,6 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class CreatePointOfInterestThematicAreaTable extends Migration
-
-
 {
     /**
      * Run the migrations.
@@ -20,7 +18,7 @@ class CreatePointOfInterestThematicAreaTable extends Migration
             $table->foreignId('point_of_interest_id')->references('id')->on('point_of_interests')->onDelete('cascade');
             $table->string('title',145);
             $table->string('description',2000)->nullable();
-            $table->integer('code_id')->nullable();
+            $table->integer('code_id')->nullable(); // TODO no debe ser nullable
         });
     }
 

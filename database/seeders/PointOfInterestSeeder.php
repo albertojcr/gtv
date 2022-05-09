@@ -6,9 +6,8 @@ use App\Models\PointOfInterest;
 use App\Models\ThematicArea;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 
-class PointOfInterestsTableSeeder extends Seeder
+class PointOfInterestSeeder extends Seeder
 {
     /**
      * Run the database seeders.

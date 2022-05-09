@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class Video_itemsTableSeeder extends Seeder
+class VideoItemSeeder extends Seeder
 {
     /**
      * Run the database seeders.

@@ -6,9 +6,8 @@ use App\Models\Place;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 
-class PlacesTableSeeder extends Seeder
+class PlaceSeeder extends Seeder
 {
     /**
      * Run the database seeders.

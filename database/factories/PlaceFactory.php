@@ -16,7 +16,5 @@ $factory->define(\App\Models\Place::class, function (Faker $faker) {
         'place_id'=> $faker->randomElement(Place::all()->pluck('id')->toArray()),
         'creator' => $faker->randomElement($users),
         'updater' => $faker->randomElement($users),
-        'date_create'=> $faker->dateTimeThisMonth,
-        'last_update' => $faker->dateTimeThisMonth,
     ];
 });

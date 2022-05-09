@@ -15,14 +15,12 @@ class CreatePhotographiesTable extends Migration
     {
         Schema::create('photographies', function (Blueprint $table) {
             $table->id();
-            $table->string('route', 245)->nullable();
-            $table->foreignId('point_of_interest_id')->nullable()->references('id')->on('point_of_interests')->onDelete('cascade');
-            $table->integer('order')->nullable();
-            $table->timestamp('date_create')->nullable();
-            $table->timestamp('last_update')->nullable();
-            $table->foreignId('creator')->nullable()->references('id')->on('users')->onDelete('cascade');
-            $table->foreignId('updater')->nullable()->references('id')->on('users')->onDelete('cascade');
-            $table->foreignId('thematic_area_id')->nullable()->references('id')->on('thematic_areas');
+            $table->string('route', 245);
+            $table->foreignId('point_of_interest_id')->references('id')->on('point_of_interests')->onDelete('cascade');
+            $table->integer('order');
+            $table->foreignId('creator')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('updater')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('thematic_area_id')->references('id')->on('thematic_areas');
 
             $table->timestamps();
             $table->softDeletes();

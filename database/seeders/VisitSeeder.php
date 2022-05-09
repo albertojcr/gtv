@@ -4,9 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\Visit;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 
-class VisitsTableSeeder extends Seeder
+class VisitSeeder extends Seeder
 {
     /**
      * Run the database seeders.

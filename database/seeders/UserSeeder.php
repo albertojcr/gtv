@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class UsersTableSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeders.
@@ -111,6 +111,7 @@ class UsersTableSeeder extends Seeder
         $student->password = '123456';
         $student->salt = 'salt-here';
         $student->email = 'student@gmail.com';
+        $student->profile = 'Profile description here';
         $student->save();
         $student->assignRole($studentRole);
 

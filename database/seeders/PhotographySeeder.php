@@ -5,9 +5,8 @@ namespace Database\Seeders;
 use App\Models\Photography;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
-class PhotographiesTableSeeder extends Seeder
+class PhotographySeeder extends Seeder
 {
     /**
      * Run the database seeders.
