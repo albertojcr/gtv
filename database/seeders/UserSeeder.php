@@ -2,13 +2,15 @@
 
 namespace Database\Seeders;
 
-use App\User;
+use App\Models\ThematicArea;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class UsersTableSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeders.
@@ -21,10 +23,10 @@ class UsersTableSeeder extends Seeder
         Storage::makeDirectory('/public/users');
         chmod(base_path().'/storage/app/public/users', 0777);
 
-        $superAdmin = Role::create(['name' => 'Super Administrador', 'display_name' => 'Super Admin']);
-        $admin = Role::create(['name' => 'Administrador','display_name'=>'Admin']);
-        $teacher = Role::create(['name' => 'Profesor','display_name'=>'Teacher']);
-        $student = Role::create(['name' => 'Alumno','display_name'=>'Student']);
+        $superAdminRole = Role::create(['name' => 'Super Administrador', 'display_name' => 'Super Admin']);
+        $adminRole = Role::create(['name' => 'Administrador','display_name'=>'Admin']);
+        $teacherRole = Role::create(['name' => 'Profesor','display_name'=>'Teacher']);
+        $studentRole = Role::create(['name' => 'Alumno','display_name'=>'Student']);
 
         $createRolePermission = Permission::create(['name' => 'Crear roles']);
         $updateRolePermission = Permission::create(['name' => 'Editar roles']);
@@ -60,16 +62,16 @@ class UsersTableSeeder extends Seeder
         $updateThematicAreasPermission = Permission::create(['name' => 'Editar areas tematicas']);
         $deleteThematicAreasPermission = Permission::create(['name' => 'Borrar areas tematicas']);
 
-        $charRankingtPermission=Permission::create(['name'=>'Ver ranking de puntos de intereses']);
-        $chartVisitsPermission=Permission::create(['name'=>'Ver gráfico de visitas']);
-        $chartPointOfInterestPermission=Permission::create(['name'=>'Ver gráfico de creaciones de puntos de intereses']);
-        $chartNewsRegistrationPermission=Permission::create(['name'=>'Ver contador de nuevos registros']);
-        $chartCountPhotosAndVideosPermission=Permission::create(['name'=>'Ver contador de fotos y vídeos registrados']);
+        $charRankingtPermission = Permission::create(['name'=>'Ver ranking de puntos de intereses']);
+        $chartVisitsPermission = Permission::create(['name'=>'Ver gráfico de visitas']);
+        $chartPointOfInterestPermission = Permission::create(['name'=>'Ver gráfico de creaciones de puntos de intereses']);
+        $chartNewsRegistrationPermission = Permission::create(['name'=>'Ver contador de nuevos registros']);
+        $chartCountPhotosAndVideosPermission = Permission::create(['name'=>'Ver contador de fotos y vídeos registrados']);
 
 
-        $student->givePermissionTo([$createPhotographiesPermission, $updatePhotographiesPermission, $createVideosPermission,$updateVideosPermission,
+        $studentRole->givePermissionTo([$createPhotographiesPermission, $updatePhotographiesPermission, $createVideosPermission,$updateVideosPermission,
             $chartCountPhotosAndVideosPermission,$charRankingtPermission]);
-        $teacher->givePermissionTo([$viewPhotographiesPermission,$updatePhotographiesPermission,$deletePhotographiesPermission,
+        $teacherRole->givePermissionTo([$viewPhotographiesPermission,$updatePhotographiesPermission,$deletePhotographiesPermission,
             $viewVideosPermission,$updateVideosPermission,$deleteVideosPermission,
             $viewPointsOfInterestPermission,$createPointsOfInterestPermission,$updatePointsOfInterestPermission,
             $viewPlacesPermission,$createPlacesPermission,$updatePlacesPermission,
@@ -77,52 +79,48 @@ class UsersTableSeeder extends Seeder
             $chartCountPhotosAndVideosPermission,$charRankingtPermission
             ]);
 
-        $user = new User;
-        $user->login = 'director';
-        $user->name = 'Jose Antonio';
-        $user->surnames = 'Alcázar Torres';
-        $user->password = '30010978';
-        $user->email = 'iescierva@gmail.com';
-        $user->save();
+        $superAdmin = new User;
+        $superAdmin->login = 'superadmin';
+        $superAdmin->password = '123456';
+        $superAdmin->salt = 'salt-here';
+        $superAdmin->email = 'superadmin@mail.com';
+        $superAdmin->profile = 'Profile description here';
+        $superAdmin->save();
+        $superAdmin->assignRole($superAdminRole);
 
-        $user->assignRole($admin);
+        $admin = new User;
+        $admin->login = 'admin';
+        $admin->password = '123456';
+        $admin->salt = 'salt-here';
+        $admin->email = 'admin@mail.com';
+        $admin->profile = 'Profile description here';
+        $admin->save();
+        $admin->assignRole($adminRole);
 
-        $user = new User;
-        $user->login = 'fran9614';
-        $user->name = 'Fran';
-        $user->surnames = 'Arce Codina';
-        $user->email = 'franarcecodina96@gmail.com';
-        $user->password = 'daw_2019';
-        $user->save();
+        $teacher = new User;
+        $teacher->login = 'teacher';
+        $teacher->password = '123456';
+        $teacher->salt = 'salt-here';
+        $teacher->email = 'teacher@mail.com';
+        $teacher->profile = 'Profile description here';
+        $teacher->save();
+        $teacher->assignRole($teacherRole);
 
-        $user->assignRole($admin);
+        $student = new User;
+        $student->login = 'student';
+        $student->password = '123456';
+        $student->salt = 'salt-here';
+        $student->email = 'student@gmail.com';
+        $student->profile = 'Profile description here';
+        $student->save();
+        $student->assignRole($studentRole);
 
-        $user = new User;
-        $user->login = 'jorgicoor1998@gmail.com';
-        $user->login = 'jorgicoor1998';
-        $user->name = 'Jorge';
-        $user->surnames = 'Orenes Rubio';
-        $user->email = 'jorgicoor1998@gmail.com';
-        $user->password = 'pokemon12';
-        $user->save();
-
-        $user->assignRole($admin);
-
-        $user = new User;
-        $user->login = 'fulgen_daw2020';
-        $user->name = 'Fulgencio';
-        $user->surnames = 'Valera Alonso';
-        $user->password = '654321';
-        $user->email = 'fulgencio.valera@gmail.com';
-        $user->save();
-        $user->assignRole($superAdmin);
-        $user->assignRole($admin);
-
-        $users = factory(User::class,10)->make();
-
-        $users->each(function($u) use($teacher) {
-            $u->save();
-            $u->assignRole($teacher);
-        });
+        $thematicAreas = ThematicArea::all()->pluck('id')->toArray();
+        foreach ($thematicAreas as $key => $value) {
+            $admin->thematicAreas()->attach($value, [
+                'date' => Carbon::now(),
+                'active' => true,
+            ]);
+        }
     }
 }

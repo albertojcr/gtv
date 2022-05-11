@@ -1,32 +1,33 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 class PointOfInterest extends Model
 {
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
-    protected $fillable = ['qr','distance','longitude', 'creator', 'updater', 'place_id','latitude','creation_date', 'last_update_date'];
+    protected $guarded = [];
     protected $dates = ['created_at','updated_at','creation_date', 'last_update_date'];
 
-    public function userCreator()
+    public function creator()
     {
         return $this->belongsTo(User::class, 'creator');
     }
 
-    public function userUpdater()
+    public function updater()
     {
         return $this->belongsTo(User::class, 'updater');
     }
 
     public function thematicAreas()
     {
-        return $this->belongsToMany(ThematicArea::class)->withPivot('point_of_interest_id', 'title', 'description', 'language');
+        return $this->belongsToMany(ThematicArea::class)->withPivot('point_of_interest_id', 'title', 'description');
     }
 
     public function photographies()
@@ -56,24 +57,10 @@ class PointOfInterest extends Model
 
         $pointOfInterest = static::query()->create($attributes);
 
-        $pointOfInterest->generateSlug();
-
         return $pointOfInterest;
     }
 
-    public function generateSlug()
-    {
-        $url = Str::slug($this->qr);
-
-        if(static::whereUrl($url)->exists()) {
-            $url .= '--' . static::where('url', 'like', $url . '-%')->count();
-        }
-
-        $this->url = $url;
-        $this->save();
-    }
-
-    public function syncthematicAreas($thematicAreas, $title, $description, $language)
+    public function syncthematicAreas($thematicAreas, $title, $description)
     {
         $this->thematicAreas()->detach();
 
@@ -81,14 +68,12 @@ class PointOfInterest extends Model
             $this->thematicAreas()->attach($thematicAreas, [
                 'title' => $title,
                 'description' => $description,
-                'language' => $language
             ]);
         }
 
         return $this->thematicAreas()->updateExistingPivot($thematicAreas, [
             'title' => $title,
             'description' => $description,
-            'language' => $language
         ]);
     }
 
@@ -97,11 +82,6 @@ class PointOfInterest extends Model
         return $this->thematicAreas()
             ->where('thematic_area_id', '=', $id)
             ->exists();
-    }
-
-    public function getRouteKeyName()
-    {
-        return 'url';
     }
 
     public static function boot()

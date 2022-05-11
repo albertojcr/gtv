@@ -1,42 +1,42 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class Video extends Model
 {
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name', 'url', 'route', 'point_of_interest_id', 'order', 'published', 'date_create', 'last_update', 'creator', 'updater', 'thematic_area_id'];
+    protected $guarded = [];
     protected $dates = ['date_create', 'last_update'];
 
-    public function video_items()
+    public function videoItems()
     {
         return $this->hasMany(VideoItem::class);
     }
 
-    public function userCreator()
+    public function creator()
     {
         return $this->belongsTo(User::class, 'creator');
     }
 
-    public function userUpdater()
+    public function updater()
     {
         return $this->belongsTo(User::class, 'updater');
     }
 
-    public function PointOfInterest()
+    public function pointOfInterest()
     {
         return $this->belongsTo(PointOfInterest::class);
     }
 
-    public function thematic_area()
+    public function thematicArea()
     {
         return $this->belongsTo(ThematicArea::class);
     }
@@ -47,7 +47,7 @@ class Video extends Model
 
         static::updating(function($video) {
             if(Request::has('route')) {
-                $file_name = $video->url . '.mp4';
+                $file_name = $video->route;
                 $video->route = Request::file('route')->storeAs('public/videos', $file_name);
             }
             $video->updater = auth()->user()->id;
@@ -67,27 +67,9 @@ class Video extends Model
 
         $video = static::query()->create($attributes);
 
-        $video->generateSlug();
-
         return $video;
     }
 
-    public function generateSlug()
-    {
-        $url = Str::slug($this->name);
-
-        if(static::whereUrl($url)->exists()) {
-            $url .= '--' . static::where('url', 'like', $url . '-%')->count();
-        }
-
-        $this->url = $url;
-        $this->save();
-    }
-
-    public function getRouteKeyName()
-    {
-        return 'url';
-    }
     public static function countNewVideos()
     {
         return (int)count(Video::whereDate('created_at', Carbon::today())->get());

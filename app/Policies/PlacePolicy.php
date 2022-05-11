@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Place;
-use App\User;
+use App\Models\Place;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class PlacePolicy
@@ -18,8 +18,8 @@ class PlacePolicy
     /**
      * Determine whether the user can view the point of interest.
      *
-     * @param  \App\User  $user
-     * @param  \App\Place  $place
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Place  $place
      * @return mixed
      */
     public function view(User $user, Place $place)
@@ -30,7 +30,7 @@ class PlacePolicy
     /**
      * Determine whether the user can create point of interests.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function create(User $user)
@@ -41,8 +41,8 @@ class PlacePolicy
     /**
      * Determine whether the user can update the point of interest.
      *
-     * @param  \App\User  $user
-     * @param  \App\Place  $place
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Place  $place
      * @return mixed
      */
     public function update(User $user)
@@ -53,8 +53,8 @@ class PlacePolicy
     /**
      * Determine whether the user can delete the point of interest.
      *
-     * @param  \App\User  $user
-     * @param  \App\Place  $place
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Place  $place
      * @return mixed
      */
     public function delete(User $user)

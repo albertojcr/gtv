@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Video;
-use App\User;
+use App\Models\User;
+use App\Models\Video;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class VideoPolicy
@@ -18,8 +18,8 @@ class VideoPolicy
     /**
      * Determine whether the user can view the photography.
      *
-     * @param  \App\User  $user
-     * @param  \App\Video  $video
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Video  $video
      * @return mixed
      */
     public function view(User $user, Video $video)
@@ -30,7 +30,7 @@ class VideoPolicy
     /**
      * Determine whether the user can create photographies.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function create(User $user)
@@ -41,8 +41,8 @@ class VideoPolicy
     /**
      * Determine whether the user can update the photography.
      *
-     * @param  \App\User  $user
-     * @param  \App\Video  $video
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Video  $video
      * @return mixed
      */
     public function update(User $user)
@@ -53,8 +53,8 @@ class VideoPolicy
     /**
      * Determine whether the user can delete the photography.
      *
-     * @param  \App\User  $user
-     * @param  \App\Video  $video
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Video  $video
      * @return mixed
      */
     public function delete(User $user)

@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\User;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ThematicAreaPolicy
@@ -22,7 +22,7 @@ class ThematicAreaPolicy
     /**
      * Determine whether the user can create point of interests.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function create(User $user)
@@ -33,7 +33,7 @@ class ThematicAreaPolicy
     /**
      * Determine whether the user can update the point of interest.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function update(User $user)
@@ -44,7 +44,7 @@ class ThematicAreaPolicy
     /**
      * Determine whether the user can delete the point of interest.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function delete(User $user)

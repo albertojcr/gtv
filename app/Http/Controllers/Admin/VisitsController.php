@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateVisitsRequest;
-use App\PointOfInterest;
-use App\Visit;
+use App\Models\PointOfInterest;
+use App\Models\Visit;
 use Illuminate\Http\Request;
 
 class VisitsController extends Controller

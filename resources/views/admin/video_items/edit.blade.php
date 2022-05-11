@@ -15,7 +15,7 @@
                 @method('PUT')
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Modificar caracteristicas del video {{ $videoitem->video->name }}</h4>
+                        <h4 class="card-title">Modificar caracteristicas del video {{ $videoitem->video->description }}</h4>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -49,20 +49,14 @@
                                     {!! $errors->first('orientation','<span class="form-text text-danger">:message</span>') !!}
                                 </div>
 
-                                <div class="form-group has-label">
-                                    <label for="language">Idioma del video:</label>
-                                    <input type="text" name="language" class="form-control {{ $errors->has('language') ? 'is-invalid' : '' }}"
-                                           placeholder="Escribe en dos letras el idioma (Ej. 'es')" value="{{ old('language', $videoitem->language) }}">
-                                    {!! $errors->first('language','<span class="form-text text-danger">:message</span>') !!}
-                                </div>
-
                                 <div class="form-check text-center">
                                     <button type="submit" class="btn btn-primary">Enviar</button>
                                 </div>
                             </div>
                         </div>
+
                         <div class="text-center">
-                            <a href="{{ route('admin.videos.edit', $videoitem->video->url) }}" class="btn btn-info">Volver</a>
+                            <a href="{{ route('admin.videos.edit', $videoitem->video) }}" class="btn btn-info">Volver</a>
                         </div>
                     </div>
                 </div>

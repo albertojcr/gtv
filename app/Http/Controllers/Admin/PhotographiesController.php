@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdatePhotographiesRequest;
-use App\Photography;
-use App\PointOfInterest;
-use App\ThematicArea;
-use App\User;
+use App\Models\Photography;
+use App\Models\PointOfInterest;
+use App\Models\ThematicArea;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PhotographiesController extends Controller

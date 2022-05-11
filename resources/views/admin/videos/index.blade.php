@@ -24,26 +24,24 @@
                         <table id="videos-table" class="table">
                             <thead class="text-primary">
                             <th class="text-center">Id</th>
-                            <th>Nombre</th>
+                            <th>Descripción</th>
                             <th class="text-center">Orden</th>
                             <th class="text-center">Publicado</th>
                             <th>Calidad</th>
                             <th>Formato</th>
                             <th>Orientacion</th>
-                            <th class="text-center">Idioma</th>
                             <th>Acciones</th>
                             </thead>
                             <tbody>
                             @foreach($videos as $video)
                                 <tr>
                                     <td class="text-center">{{ $video->id }}</td>
-                                    <td>{{ $video->name }}</td>
+                                    <td>{{ $video->description }}</td>
                                     <td class="text-center">{{ $video->order }}</td>
                                     <td class="text-center">{{ $video->published == '1' ? 'Sí' : 'No' }}</td>
                                     <td>{{ $video->video_items()->pluck('quality')->first() }}</td>
                                     <td>{{ $video->video_items()->pluck('format')->first() }}</td>
                                     <td>{{ $video->video_items()->pluck('orientation')->first() }}</td>
-                                    <td class="text-center">{{ $video->video_items()->pluck('language')->first() }}</td>
                                     <td>
                                         <a href="{{ route('admin.videos.show', $video) }}" rel="tooltip" class="btn btn-info btn-icon btn-sm">
                                             <i class="fa fa-video"></i>

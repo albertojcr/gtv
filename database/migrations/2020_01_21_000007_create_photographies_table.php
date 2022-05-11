@@ -14,35 +14,16 @@ class CreatePhotographiesTable extends Migration
     public function up()
     {
         Schema::create('photographies', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name', 245);
-            $table->string('url')->nullable();
-            $table->string('route', 245)->nullable();
+            $table->id();
+            $table->string('route', 245);
+            $table->foreignId('point_of_interest_id')->references('id')->on('point_of_interests')->onDelete('cascade');
+            $table->integer('order');
+            $table->foreignId('creator')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('updater')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('thematic_area_id')->references('id')->on('thematic_areas');
 
-            $table->unsignedBigInteger('point_of_interest_id')->nullable();
-            $table->foreign('point_of_interest_id')->on('point_of_interests')->references('id')->onDelete('cascade');
-            $table->index(["point_of_interest_id"], 'fk_photography_points1_idx');
-
-            $table->integer('order')->nullable();
-
-            $table->boolean('published')->default(0);
-
-            $table->timestamp('date_create')->nullable();
-            $table->timestamp('last_update')->nullable();
-
-            $table->unsignedBigInteger('creator')->nullable();
-            $table->foreign('creator')->on('users')->references('id')->onDelete('cascade');
-            $table->index(["creator"], 'fk_photography_user1_idx');
-
-            $table->unsignedBigInteger('updater')->nullable();
-            $table->foreign('updater')->on('users')->references('id')->onDelete('cascade');
-            $table->index(["updater"], 'fk_photography_user2_idx');
-
-            $table->unsignedBigInteger('thematic_area_id')->nullable();
-            $table->foreign('thematic_area_id')->on('thematic_areas')->references('id');
-            $table->index(["thematic_area_id"], 'fk_photography_thematic_area1_idx');
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
