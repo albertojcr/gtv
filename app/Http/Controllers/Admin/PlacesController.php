@@ -11,7 +11,7 @@ class PlacesController extends Controller
 {
     public function index()
     {
-        $places = Place::allowed()->get();
+        $places = Place::all();
         return view('admin.places.index', compact('places'));
     }
 

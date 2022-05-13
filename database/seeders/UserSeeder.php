@@ -81,7 +81,7 @@ class UserSeeder extends Seeder
 
         $superAdmin = new User;
         $superAdmin->login = 'superadmin';
-        $superAdmin->password = '123456';
+        $superAdmin->password = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'; // password
         $superAdmin->salt = 'salt-here';
         $superAdmin->email = 'superadmin@mail.com';
         $superAdmin->profile = 'Profile description here';
@@ -90,7 +90,7 @@ class UserSeeder extends Seeder
 
         $admin = new User;
         $admin->login = 'admin';
-        $admin->password = '123456';
+        $admin->password = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'; // password
         $admin->salt = 'salt-here';
         $admin->email = 'admin@mail.com';
         $admin->profile = 'Profile description here';
@@ -99,7 +99,7 @@ class UserSeeder extends Seeder
 
         $teacher = new User;
         $teacher->login = 'teacher';
-        $teacher->password = '123456';
+        $teacher->password = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'; // password
         $teacher->salt = 'salt-here';
         $teacher->email = 'teacher@mail.com';
         $teacher->profile = 'Profile description here';
@@ -108,7 +108,7 @@ class UserSeeder extends Seeder
 
         $student = new User;
         $student->login = 'student';
-        $student->password = '123456';
+        $student->password = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'; // password
         $student->salt = 'salt-here';
         $student->email = 'student@gmail.com';
         $student->profile = 'Profile description here';
