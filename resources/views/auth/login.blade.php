@@ -1,7 +1,7 @@
 <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
-            <x-jet-authentication-card-logo />
+            <span class="text-4xl font-bold whitespace-nowrap text-gray-800">GTV</span>
         </x-slot>
 
         <x-jet-validation-errors class="mb-4" />
