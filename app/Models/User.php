@@ -6,7 +6,6 @@ use App\Notifications\MyResetPassword;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Auth\Events\Login;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -16,7 +15,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use Notifiable, hasRoles, SoftDeletes, HasFactory;
+    use Notifiable, hasRoles, SoftDeletes;
 
     protected $fillable = [
         'login', 'name', 'surnames', 'email', 'password', 'profile', 'thematic_area_id', 'active'
