@@ -10,6 +10,7 @@ class ShowVisits extends Component
 {
     use WithPagination;
 
+
     public $search;
 
     public function updatingSearch()
@@ -24,9 +25,8 @@ class ShowVisits extends Component
 
     public function render()
     {
-        $visits = \App\Models\Visit::where('name', 'LIKE', "%{$this->search}%")->paginate(20);
+        $visits = \App\Models\Visit::where('useragent', 'LIKE', "%{$this->search}%")->paginate(20);
 
-        return view('livewire.visit', compact('visits'))
-            ->layout('layouts.admin'); //falta el layout y la vista en wl web!!!!!!!!
+        return view('livewire.admin.show-visits', compact('visits'));
     }
 }

@@ -2,8 +2,9 @@
 
 namespace App\Http\Livewire\Admin;
 
-use App\Http\Livewire\Admin\Visit;
+
 use App\Models\PointOfInterest;
+use App\Models\Visit;
 use Livewire\Component;
 use function redirect;
 use function view;
@@ -41,6 +42,6 @@ class CreateVisits extends Component
 
     public function render()
     {
-        return view('livewire.admin.create-visit')->layout('layouts.admin'); //FALTA LAS VISTAS!!!!!
+        return view('livewire.admin.create-visit')->layout('layouts.app'); //FALTA LAS VISTAS!!!!!
     }
 }

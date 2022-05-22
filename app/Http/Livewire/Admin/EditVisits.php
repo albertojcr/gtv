@@ -61,6 +61,6 @@ class EditVisits extends Component
 
     public function render()
     {
-        return view('livewire.edit-visits')->layout('');
+        return view('livewire.edit-visits')->layout('layouts.app');
     }
 }
