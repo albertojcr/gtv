@@ -1,4 +1,5 @@
 <div>
+
     <h1 class="text-2xl font-semibold text-gray-700 mb-6">Visitas</h1>
 
     <x-button>Botón azul</x-button>
@@ -49,7 +50,7 @@
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <x-button-link href="{{ route('admin.visits.edit', $visit) }}">Ver Detalles</x-button-link>
-                        <x-button color="red" wire:click="emit('deleteVisit', '{{ $visit->id }}')">Eliminar</x-button>
+                        <x-button color="red" wire:click="$emit('delete', '{{ $visit->id }}')">Eliminar</x-button>
                     </td>
                 </tr>
             @endforeach
@@ -68,7 +69,8 @@
 </div>
         @push('scripts')
         <script>
-            Livewire.on('deleteVisit', () => {
+            Livewire.on('delete', visitId => {
+                debugger;
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -79,7 +81,7 @@
                     confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Livewire.emitTo('admin.edit-visit', 'delete');
+                        Livewire.emitTo('admin.ShowVisits', 'delete', visitId);
                         Swal.fire(
                             'Deleted!',
                             'Your file has been deleted.',

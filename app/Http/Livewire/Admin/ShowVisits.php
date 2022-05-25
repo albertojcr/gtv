@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Models\Visit;
 use Livewire\Component;
 use Livewire\WithPagination;
 use function view;
@@ -10,8 +11,14 @@ class ShowVisits extends Component
 {
     use WithPagination;
 
+    protected $listeners = ['delete'];
 
     public $search;
+
+    public function delete(Visit $visit)
+    {
+        $visit->delete();
+    }
 
     public function updatingSearch()
     {
@@ -25,8 +32,7 @@ class ShowVisits extends Component
 
     public function render()
     {
-        $visits = \App\Models\Visit::where('useragent', 'LIKE', "%{$this->search}%")->paginate(20);
 
-        return view('livewire.admin.show-visits', compact('visits'));
+        return view('livewire.admin.show-visits', ['visits' => Visit::paginate(20),]);
     }
 }
