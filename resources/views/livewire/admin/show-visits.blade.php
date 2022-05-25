@@ -1,3 +1,4 @@
+<div>
     <h1 class="text-2xl font-semibold text-gray-700 mb-6">Visitas</h1>
 
     <x-button>Botón azul</x-button>
@@ -47,20 +48,45 @@
                         <div >{{ $visit->point_of_interest_id }}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <x-button-link href="{{ route('admin.visits.edit', $visit) }}">Ver Detalles(Todavia no va)</x-button-link>
-                        <x-button color="red">Eliminar</x-button>
+                        <x-button-link href="{{ route('admin.visits.edit', $visit) }}">Ver Detalles</x-button-link>
+                        <x-button color="red" wire:click="emit('deleteVisit', '{{ $visit->id }}')">Eliminar</x-button>
                     </td>
                 </tr>
             @endforeach
         </x-slot>
     </x-table>
-    @if($visits->hasPages())
-        <div class="px-6 py-4">
-            {{ $visits->links() }}
-        </div>
-    @endif
+        @if($visits->hasPages())
+            <div class="px-6 py-4">
+                {{ $visits->links() }}
+            </div>
+        @endif
     @else
         <div class="px-6 py-4">
-            No existen productos coincidentes
+            No existen vistas coincidentes
         </div>
     @endif
+</div>
+        @push('scripts')
+        <script>
+            Livewire.on('deleteVisit', () => {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.emitTo('admin.edit-visit', 'delete');
+                        Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        )
+                    }
+                })
+            });
+        </script>
+    @endpush
