@@ -24,33 +24,41 @@
             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Punto de Interes
             </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Acciones
+            </th>
         </x-slot>
         <x-slot name="tbody">
             @foreach($visits as $visit)
                 <tr>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm font-medium text-gray-900">{{ $visit->id}}</div>
+                    <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                        <div>{{ $visit->id}}</div>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-gray-500">{{ $visit->deviceid }}</div>
+                    <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                        <div>{{ $visit->deviceid }}</div>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-gray-500">{{ $visit->ssoo }}</div>
+                    <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                        <div>{{ $visit->ssoo }}</div>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-gray-500">{{ $visit->ssooversion }}</div>
+                    <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                        <div>{{ $visit->ssooversion }}</div>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-gray-500">{{ $visit->point_of_interest_id }}</div>
+                    <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                        <div >{{ $visit->point_of_interest_id }}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <x-button-link href="{{ route('admin.visits.edit', $visit) }}">Editar(Todavia no va)</x-button-link>
+                        <x-button-link href="{{ route('admin.visits.edit', $visit) }}">Ver Detalles(Todavia no va)</x-button-link>
                         <x-button color="red">Eliminar</x-button>
                     </td>
                 </tr>
             @endforeach
         </x-slot>
     </x-table>
+    @if($visits->hasPages())
+        <div class="px-6 py-4">
+            {{ $visits->links() }}
+        </div>
+    @endif
     @else
         <div class="px-6 py-4">
             No existen productos coincidentes
