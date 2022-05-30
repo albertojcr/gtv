@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class ShowVideos extends Component
+class ListVideos extends Component
 {
     use WithPagination;
 
-    public $listeners = ['delete'];
+    public $listeners = ['delete', 'render'];
 
     public $detailsModal = [
         'open' => false,
@@ -43,7 +43,7 @@ class ShowVideos extends Component
         $this->detailsModal['thematicAreaId'] = $video->thematicArea->id;
         $this->detailsModal['creatorName'] = User::find($video->creator)->name;
         $this->detailsModal['creatorId'] = $video->creator;
-        $this->detailsModal['updaterName'] = User::find($video->updater)->name;
+        $this->detailsModal['updaterName'] = $video->updater ? User::find($video->updater)->name : null;;
         $this->detailsModal['updaterId'] = $video->updater;
         $this->detailsModal['createdAt'] = $video->created_at;
         $this->detailsModal['updatedAt'] = $video->updated_at;
@@ -51,17 +51,21 @@ class ShowVideos extends Component
 
     public function delete(Video $video)
     {
+        if(Storage::exists($video->route)) {
+            Storage::delete($video->route);
+        }
+
         $video->delete();
     }
 
     public function render()
     {
-        if (auth()->user()->hasRole('Estudiante')) {
-            $videos = Video::where('creator', auth()->user()->id)->paginate(10);
+        if (auth()->user()->hasRole('Alumno')) {
+            $videos = Video::where('creator', auth()->user()->id)->orderByDesc('id')->paginate(10);
         } else {
-            $videos = Video::paginate(10);
+            $videos = Video::orderByDesc('id')->paginate(10);
         }
 
-        return view('livewire.admin.video.show-videos', compact('videos'));
+        return view('livewire.admin.video.list-videos', compact('videos'));
     }
 }

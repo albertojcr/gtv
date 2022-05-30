@@ -1,12 +1,21 @@
 <div>
     <div class="flex items-center mb-6">
         <h1 class="text-2xl font-semibold text-gray-700">Listado de vídeos</h1>
-        <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ml-auto">
-            Añadir
-        </button>
+
+        @hasanyrole('Administrador|Profesor')
+            <button type="button"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ml-auto"
+                    wire:click="$emitTo('admin.video.create-video', 'openCreationModal')">
+                Añadir
+            </button>
+        @endhasanyrole
     </div>
 
+    @livewire('admin.video.create-video')
+
     @if(count($videos))
+        @livewire('admin.video.edit-video')
+
         <x-table>
             <x-slot name="thead">
                 <th scope="col" class="px-6 py-3">
@@ -17,6 +26,9 @@
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Punto de interés
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Orden
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Área temática
@@ -48,13 +60,18 @@
                             {{ $video->pointOfInterest->id }}
                         </td>
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                            {{ $video->order }}
+                        </td>
+                        <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                             {{ $video->thematicArea->name }}
                         </td>
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                             {{ \App\Models\User::find($video->creator)->name }}
                         </td>
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                            {{ \App\Models\User::find($video->updater)->name }}
+                            @if($video->updater)
+                                {{ \App\Models\User::find($video->updater)->name }}
+                            @endif
                         </td>
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                             {{ $video->created_at }}
@@ -63,7 +80,8 @@
                             <span class="font-medium text-blue-600 cursor-pointer" wire:click="show('{{ $video->id }}')">
                                 <i class="fa-solid fa-eye"></i>
                             </span>
-                            <span class="font-medium text-yellow-400 cursor-pointer">
+                            <span class="font-medium text-yellow-400 cursor-pointer"
+                               wire:click="$emitTo('admin.video.edit-video', 'openEditModal', '{{ $video->id }}')">
                                 <i class="fa-solid fa-pencil"></i>
                             </span>
                             <span class="font-medium text-red-500 cursor-pointer"
@@ -88,15 +106,14 @@
     {{-- Modal show --}}
     <x-jet-dialog-modal wire:model="detailsModal.open">
         <x-slot name="title">
-            <span class="text-2xl">Detalles del vídeo #{{ $video->id }}</span>
+            <span class="text-2xl">Detalles del vídeo #{{ $detailsModal['id'] }}</span>
         </x-slot>
 
         <x-slot name="content">
             <div class="space-y-3">
-                <video class="mx-auto my-10 w-4/5" controls>
-                    <source src="{{ $detailsModal['route'] }}" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
+                @if($detailsModal['route'] !== null)
+                    @livewire('admin.video.video-preview', ['route' => $detailsModal['route']])
+                @endif
                 <div>
                     <x-jet-label>
                         Descripción: {{ $detailsModal['description']}}
@@ -129,7 +146,12 @@
                 </div>
                 <div>
                     <x-jet-label>
-                        Actualizador: {{ $detailsModal['updaterName'] }} ({{ $detailsModal['updaterId'] }})
+                        Actualizador:
+                        @if($detailsModal['updaterName'])
+                            {{ $detailsModal['updaterName'] }} ({{ $detailsModal['updaterId'] }})
+                        @else
+                            {{ 'ninguno' }}
+                        @endif
                     </x-jet-label>
                 </div>
                 <div>
@@ -166,7 +188,7 @@
                     confirmButtonText: 'Eliminar'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Livewire.emitTo('admin.video.show-videos', 'delete', videoId)
+                        Livewire.emitTo('admin.video.list-videos', 'delete', videoId)
                         Swal.fire(
                             '¡Hecho!',
                             'El vídeo ha sido eliminado.',
