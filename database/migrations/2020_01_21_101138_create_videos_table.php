@@ -19,8 +19,7 @@ class CreateVideosTable extends Migration
             $table->foreignId('point_of_interest_id')->references('id')->on('point_of_interests')->onDelete('cascade');
             $table->integer('order');
             $table->foreignId('creator')->references('id')->on('users')->onDelete('cascade');
-            $table->foreignId('updater')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('code_id')->nullable(); // TODO no debe ser nullable
+            $table->foreignId('updater')->nullable()->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('thematic_area_id')->references('id')->on('thematic_areas');
             $table->string('description', 2000);
 

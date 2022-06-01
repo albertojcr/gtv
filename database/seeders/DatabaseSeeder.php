@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,6 +14,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        Storage::disk('public')->deleteDirectory('videos');
+        Storage::disk('public')->makeDirectory('videos');
+
         $this->call(ThematicAreaSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(PlaceSeeder::class);
