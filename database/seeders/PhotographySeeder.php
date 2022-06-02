@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Photography;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Storage;
 
 class PhotographySeeder extends Seeder
 {
@@ -15,8 +14,6 @@ class PhotographySeeder extends Seeder
      */
     public function run()
     {
-        Storage::disk('public')->deleteDirectory('photos');
-
         factory(Photography::class, 30)->create();
     }
 }
