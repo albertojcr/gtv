@@ -1,9 +1,6 @@
 <?php
 
 use App\Http\Controllers\WelcomeController;
-use App\Http\Livewire\Admin\CreateVisits;
-use App\Http\Livewire\Admin\EditVisits;
-use App\Http\Livewire\Admin\ShowVisits;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', WelcomeController::class);
