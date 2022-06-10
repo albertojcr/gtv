@@ -11,38 +11,36 @@ class CreatePointsOfinterest extends Component
 {
 
     public $distance, $latitude, $longitude;
-    public $place = [], $creator = '';
+    public $places = [];
 
     protected $listeners = ['openCreationModal'];
 
     public $createForm = [
         'open' => false,
-        'distance' => null,
-        'latitude' => null,
-        'longitude' => null,
-        'place_id' => null,
-        'creator' => null,
+        'distance' => '',
+        'latitude' => '',
+        'longitude' => '',
+        'place' => '',
     ];
 
     protected $rules = [
         'createForm.distance' => 'required',
         'createForm.latitude' => 'required',
-        'createForm.longitude' => 'required',
-        'createForm.place_id' => 'required',
-        'createForm.creator' => 'required',
+        'createForm.longitude' => 'required|exist:places,id',
+        'createForm.place' => 'required',
     ];
 
     protected $validationAttributes = [
         'createForm.distance' => 'distancia',
         'createForm.latitude' => 'latitud',
         'createForm.longitude' => 'longitud',
-        'createForm.place_id' => 'sitio',
-        'createForm.creator' => 'creador',
+        'createForm.place' => 'sitio',
     ];
 
     public function openCreationModal()
     {
         $this->createForm['open'] = true;
+        $this->getPlaces();
     }
 
     public function getPlaces()
@@ -59,15 +57,17 @@ class CreatePointsOfinterest extends Component
     {
 
         $this->validate();
-        $point = new PointOfInterest();
-        $point->distance = $this->distance;
-        $point->latitude = $this->latitude;
-        $point->longitude = $this->longitude;
-        $point->place_id = $this->place_id;
-        $point->creator = $this->creator;
-        $point->save();
 
-        return redirect()->route('admin.pointsofinterest.edit', $point);
+        $point = PointOfInterest::create([
+            'distance' => $this->createForm['distance'],
+            'latitude' => $this->createForm['latitude'],
+            'longitude' => $this->createForm['longitude'],
+            'place_id' => $this->createForm['place'],
+        ]);
+
+        $this->reset('createForm');
+        $this->emit('PointCreated');
+        $this->emitTo('admin.pointsofinterest.show-points-ofinterest', 'render');
     }
 
     public function render()
