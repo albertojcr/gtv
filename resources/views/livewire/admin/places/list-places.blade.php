@@ -1,19 +1,14 @@
 <div>
     <div class="flex items-center mb-6">
         <h1 class="text-2xl font-semibold text-gray-700">Listado de lugares</h1>
-        <div class="ml-2">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-            </svg>
 
-            @hasanyrole('Administrador|Profesor')
-            <button type="button"
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ml-auto"
-                    wire:click="$emitTo('admin.place.create-place', 'openCreationModal')">
-                Añadir
-            </button>
-            @endhasanyrole
-        </div>
+        @hasanyrole('Administrador|Profesor')
+        <button type="button"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ml-auto"
+                wire:click="$emitTo('admin.places.create-place', 'openCreationModal')">
+            Añadir
+        </button>
+        @endhasanyrole
     </div>
 
     @livewire('admin.places.create-place')
@@ -70,14 +65,17 @@
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap flex gap-4">
                             <span class="font-medium text-blue-600 cursor-pointer" wire:click="show('{{ $place->id }}')">
                                 <i class="fa-solid fa-eye"></i>
+                                Detalles
                             </span>
                             <span class="font-medium text-yellow-400 cursor-pointer"
-                                  wire:click="$emitTo('admin.place.edit-place', 'openEditModal', '{{ $place->id }}')">
+                                  wire:click="$emitTo('admin.places.edit-place', 'openEditModal', '{{ $place->id }}')">
                                 <i class="fa-solid fa-pencil"></i>
+                                Editar
                             </span>
                             <span class="font-medium text-red-500 cursor-pointer"
-                                  wire:click="$emit('deleteplace', '{{ $place->id }}')">
+                                  wire:click="$emit('deletePlace', '{{ $place->id }}')">
                                 <i class="fa-solid fa-trash"></i>
+                                Borrar
                             </span>
                         </td>
                     </tr>
@@ -153,6 +151,8 @@
     </x-jet-dialog-modal>
 
     @push('scripts')
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
         <script>
             Livewire.on('deletePlace', placeId => {
                 Swal.fire({
@@ -166,7 +166,7 @@
                     confirmButtonText: 'Eliminar'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Livewire.emitTo('admin.place.list-places', 'delete', placeId)
+                        Livewire.emitTo('admin.places.list-places', 'delete', placeId)
                         Swal.fire(
                             '¡Hecho!',
                             'El lugar ha sido eliminado.',

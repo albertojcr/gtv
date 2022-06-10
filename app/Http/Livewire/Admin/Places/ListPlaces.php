@@ -36,7 +36,7 @@ class ListPlaces extends Component
         $this->detailsModal['description'] = $place->description;
         $this->detailsModal['creatorName'] = User::find($place->creator)->name;
         $this->detailsModal['creatorId'] = $place->creator;
-        $this->detailsModal['updaterName'] = User::find($place->updater)->name;
+        $this->detailsModal['updaterName'] = $place->updater ? User::find($place->updater)->name : null;
         $this->detailsModal['updaterId'] = $place->updater;
         $this->detailsModal['createdAt'] = $place->created_at;
         $this->detailsModal['updatedAt'] = $place->updated_at;
@@ -44,10 +44,6 @@ class ListPlaces extends Component
 
     public function delete(Place $place)
     {
-        if(Storage::exists($place->route)) {
-            Storage::delete($place->route);
-        }
-
         $place->delete();
     }
 
