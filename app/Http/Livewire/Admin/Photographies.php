@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin;
 
 use App\Models\Photography;
+use App\Models\PointOfInterest;
 use App\Models\ThematicArea;
 use App\Models\User;
 use Livewire\Component;
@@ -16,6 +17,7 @@ class Photographies extends Component
 
     public $pointsOfInterest;
     public $thematicAreas;
+    public $pointOfInterestoOrders = [];
     public $showForm = false;
 
     public $listeners = ['delete', 'show'];
@@ -35,23 +37,19 @@ class Photographies extends Component
     ];
 
     protected $rules = [
-        'createForm.route' => 'image',
-        'createForm.order' => '',
-        'createForm.pointOfInterestId' => 'required',
-        'createForm.thematicAreaId' => 'required',
-    ];
-
-    protected $editRules = [
-        'editForm.route' => 'image',
-        'editForm.order' => '',
-        'editForm.pointOfInterestId' => 'required',
-        'editForm.thematicAreaId' => 'required',
+        'createForm.route' => 'image|max:5120',
+        'createForm.pointOfInterestId' => 'required|integer',
+        'createForm.thematicAreaId' => 'required|integer',
     ];
 
     protected $validationAttributes = [
         'createForm.route' => 'fotografía',
         'createForm.pointOfInterestId' => 'punto de interes',
         'createForm.thematicAreaId' => 'área temática',
+
+        'editForm.route' => 'fotografía',
+        'editForm.pointOfInterestId' => 'punto de interes',
+        'editForm.thematicAreaId' => 'área temática',
     ];
 
     public $editModal = [
@@ -78,14 +76,28 @@ class Photographies extends Component
 
     public function getPointsOfInterest()
     {
-        $this->pointsOfInterest = Photography::select('point_of_interest_id')
-            ->distinct()
-            ->pluck('point_of_interest_id');
+        $this->pointsOfInterest = PointOfInterest::all();
     }
 
     public function getThematicAreas()
     {
         $this->thematicAreas = ThematicArea::all();
+    }
+
+    public function updatedCreateFormPointOfInterestId()
+    {
+        $this->createForm['thematicAreaId'] = '';
+        $this->thematicAreas = PointOfInterest::find($this->createForm['pointOfInterestId'])->thematicAreas;
+
+        $this->createForm['thematicAreaId'] = $this->thematicAreas[0]->id;
+    }
+
+    public function updatedEditFormPointOfInterestId()
+    {
+        $this->editForm['thematicAreaId'] = '';
+        $this->thematicAreas = PointOfInterest::find($this->editForm['pointOfInterestId'])->thematicAreas;
+
+        $this->editForm['thematicAreaId'] = $this->thematicAreas[0]->id;
     }
 
     public function save()
@@ -94,13 +106,11 @@ class Photographies extends Component
 
         $this->createForm['route']->storeAs('public/photos', $this->createForm['route']->getFilename());
 
-        $order = Photography::where('point_of_interest_id', $this->createForm['pointOfInterestId'])
-            ->orderBy('order', 'desc')
-            ->first();
+        $order = Photography::where('point_of_interest_id', $this->createForm['pointOfInterestId'])->count();
 
         Photography::create([
-            'route' => $this->createForm['route']->getFilename(),
-            'order' =>  $order->order +1,
+            'route' => 'storage/photos/' . $this->createForm['route']->getFilename(),
+            'order' =>  $order +1,
             'point_of_interest_id' => $this->createForm['pointOfInterestId'],
             'thematic_area_id' => $this->createForm['thematicAreaId'],
             'creator' => auth()->user()->id,
@@ -112,10 +122,16 @@ class Photographies extends Component
 
     public function update(Photography $photography)
     {
+        $this->validate([
+            'editForm.route' => 'max:5120',
+            'editForm.pointOfInterestId' => 'required|integer',
+            'editForm.thematicAreaId' => 'required|integer',
+        ]);
+
         if (! is_null($this->editForm['route'])) {
             $this->editForm['route']->storeAs('public/photos', $this->editForm['route']->getFilename());
 
-            $photography['route'] = $this->editForm['route']->getFilename();
+            $photography['route'] = 'storage/photos/' . $this->editForm['route']->getFilename();
         }
 
         $photography['point_of_interest_id'] = $this->editForm['pointOfInterestId'];
@@ -131,11 +147,13 @@ class Photographies extends Component
     {
         $this->reset(['editForm']);
 
+        $this->thematicAreas = PointOfInterest::find($photography['point_of_interest_id'])->thematicAreas;
+
         $this->editForm['pointOfInterestId'] = $photography['point_of_interest_id'];
         $this->editForm['thematicAreaId'] = $photography->thematicArea->id;
 
         $this->editModal['id'] = $photography->id;
-        $this->editModal['route'] = 'storage/photos/' . $photography->route;
+        $this->editModal['route'] = $photography->route;
         $this->editModal['order'] = $photography->order;
         $this->editModal['thematicAreaName'] = $photography->thematicArea->name;
         $this->editModal['creatorId'] = User::find($photography->creator)->id;
@@ -156,11 +174,15 @@ class Photographies extends Component
     public function render()
     {
         if (auth()->user()->hasRole('Profesor')){
-            return Photography::where('thematic_area_id', auth()->user()->thematic_area_id);
+            $photographies = Photography::where('thematic_area_id', auth()->user()->thematic_area_id)
+                ->orderBy('id', 'desc')
+                ->paginate(10);
         } else if (auth()->user()->hasRole('Estudiante')) {
-            $photographies = Photography::where('creator', auth()->user()->id)->paginate(10);
+            $photographies = Photography::where('creator', auth()->user()->id)
+                ->orderBy('id', 'desc')
+                ->paginate(10);
         } else {
-            $photographies = Photography::paginate(10);
+            $photographies = Photography::orderBy('id', 'desc')->paginate(10);
         }
 
         return view('livewire.admin.photographies', compact('photographies'));

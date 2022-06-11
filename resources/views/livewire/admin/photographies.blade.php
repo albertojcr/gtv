@@ -16,6 +16,11 @@
               wire:submit.prevent="save">
             <h2 class="text-2xl mb-6">Añadir fotografía</h2>
 
+            @if ($this->createForm['route'])
+                Preview
+                <img src="{{ $this->createForm['route']->temporaryUrl() }}">
+            @endif
+
             <div class="mb-6">
                 <label for="Fotografía" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                     Fotografía
@@ -37,7 +42,7 @@
                         wire:model="createForm.pointOfInterestId">
                     <option>Seleccione un punto de interes</option>
                     @foreach ($pointsOfInterest as $pointOfInterest)
-                        <option value="{{ $pointOfInterest}}">{{ $pointOfInterest }}</option>
+                        <option value="{{ $pointOfInterest->id}}">{{ $pointOfInterest->id }}</option>
                     @endforeach
                 </select>
                 @error('createForm.pointOfInterestId') <span class="text-red-600">{{ $message }}</span> @enderror
@@ -111,15 +116,9 @@
                                 {{ $photography->id }}
                             </td>
                             <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                                @if(str_starts_with($photography->route, 'http'))
-                                    <a class="max-w-xs" href="{{ $photography->route }}" target="_blank">
-                                        <img src="{{ $photography->route }}">
-                                    </a>
-                                @else
-                                    <a class="max-w-xs" href="storage/photos/{{ $photography->route }}" target="_blank">
-                                        <img src="storage/photos/{{ $photography->route }}">
-                                    </a>
-                                @endif
+                                <a class="max-w-xs" href="{{ $photography->route }}" target="_blank">
+                                    <img src="{{ $photography->route }}">
+                                </a>
                             </td>
                             <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                                 {{ $photography->order }}
@@ -179,13 +178,12 @@
 
                 <form wire:submit.prevent="update({{ $editModal['id'] }})">
                     <div class="mb-4">
-                        @if(str_starts_with($photography->route, 'http'))
-                            <a class="max-w-xs" href="{{ $photography->route }}" target="_blank">
-                                <img src="{{ $photography->route }}">
-                            </a>
+                        @if ($this->editForm['route'])
+                            Preview:
+                            <img src="{{ $this->editForm['route']->temporaryUrl() }}">
                         @else
-                            <a class="max-w-xs" href="storage/photos/{{ $photography->route }}" target="_blank">
-                                <img src="storage/photos/{{ $photography->route }}">
+                            <a class="max-w-xs" href="{{ $this->editModal['route'] }}" target="_blank">
+                                <img src="{{ $this->editModal['route'] }}">
                             </a>
                         @endif
                     </div>
@@ -219,7 +217,7 @@
                             p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
                             dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-1">
                             @foreach($pointsOfInterest as $pointOfInterest)
-                                <option value="{{ $pointOfInterest }}">{{ $pointOfInterest }}</option>
+                                <option value="{{ $pointOfInterest->id }}">{{ $pointOfInterest->id }}</option>
                             @endforeach
                         </select>
                         <x-jet-input-error for="editForm.pointOfInterest" class="mt-2" />
