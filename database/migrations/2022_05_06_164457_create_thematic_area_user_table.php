@@ -14,17 +14,11 @@ class CreateThematicAreaUserTable extends Migration
     public function up()
     {
         Schema::create('thematic_area_user', function (Blueprint $table) {
-
-            $table->primary(['thematic_area_id', 'user_id', 'date']);
-
+            $table->foreignId('thematic_area_id')->references('id')->on('thematic_areas')->onDelete('cascade');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->date('date');
+            $table->primary(['thematic_area_id', 'user_id', 'date']);
             $table->boolean('active');
-
-            $table->foreignId('thematic_area_id')->references('id')
-                ->on('thematic_areas')->onDelete('cascade');
-
-            $table->foreignId('user_id')->references('id')
-                ->on('users')->onDelete('cascade');
         });
     }
 
@@ -37,4 +31,4 @@ class CreateThematicAreaUserTable extends Migration
     {
         Schema::dropIfExists('thematic_area_user');
     }
-}
+};
