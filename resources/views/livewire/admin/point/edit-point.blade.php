@@ -1,7 +1,7 @@
 <div>
     <x-jet-dialog-modal wire:model="editForm.open">
         <x-slot name="title">
-            <span class="text-2xl">Editar Pinto #{{ $pointId }}</span>
+            <span class="text-2xl">Editar Punto #{{ $pointId }}</span>
         </x-slot>
 
         <x-slot name="content">

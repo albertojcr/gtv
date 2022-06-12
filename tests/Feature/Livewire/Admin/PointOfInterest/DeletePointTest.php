@@ -2,15 +2,19 @@
 
 namespace Tests\Feature\Livewire\Admin\PointOfInterest;
 
-use App\Http\Livewire\Admin\PointOfInterest\ShowPointsOfinterest;
+use App\Http\Livewire\Admin\Point\ShowPoint;
 use App\Http\Livewire\Admin\Video\CreateVideo;
 use App\Models\Video;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Livewire\Livewire;
 use Tests\TestCase;
 
 class DeletePointTest extends TestCase
 {
+    use RefreshDatabase;
+
+    /** @test */
     public function PointIsDeleted()
     {
         $adminUser = $this->createAdmin();
@@ -19,9 +23,9 @@ class DeletePointTest extends TestCase
 
         $this->actingAs($adminUser);
 
-        $this->assertDatabaseCount('point_of_interest', 0);
+        $this->assertDatabaseCount('point_of_interests', 0);
 
-        $this->assertDatabaseHas('point_of_interest', [
+        $this->assertDatabaseHas('point_of_interests', [
             'distance' => $pointOfInterest->distance,
             'longitude' => $pointOfInterest->longitude,
             'latitude' => $pointOfInterest->latitude,
@@ -29,9 +33,9 @@ class DeletePointTest extends TestCase
         ]);
 
 
-        Livewire::test(ShowPointsOfinterest::class)
+        Livewire::test(ShowPoint::class)
             ->call('delete', $pointOfInterest);
 
-        $this->assertDatabaseCount('point_of_interest', 0);
+        $this->assertDatabaseCount('point_of_interests', 0);
     }
 }

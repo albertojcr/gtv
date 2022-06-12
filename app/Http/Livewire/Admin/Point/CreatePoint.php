@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin\PointOfInterest;
+namespace App\Http\Livewire\Admin\Point;
 
 use App\Models\Place;
 use App\Models\PointOfInterest;
@@ -9,7 +9,6 @@ use function view;
 
 class CreatePoint extends Component
 {
-
     public $distance, $latitude, $longitude;
     public $places = [];
 
@@ -55,23 +54,24 @@ class CreatePoint extends Component
 
     public function save()
     {
-
         $this->validate();
 
-        $point = PointOfInterest::create([
+        PointOfInterest::create([
             'distance' => $this->createForm['distance'],
             'latitude' => $this->createForm['latitude'],
             'longitude' => $this->createForm['longitude'],
             'place_id' => $this->createForm['place'],
+            'creator' => auth()->user()->id,
+            'updater' => null,
         ]);
 
         $this->reset('createForm');
         $this->emit('PointCreated');
-        $this->emitTo('admin.pointsofinterest.show-points', 'render');
+        $this->emitTo('admin.point.show-point', 'render');
     }
 
     public function render()
     {
-        return view('livewire.create-point');
+        return view('livewire.admin.point.create-point');
     }
 }

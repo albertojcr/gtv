@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin\PointOfInterest;
+namespace App\Http\Livewire\Admin\Point;
 
 use App\Models\PointOfInterest;
 use App\Models\User;
@@ -54,6 +54,6 @@ class ShowPoint extends Component
 
     public function render()
     {
-        return view('livewire.admin.pointsofinterest.show-points', ['points' => PointOfInterest::paginate(10)]);
+        return view('livewire.admin.point.show-point', ['points' => PointOfInterest::paginate(10)]);
     }
 }

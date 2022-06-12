@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin\PointOfInterest;
+namespace App\Http\Livewire\Admin\Point;
 
 use App\Models\Place;
 use App\Models\PointOfInterest;
@@ -9,8 +9,8 @@ use function view;
 
 class EditPoint extends Component
 {
-    public $distance, $latitude, $longitude, $pointid;
-    public $place = [];
+    public $distance, $latitude, $longitude, $pointId;
+    public $places = [];
 
     protected $listeners = ['openEditModal'];
 
@@ -71,12 +71,12 @@ class EditPoint extends Component
         $this->editForm['open'] = false;
         $this->reset(['editForm']);
 
-        $this->emitTo('admin.pointsofinterest.show-points-ofinterest', 'render');
+        $this->emitTo('admin.point.show-point', 'render');
         $this->emit('PointUpdated');
     }
 
     public function render()
     {
-        return view('livewire.edit-points-ofinterest');
+        return view('livewire.admin.point.edit-point');
     }
 }

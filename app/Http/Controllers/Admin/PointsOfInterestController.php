@@ -16,7 +16,7 @@ class PointsOfInterestController extends Controller
     {
         $pointsofinterests = PointOfInterest::allowed()->get();
         $users = User::all();
-        return view('admin.pointsofinterest.index', compact('pointsofinterests','users'));
+        return view('admin.point.index', compact('pointsofinterests','users'));
     }
 
     public function store(Request $request)
@@ -29,12 +29,12 @@ class PointsOfInterestController extends Controller
 
         $pointsofinterest = PointOfInterest::create($request->all());
 
-        return redirect()->route('admin.pointsofinterest.edit', compact('pointsofinterest'))->with('flash', 'El punto de interés ha sido creado correctamente');
+        return redirect()->route('admin.point.edit', compact('pointsofinterest'))->with('flash', 'El punto de interés ha sido creado correctamente');
     }
 
     public function show(PointOfInterest $pointsofinterest)
     {
-        return view('admin.pointsofinterest.show', compact('pointsofinterest'));
+        return view('admin.point.show', compact('pointsofinterest'));
     }
 
     public function edit(PointOfInterest $pointsofinterest)
@@ -44,7 +44,7 @@ class PointsOfInterestController extends Controller
         $thematicAreas=ThematicArea::all();
         $places = Place::all();
 
-        return view('admin.pointsofinterest.edit', compact('pointsofinterest', 'places','thematicAreas'));
+        return view('admin.point.edit', compact('pointsofinterest', 'places','thematicAreas'));
     }
 
     public function update(UpdatePointsOfInterestRequest $request, PointOfInterest $pointsofinterest)
@@ -61,7 +61,7 @@ class PointsOfInterestController extends Controller
 
         $pointsofinterest->syncthematicAreas($request->thematicAreas, $request->title, $request->description);
 
-        return redirect()->route('admin.pointsofinterest.index', compact('pointsofinterest'))->with('flash', 'El punto de interés ' . $pointsofinterest->qr . ' ha sido editado correctamente');
+        return redirect()->route('admin.point.index', compact('pointsofinterest'))->with('flash', 'El punto de interés ' . $pointsofinterest->qr . ' ha sido editado correctamente');
     }
 
     public function destroy(PointOfInterest $pointsofinterest)
@@ -70,6 +70,6 @@ class PointsOfInterestController extends Controller
 
         $pointsofinterest->delete();
 
-        return redirect()->route('admin.pointsofinterest.index')->with('flash', 'El punto de interés ' . $pointsofinterest->qr . ' ha sido borrado correctamente');;
+        return redirect()->route('admin.point.index')->with('flash', 'El punto de interés ' . $pointsofinterest->qr . ' ha sido borrado correctamente');;
     }
 }

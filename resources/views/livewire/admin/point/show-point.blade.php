@@ -5,19 +5,22 @@
         @hasanyrole('Administrador|Profesor')
         <button type="button"
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ml-auto"
-                wire:click="$emitTo('admin.pointofinterest.create-point', 'openCreationModal')">
+                wire:click="$emitTo('admin.point.create-point', 'openCreationModal')">
             Añadir
         </button>
         @endhasanyrole
     </div>
 
-    @livewire('admin.pointsofinterest.create-point')
+    @livewire('admin.point.create-point')
 
     @if(count($points))
-        @livewire('admin.pointsofinterest.edit-point')
+        @livewire('admin.point.edit-point')
 
         <x-table>
             <x-slot name="thead">
+                <th scope="col" class="px-6 py-3">
+                    QR
+                </th>
                 <th scope="col" class="px-6 py-3">
                     ID
                 </th>
@@ -50,6 +53,9 @@
             <x-slot name="tbody">
                 @foreach($points as $point)
                     <tr class="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700">
+                        <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                            {!!QrCode::size(100)->generate(json_encode($point, JSON_PRETTY_PRINT)) !!}
+                        </td>
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                             {{$point->id}}
                         </td>
@@ -178,7 +184,7 @@
                     confirmButtonText: 'Eliminar'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Livewire.emitTo('admin.pointsofinterest.showpointsofinterest', 'delete', pointId)
+                        Livewire.emitTo('admin.point.showpointsofinterest', 'delete', pointId)
                         Swal.fire(
                             '¡Hecho!',
                             'El punto ha sido borrado.',
