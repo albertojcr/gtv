@@ -7,7 +7,7 @@ use App\Models\PointOfInterest;
 use Livewire\Component;
 use function view;
 
-class EditPointsOfinterest extends Component
+class EditPoint extends Component
 {
     public $distance, $latitude, $longitude, $pointid;
     public $place = [];
@@ -23,9 +23,9 @@ class EditPointsOfinterest extends Component
     ];
 
     protected $rules = [
-        'createForm.distance' => 'required',
-        'createForm.latitude' => 'required',
-        'createForm.longitude' => 'required',
+        'createForm.distance' => 'required|number',
+        'createForm.latitude' => 'required|number',
+        'createForm.longitude' => 'required|number',
         'createForm.place' => 'required|exist:places,id',
     ];
 

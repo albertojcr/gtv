@@ -7,7 +7,7 @@ use App\Models\PointOfInterest;
 use Livewire\Component;
 use function view;
 
-class CreatePointsOfinterest extends Component
+class CreatePoint extends Component
 {
 
     public $distance, $latitude, $longitude;
@@ -24,10 +24,10 @@ class CreatePointsOfinterest extends Component
     ];
 
     protected $rules = [
-        'createForm.distance' => 'required',
-        'createForm.latitude' => 'required',
-        'createForm.longitude' => 'required|exist:places,id',
-        'createForm.place' => 'required',
+        'createForm.distance' => 'required|numeric',
+        'createForm.latitude' => 'required|numeric',
+        'createForm.longitude' => 'required||numeric',
+        'createForm.place' => 'required|exist:places,id',
     ];
 
     protected $validationAttributes = [
@@ -67,11 +67,11 @@ class CreatePointsOfinterest extends Component
 
         $this->reset('createForm');
         $this->emit('PointCreated');
-        $this->emitTo('admin.pointsofinterest.show-points-ofinterest', 'render');
+        $this->emitTo('admin.pointsofinterest.show-points', 'render');
     }
 
     public function render()
     {
-        return view('livewire.delete-points-ofinterest');
+        return view('livewire.create-point');
     }
 }

@@ -8,7 +8,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use function view;
 
-class ShowPointsOfinterest extends Component
+class ShowPoint extends Component
 {
     use WithPagination;
 
@@ -54,6 +54,6 @@ class ShowPointsOfinterest extends Component
 
     public function render()
     {
-        return view('livewire.admin.pointsofinterest.show-points-ofinterest', ['points' => PointOfInterest::paginate(10)]);
+        return view('livewire.admin.pointsofinterest.show-points', ['points' => PointOfInterest::paginate(10)]);
     }
 }
