@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\WelcomeController;
-use App\Http\Livewire\Admin\ThematicAreas;
+use App\Http\Livewire\Admin\ThematicArea\ThematicAreas;
 use App\Http\Livewire\Admin\Video\ListVideos;
 use App\Http\Livewire\Admin\VideoItem\ListVideoItems;
 use Illuminate\Support\Facades\Route;

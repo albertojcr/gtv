@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin;
+namespace App\Http\Livewire\Admin\ThematicArea;
 
 use App\Models\ThematicArea;
 use Livewire\Component;
@@ -12,20 +12,19 @@ class ThematicAreas extends Component
 
     public $listeners = ['delete'];
 
-    public $showForm = false;
-
     public $createForm = [
-        'name' => null,
-        'description' => null,
+        'open' => false,
+        'name' => '',
+        'description' => '',
     ];
     public $editForm = [
-        'name' => null,
-        'description' => null,
+        'name' => '',
+        'description' => '',
     ];
 
     protected $rules = [
-        'createForm.name' => '',
-        'createForm.description' => '',
+        'createForm.name' => 'max:45',
+        'createForm.description' => 'max:2000',
     ];
 
     protected $validationAttributes = [
@@ -36,12 +35,31 @@ class ThematicAreas extends Component
         'editForm.description' => 'descripción',
     ];
 
-    public $editModal = [
+    public $showModal = [
         'open' => false,
         'id' => null,
+        'name' => null,
+        'description' => null,
         'createdAt' => null,
         'updatedAt' => null,
     ];
+
+    public $editModal = [
+        'open' => false,
+        'id' => null,
+    ];
+
+    public function show(ThematicArea $thematicArea)
+    {
+        $this->showModal['id'] = $thematicArea->id;
+
+        $this->showModal['name'] = $thematicArea->name;
+        $this->showModal['description'] = $thematicArea->description;
+        $this->showModal['createdAt'] = $thematicArea->created_at;
+        $this->showModal['updatedAt'] = $thematicArea->updated_at;
+
+        $this->showModal['open'] = true;
+    }
 
     public function edit(ThematicArea $thematicArea)
     {
@@ -67,13 +85,15 @@ class ThematicAreas extends Component
         ]);
 
         $this->reset('createForm');
+
+        $this->emit('thematicAreaCreated');
     }
 
     public function update(ThematicArea $thematicArea)
     {
         $this->validate([
-            'editForm.name' => '',
-            'editForm.description' => '',
+            'editForm.name' => 'max:45',
+            'editForm.description' => 'max:2000',
         ]);
 
         $thematicArea['name'] = $this->editForm['name'];
@@ -82,6 +102,9 @@ class ThematicAreas extends Component
         $thematicArea->update();
 
         $this->editModal['open'] = false;
+        $this->reset(['editForm']);
+
+        $this->emit('thematicAreaUpdated');
     }
 
     public function delete(ThematicArea $thematicArea)
@@ -99,6 +122,6 @@ class ThematicAreas extends Component
             $thematicAreas = ThematicArea::paginate(10);
         }
 
-        return view('livewire.admin.thematic-areas', compact('thematicAreas'));
+        return view('livewire.admin.thematic-area.thematic-areas', compact('thematicAreas'));
     }
 }
