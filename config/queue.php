@@ -95,6 +95,9 @@ return [
                     'exclusive' => env('RABBITMQ_QUEUE_EXCLUSIVE', false),
                     'auto_delete' => env('RABBITMQ_QUEUE_AUTODELETE', false),
                     'arguments' => env('RABBITMQ_QUEUE_ARGUMENTS'),
+                    'options' => [
+                        'exchange' => env('RABBITMQ_EXCHANGE_NAME'),
+                    ],
                 ],
             ],
             'sleep_on_error' => env('RABBITMQ_ERROR_SLEEP', 5),
