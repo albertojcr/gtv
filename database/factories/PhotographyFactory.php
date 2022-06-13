@@ -17,6 +17,7 @@ $factory->define(Photography::class, function (Faker $faker) {
         'point_of_interest_id' => $faker->randomElement(PointOfInterest::all()->pluck('id')->toArray()),
         'thematic_area_id' => $faker->randomElement(ThematicArea::all()->pluck('id')->toArray()),
         'creator' => $faker->randomElement(User::all()->pluck('id')->toArray()),
-        'updater' => $faker->randomElement(User::all()->pluck('id')->toArray()),
+        'updater' => null,
+        'updated_at' => null,
     ];
 });

@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\WelcomeController;
-use App\Http\Livewire\Admin\Photographies;
+use App\Http\Livewire\Admin\Photography\Photographies;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', WelcomeController::class);

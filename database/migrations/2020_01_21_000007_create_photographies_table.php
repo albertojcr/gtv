@@ -21,12 +21,14 @@ class CreatePhotographiesTable extends Migration
 
             $table->foreignId('point_of_interest_id')->references('id')
                 ->on('point_of_interests')->onDelete('cascade');
-            $table->foreignId('thematic_area_id')->references('id')
-                ->on('thematic_areas');
+
+            $table->foreignId('thematic_area_id')->nullable()->references('id')
+                ->on('thematic_areas')->onDelete('set null');
 
             $table->foreignId('creator')->references('id')
                 ->on('users')->onDelete('cascade');
-            $table->foreignId('updater')->references('id')
+
+            $table->foreignId('updater')->nullable()->references('id')
                 ->on('users')->onDelete('cascade');
 
             $table->timestamps();

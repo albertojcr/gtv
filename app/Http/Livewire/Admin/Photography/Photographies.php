@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin;
+namespace App\Http\Livewire\Admin\Photography;
 
 use App\Models\Photography;
 use App\Models\PointOfInterest;
@@ -17,23 +17,22 @@ class Photographies extends Component
 
     public $pointsOfInterest;
     public $thematicAreas;
-    public $pointOfInterestoOrders = [];
-    public $showForm = false;
 
-    public $listeners = ['delete', 'show'];
+    public $listeners = ['delete'];
 
     public $createForm = [
+        'open' => false,
         'route' => null,
-        'order' => null,
-        'pointOfInterestId' => null,
-        'thematicAreaId' => null,
+        'order' => '',
+        'pointOfInterestId' => '',
+        'thematicAreaId' => '',
     ];
 
     public $editForm = [
         'route' => null,
-        'order' => null,
-        'pointOfInterestId' => null,
-        'thematicAreaId' => null,
+        'order' => '',
+        'pointOfInterestId' => '',
+        'thematicAreaId' => '',
     ];
 
     protected $rules = [
@@ -50,6 +49,22 @@ class Photographies extends Component
         'editForm.route' => 'fotografía',
         'editForm.pointOfInterestId' => 'punto de interes',
         'editForm.thematicAreaId' => 'área temática',
+    ];
+
+    public $showModal = [
+        'open' => false,
+        'id' => null,
+        'route' => null,
+        'order' => null,
+        'pointOfInterestId' => null,
+        'thematicAreaId' => null,
+        'thematicAreaName' => null,
+        'creatorId' => null,
+        'creatorName' => null,
+        'updaterId' => null,
+        'updaterName' => null,
+        'createdAt' => null,
+        'updatedAt' => null,
     ];
 
     public $editModal = [
@@ -114,10 +129,13 @@ class Photographies extends Component
             'point_of_interest_id' => $this->createForm['pointOfInterestId'],
             'thematic_area_id' => $this->createForm['thematicAreaId'],
             'creator' => auth()->user()->id,
-            'updater' => auth()->user()->id,
+            'updater' => null,
+            'updated_at' => null,
         ]);
 
         $this->reset('createForm');
+
+        $this->emit('photographyCreated');
     }
 
     public function update(Photography $photography)
@@ -134,13 +152,46 @@ class Photographies extends Component
             $photography['route'] = 'storage/photos/' . $this->editForm['route']->getFilename();
         }
 
+        $order = Photography::where('point_of_interest_id', $this->editForm['pointOfInterestId'])->count();
+
+        $photography['order'] = $order +1;
         $photography['point_of_interest_id'] = $this->editForm['pointOfInterestId'];
         $photography['thematic_area_id'] = $this->editForm['thematicAreaId'];
         $photography['updater'] = auth()->user()->id;
 
         $photography->update();
 
-        $this->editModal['open'] = false;
+        $this->reset(['editForm']);
+        $this->reset(['editModal']);
+
+        $this->emit('photographyUpdated');
+    }
+
+    public function show(Photography $photography)
+    {
+        if ( ! is_null( User::find(null) )) {
+            $this->showModal['updaterId'] = User::find($photography->updater)->id;
+            $this->showModal['updaterName'] = User::find($photography->updater)->name;
+        } else {
+            $this->showModal['updaterId'] = '';
+            $this->showModal['updaterName'] = '';
+        }
+
+        $this->showModal['id'] = $photography->id;
+
+        $this->showModal['route'] = $photography->route;
+        $this->showModal['order'] = $photography->order;
+        $this->showModal['pointOfInterestId'] = $photography['point_of_interest_id'];
+        $this->showModal['thematicAreaId'] = $photography->thematicArea->id;
+        $this->showModal['thematicAreaName'] = $photography->thematicArea->name;
+
+        $this->showModal['creatorId'] = User::find($photography->creator)->id;
+        $this->showModal['creatorName'] = User::find($photography->creator)->name;
+
+        $this->showModal['createdAt'] = $photography->created_at;
+        $this->showModal['updatedAt'] = $photography->updated_at;
+
+        $this->showModal['open'] = true;
     }
 
     public function edit(Photography $photography)
@@ -154,14 +205,6 @@ class Photographies extends Component
 
         $this->editModal['id'] = $photography->id;
         $this->editModal['route'] = $photography->route;
-        $this->editModal['order'] = $photography->order;
-        $this->editModal['thematicAreaName'] = $photography->thematicArea->name;
-        $this->editModal['creatorId'] = User::find($photography->creator)->id;
-        $this->editModal['creatorName'] = User::find($photography->creator)->name;
-        $this->editModal['updaterId'] = User::find($photography->updater)->id;
-        $this->editModal['updaterName'] = User::find($photography->updater)->name;
-        $this->editModal['createdAt'] = $photography->created_at;
-        $this->editModal['updatedAt'] = $photography->updated_at;
 
         $this->editModal['open'] = true;
     }
@@ -185,6 +228,6 @@ class Photographies extends Component
             $photographies = Photography::orderBy('id', 'desc')->paginate(10);
         }
 
-        return view('livewire.admin.photographies', compact('photographies'));
+        return view('livewire.admin.photography.photographies', compact('photographies'));
     }
 }
