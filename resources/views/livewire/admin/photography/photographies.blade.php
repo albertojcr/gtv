@@ -158,7 +158,7 @@
                     </x-jet-label>
                 </div>
 
-                @if($photography->updater)
+                @if( ! is_null($showModal['updaterId']))
                     <div class="mb-4">
                         <x-jet-label>
                             Actualizador: {{ $showModal['updaterName'] }} (ID: {{ $showModal['updaterId'] }})
@@ -172,7 +172,7 @@
                     </x-jet-label>
                 </div>
 
-                @if($photography->updater)
+                @if( ! is_null($showModal['updaterId']))
                     <div class="mb-4">
                         <x-jet-label>
                             Fecha de actualización: {{ $showModal['updatedAt'] }}

@@ -169,12 +169,12 @@ class Photographies extends Component
 
     public function show(Photography $photography)
     {
-        if ( ! is_null( User::find(null) )) {
+        if ( ! is_null( User::find($photography->updater) )) {
             $this->showModal['updaterId'] = User::find($photography->updater)->id;
             $this->showModal['updaterName'] = User::find($photography->updater)->name;
         } else {
-            $this->showModal['updaterId'] = '';
-            $this->showModal['updaterName'] = '';
+            $this->showModal['updaterId'] = null;
+            $this->showModal['updaterName'] = null;
         }
 
         $this->showModal['id'] = $photography->id;
