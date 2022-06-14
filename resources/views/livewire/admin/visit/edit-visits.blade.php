@@ -45,7 +45,7 @@
                 </div>
 
             <div class="flex justify-end items-center mt-4">
-                <x-button-link href="{{ route('admin.visits.show') }}">
+                <x-button-link href="{{ route('admin.visit.show') }}">
                     Volver
                 </x-button-link>
             </div>
