@@ -24,10 +24,6 @@ return new class extends Migration
 
             $table->rememberToken();
             $table->timestamps();
-
-//            $table->string('login', 45);
-//            $table->string('salt', 45); // TODO generar salt al crear usuarios
-//            $table->string('profile', 45);
         });
     }
 
