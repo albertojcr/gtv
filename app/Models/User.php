@@ -30,7 +30,7 @@ class User extends Authenticatable
 
     public function places()
     {
-        return $this->belongsToMany(Place::class);
+        return $this->hasMany(Place::class, 'creator');
     }
 
     public function photographies()
