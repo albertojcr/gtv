@@ -51,7 +51,7 @@
             Livewire.on('pointUpdated', () => {
                 Swal.fire(
                     '¡Hecho!',
-                    'El vídeo ha sido actualizado.',
+                    'El punto ha sido actualizado.',
                     'success'
                 )
             });
