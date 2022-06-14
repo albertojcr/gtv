@@ -43,12 +43,12 @@ class CreatePlace extends Component
 
         $this->reset('createForm');
         $this->emit('placeCreated');
-        $this->emitTo('admin.place.list-places', 'render');
+        $this->emitTo('admin.places.list-places', 'render');
     }
 
 
     public function render()
     {
-        return view('livewire..admin.places.create-place');
+        return view('livewire.admin.places.create-place');
     }
 }

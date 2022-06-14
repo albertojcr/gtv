@@ -65,17 +65,14 @@
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap flex gap-4">
                             <span class="font-medium text-blue-600 cursor-pointer" wire:click="show('{{ $place->id }}')">
                                 <i class="fa-solid fa-eye"></i>
-                                Detalles
                             </span>
                             <span class="font-medium text-yellow-400 cursor-pointer"
                                   wire:click="$emitTo('admin.places.edit-place', 'openEditModal', '{{ $place->id }}')">
                                 <i class="fa-solid fa-pencil"></i>
-                                Editar
                             </span>
                             <span class="font-medium text-red-500 cursor-pointer"
                                   wire:click="$emit('deletePlace', '{{ $place->id }}')">
                                 <i class="fa-solid fa-trash"></i>
-                                Borrar
                             </span>
                         </td>
                     </tr>
