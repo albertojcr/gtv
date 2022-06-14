@@ -5,13 +5,13 @@
         @hasanyrole('Administrador|Profesor')
         <button type="button"
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ml-auto"
-                wire:click="$emitTo('admin.video.create-video', 'openCreationModal')">
+                wire:click="$emitTo('admin.visit.create-visit', 'openCreationModal')">
             Añadir
         </button>
         @endhasanyrole
     </div>
 
-    @if(count($videos))
+    @if(count($visits))
         @livewire('admin.visit.edit-visit')
 
         <x-table>
@@ -62,11 +62,6 @@
                         </td>
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                             <div >{{ $visit->point_of_interest_id }}</div>
-                        </td>
-                        <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                            @if($visit->updater)
-                                {{ \App\Models\User::find($video->updater)->name }}
-                            @endif
                         </td>
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                             {{ $visit->created_at }}
