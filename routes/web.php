@@ -11,4 +11,4 @@ Route::get('/ejemplos', function () {
 });
 
 
-Route::get('visits', ShowVisits::class)->name('admin.visits.show');
+Route::get('visits', ShowVisits::class)->name('admin.visit.show');
