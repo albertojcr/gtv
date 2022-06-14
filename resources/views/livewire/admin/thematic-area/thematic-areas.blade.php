@@ -239,7 +239,7 @@
                     confirmButtonText: 'Eliminar'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Livewire.emitTo('admin.thematic-areas', 'delete', thematicAreaId)
+                        Livewire.emitTo('admin.thematic-area.thematic-areas', 'delete', thematicAreaId)
                         Swal.fire(
                             '¡Hecho!',
                             'El área temática ha sido eliminada.',
