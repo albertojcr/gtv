@@ -366,7 +366,7 @@
                     confirmButtonText: 'Eliminar'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Livewire.emitTo('admin.photographies', 'delete', photographyId)
+                        Livewire.emitTo('admin.photography.photographies', 'delete', photographyId)
                         Swal.fire(
                             '¡Hecho!',
                             'La fotografía ha sido eliminada.',
