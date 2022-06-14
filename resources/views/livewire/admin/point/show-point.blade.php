@@ -1,10 +1,10 @@
 <div>
     <div class="flex items-center mb-6">
-        <h1 class="text-2xl font-semibold text-gray-700">Listado de Puntos de Interest</h1>
+        <h1 class="text-2xl font-semibold text-gray-700">Listado de Puntos de Interes</h1>
 
         @hasanyrole('Administrador|Profesor')
         <button type="button"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ml-auto"
+                class="ml-12 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ml-auto"
                 wire:click="$emitTo('admin.point.create-point', 'openCreationModal')">
             Añadir
         </button>
@@ -81,11 +81,8 @@
                             {{$point->created_at}}
                         </td>
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap flex gap-4">
-                            <span class="font-medium text-blue-600 cursor-pointer" wire:click="show('')">
-                                <i class="fa-solid fa-eye"></i>
-                            </span>
                             <span class="font-medium text-yellow-400 cursor-pointer"
-                                  wire:click="$emitTo('admin.pointofinterest.edit', 'openEditModal', '')">
+                                  wire:click="$emitTo('admin.point.edit', 'openEditModal', '')">
                                 <i class="fa-solid fa-pencil"></i>
                             </span>
                             <span class="font-medium text-red-500 cursor-pointer"
@@ -110,7 +107,7 @@
     {{-- Modal show --}}
     <x-jet-dialog-modal wire:model="detailsModal.open">
         <x-slot name="title">
-            <span class="text-2xl">Detalles del Punto #{{ $detailsModal['id'] }}</span>
+            <span class="text-2xl">Detalles del Punto de Interes #{{ $detailsModal['id'] }}</span>
         </x-slot>
 
         <x-slot name="content">
@@ -184,7 +181,7 @@
                     confirmButtonText: 'Eliminar'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Livewire.emitTo('admin.point.showpointsofinterest', 'delete', pointId)
+                        Livewire.emitTo('admin.point.showpoint', 'delete', pointId)
                         Swal.fire(
                             '¡Hecho!',
                             'El punto ha sido borrado.',

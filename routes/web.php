@@ -16,4 +16,4 @@ Route::get('/ejemplos', function () {
 Route::get('videos', ListVideos::class)->name('videos.index');
 Route::get('video-items', ListVideoItems::class)->name('video-items.index');
 
-Route::get('points', ShowPoint::class)->name('points.index');
+Route::get('points-of-interest', ShowPoint::class)->name('points.index');

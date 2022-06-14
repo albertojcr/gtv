@@ -11,7 +11,7 @@ class ShowPointTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function ListPointsOfInterest()
+    public function TestListPointsOfInterest()
     {
         $adminUser = $this->createAdmin();
         $place1 = $this->createPlace();

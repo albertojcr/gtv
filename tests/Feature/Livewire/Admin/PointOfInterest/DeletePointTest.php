@@ -12,7 +12,7 @@ class DeletePointTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function PointIsDeleted()
+    public function TestPointIsDeleted()
     {
         $adminUser = $this->createAdmin();
         $place = $this->createPlace();

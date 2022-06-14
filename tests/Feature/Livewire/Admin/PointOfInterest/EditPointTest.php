@@ -13,7 +13,7 @@ class EditPointTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function PointCanBeUpdated()
+    public function TestPointCanBeUpdated()
     {
         $adminUser = $this->createAdmin();
         $place = $this->createPlace();
@@ -54,7 +54,7 @@ class EditPointTest extends TestCase
     }
 
     /** @test */
-    public function DistanceIsRequired()
+    public function TestDistanceIsRequired()
     {
         $adminUser = $this->createAdmin();
         $place = $this->createPlace();
@@ -94,7 +94,7 @@ class EditPointTest extends TestCase
     }
 
     /** @test */
-    public function LatitudeIsRequired()
+    public function TestLatitudeIsRequired()
     {
         $adminUser = $this->createAdmin();
         $place = $this->createPlace();
@@ -134,7 +134,7 @@ class EditPointTest extends TestCase
     }
 
     /** @test */
-    public function LongitudeIsRequired()
+    public function TestLongitudeIsRequired()
     {
         $adminUser = $this->createAdmin();
         $place = $this->createPlace();
@@ -174,7 +174,7 @@ class EditPointTest extends TestCase
     }
 
     /** @test */
-    public function PlaceIsRequired()
+    public function TestPlaceIsRequired()
     {
         $adminUser = $this->createAdmin();
         $place = $this->createPlace();
@@ -215,7 +215,7 @@ class EditPointTest extends TestCase
     }
 
     /** @test */
-    public function PlacesExist()
+    public function TestPlacesExist()
     {
         $adminUser = $this->createAdmin();
         $place = $this->createPlace();
@@ -256,7 +256,7 @@ class EditPointTest extends TestCase
     }
 
     /** @test */
-    public function DistanceIsANumber()
+    public function TestDistanceIsANumber()
     {
         $adminUser = $this->createAdmin();
         $place = $this->createPlace();
@@ -297,7 +297,7 @@ class EditPointTest extends TestCase
     }
 
     /** @test */
-    public function LatitudeIsANumber()
+    public function TestLatitudeIsANumber()
     {
         $adminUser = $this->createAdmin();
         $place = $this->createPlace();
@@ -337,7 +337,7 @@ class EditPointTest extends TestCase
     }
 
     /** @test */
-    public function LongitudeIsANumber()
+    public function TestLongitudeIsANumber()
     {
         $adminUser = $this->createAdmin();
         $place = $this->createPlace();

@@ -54,6 +54,12 @@ class ShowPoint extends Component
 
     public function render()
     {
-        return view('livewire.admin.point.show-point', ['points' => PointOfInterest::paginate(10)]);
+        if (auth()->user()->hasRole('Alumno')) {
+            $points = PointOfInterest::where('creator', auth()->user()->id)->orderByDesc('id')->paginate(10);
+        } else {
+            $points = PointOfInterest::orderByDesc('id')->paginate(10);
+        }
+
+        return view('livewire.admin.point.show-point', compact('points'));
     }
 }

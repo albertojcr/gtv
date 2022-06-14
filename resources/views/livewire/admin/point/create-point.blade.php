@@ -28,7 +28,7 @@
                     <x-jet-label>
                         Sitio
                     </x-jet-label>
-                    <select wire:model="createForm.pointOfInterest" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-1">
+                    <select wire:model="createForm.place" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-1">
                         <option value="" selected disabled>Elige uno</option>
                         @foreach($places as $place)
                             <option value="{{ $place->id }}">{{ $place->name }}</option>
@@ -40,7 +40,7 @@
         </x-slot>
 
         <x-slot name="footer">
-            <x-button color="green" wire:click="save">
+            <x-button color="blue" wire:click="save">
                 Crear
             </x-button>
         </x-slot>
