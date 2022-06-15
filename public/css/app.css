@@ -11651,6 +11651,9 @@ input:checked + .toggle-bg {
 .top-0 {
   top: 0px;
 }
+.-left-1 {
+  left: -0.25rem;
+}
 .z-0 {
   z-index: 0;
 }
@@ -11676,6 +11679,10 @@ input:checked + .toggle-bg {
 .my-10 {
   margin-top: 2.5rem;
   margin-bottom: 2.5rem;
+}
+.my-8 {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 .ml-3 {
   margin-left: 0.75rem;
@@ -11749,11 +11756,11 @@ input:checked + .toggle-bg {
 .ml-auto {
   margin-left: auto;
 }
-.ml-8 {
-  margin-left: 2rem;
-}
 .mb-2 {
   margin-bottom: 0.5rem;
+}
+.ml-8 {
+  margin-left: 2rem;
 }
 .mb-1 {
   margin-bottom: 0.25rem;
@@ -11809,6 +11816,9 @@ input:checked + .toggle-bg {
 .h-20 {
   height: 5rem;
 }
+.h-36 {
+  height: 9rem;
+}
 .min-h-screen {
   min-height: 100vh;
 }
@@ -11863,6 +11873,9 @@ input:checked + .toggle-bg {
 .w-64 {
   width: 16rem;
 }
+.w-36 {
+  width: 9rem;
+}
 .min-w-0 {
   min-width: 0px;
 }
@@ -11874,6 +11887,9 @@ input:checked + .toggle-bg {
 }
 .max-w-xl {
   max-width: 36rem;
+}
+.max-w-xs {
+  max-width: 20rem;
 }
 .flex-1 {
   flex: 1 1 0%;
@@ -12483,6 +12499,10 @@ input:checked + .toggle-bg {
   --tw-text-opacity: 1;
   color: rgb(227 160 8 / var(--tw-text-opacity));
 }
+.text-orange-500 {
+  --tw-text-opacity: 1;
+  color: rgb(255 90 31 / var(--tw-text-opacity));
+}
 .underline {
   -webkit-text-decoration-line: underline;
           text-decoration-line: underline;
@@ -12655,6 +12675,10 @@ input:checked + .toggle-bg {
 .hover\:text-gray-900:hover {
   --tw-text-opacity: 1;
   color: rgb(17 24 39 / var(--tw-text-opacity));
+}
+.hover\:text-orange-400:hover {
+  --tw-text-opacity: 1;
+  color: rgb(255 138 76 / var(--tw-text-opacity));
 }
 .hover\:text-blue-600:hover {
   --tw-text-opacity: 1;
@@ -12864,6 +12888,10 @@ input:checked + .toggle-bg {
 .dark .dark\:text-blue-500 {
   --tw-text-opacity: 1;
   color: rgb(63 131 248 / var(--tw-text-opacity));
+}
+.dark .dark\:text-gray-300 {
+  --tw-text-opacity: 1;
+  color: rgb(209 213 219 / var(--tw-text-opacity));
 }
 .dark .dark\:placeholder-gray-400::-moz-placeholder {
   --tw-placeholder-opacity: 1;
@@ -13197,6 +13225,10 @@ input:checked + .toggle-bg {
 
   .lg\:col-span-4 {
     grid-column: span 4 / span 4;
+  }
+
+  .lg\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .lg\:px-8 {
