@@ -2,13 +2,7 @@
 
 namespace Tests\Feature\Livewire\Admin\Visit;
 
-use App\Http\Livewire\Admin\Visit\CreateVisits;
-use App\Models\PointOfInterest;
-use App\Models\User;
-use App\Models\Visit;
-use Livewire\Livewire;
 use Tests\TestCase;
-use function dd;
 
 
 class ShowVisitsTest extends TestCase
