@@ -12,7 +12,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use hasRoles, HasApiTokens, HasFactory, HasProfilePhoto, Notifiable, TwoFactorAuthenticatable;
+    use HasRoles, HasApiTokens, HasFactory, HasProfilePhoto, Notifiable, TwoFactorAuthenticatable;
 
     protected $guarded = [];
     protected $hidden = [
@@ -30,7 +30,7 @@ class User extends Authenticatable
 
     public function places()
     {
-        return $this->belongsToMany(Place::class);
+        return $this->hasMany(Place::class, 'creator');
     }
 
     public function photographies()
