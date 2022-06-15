@@ -23,8 +23,8 @@ class ThematicAreas extends Component
     ];
 
     protected $rules = [
-        'createForm.name' => 'max:45',
-        'createForm.description' => 'max:2000',
+        'createForm.name' => 'required|max:45',
+        'createForm.description' => 'required|max:2000',
     ];
 
     protected $validationAttributes = [
