@@ -49,7 +49,7 @@
         </x-slot>
 
         <x-slot name="footer">
-            <x-button color="green" wire:click="update('{{ $visitId }}')">
+            <x-button color="blue" wire:click="update('{{ $visitId }}')">
                 Actualizar
             </x-button>
         </x-slot>
