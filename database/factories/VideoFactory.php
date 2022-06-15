@@ -5,25 +5,28 @@
 namespace Database\Factories;
 
 use App\Models\PointOfInterest;
-use App\Models\ThematicArea;
 use App\Models\User;
 use App\Models\Video;
 use Faker\Generator as Faker;
-use Illuminate\Support\Str;
 
 $factory->define(Video::class, function (Faker $faker) {
+    $pointOfInterest = $faker->randomElement(PointOfInterest::all()->pluck('id')->toArray());
+    $thematicAreas = PointOfInterest::find($pointOfInterest)->thematicAreas->pluck('id')->toArray();
+    $description = $faker->sentence(5);
 
-        $description = $faker->sentence(5);
-        $slug = Str::slug($description);
+    $foundVideos = PointOfInterest::find($pointOfInterest)->videos;
 
-        return [
-            'route' => $slug . '.mp4', // TODO reemplazar por video de verdad en el seeder
-            'point_of_interest_id' => $faker->randomElement(PointOfInterest::all()->pluck('id')->toArray()),
-            'order'=> $faker->randomDigit,
-            'creator' => $faker->randomElement(User::all()->pluck('id')->toArray()),
-            'updater' => $faker->randomElement(User::all()->pluck('id')->toArray()),
-            'code_id' => $faker->randomDigitNotZero(),
-            'thematic_area_id' => $faker->randomElement(ThematicArea::all()->pluck('id')->toArray()),
-            'description' => $description,
-        ];
+    \count($foundVideos) > 0
+        ? $order = \count($foundVideos) + 1
+        : $order = 1;
+
+    return [
+        'route' => 'videos/' . $faker->uuid() . '.mp4',
+        'point_of_interest_id' => $pointOfInterest,
+        'order' => $order,
+        'creator' => $faker->randomElement(User::all()->pluck('id')->toArray()),
+        'updater' => null,
+        'thematic_area_id' => $faker->randomElement($thematicAreas),
+        'description' => $description,
+    ];
 });
