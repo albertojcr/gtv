@@ -19,4 +19,5 @@ Route::get('videos', ListVideos::class)->name('videos.index');
 Route::get('video-items', ListVideoItems::class)->name('video-items.index');
 
 Route::get('areas-tematicas', ThematicAreas::class)->name('thematic-areas');
-
+use App\Http\Livewire\Admin\Places\ListPlaces;
+Route::get('places', ListPlaces::class)->name('places.index');

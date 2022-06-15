@@ -74,7 +74,7 @@ class UserSeeder extends Seeder
         $teacherRole->givePermissionTo([$viewPhotographiesPermission,$updatePhotographiesPermission,$deletePhotographiesPermission,
             $viewVideosPermission,$updateVideosPermission,$deleteVideosPermission,
             $viewPointsOfInterestPermission,$createPointsOfInterestPermission,$updatePointsOfInterestPermission,
-            $viewPlacesPermission,$createPlacesPermission,$updatePlacesPermission,
+            $viewPlacesPermission,$createPlacesPermission,$updatePlacesPermission,$deletePlacesPermission,
             $viewThematicAreasPermission, $createThematicAreasPermission,$updateThematicAreasPermission,
             $chartCountPhotosAndVideosPermission,$charRankingtPermission
             ]);
