@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\WelcomeController;
+use App\Http\Livewire\Admin\ThematicArea\ThematicAreas;
 use App\Http\Livewire\Admin\Video\ListVideos;
 use App\Http\Livewire\Admin\VideoItem\ListVideoItems;
 use App\Http\Livewire\Admin\Visit\ShowVisits;
@@ -14,5 +15,7 @@ Route::get('/ejemplos', function () {
 
 Route::get('videos', ListVideos::class)->name('videos.index');
 Route::get('video-items', ListVideoItems::class)->name('video-items.index');
+
+Route::get('areas-tematicas', ThematicAreas::class)->name('thematic-areas');
 
 Route::get('visits', ShowVisits::class)->name('admin.visit.show');
