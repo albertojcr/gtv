@@ -9,6 +9,7 @@ use Faker\Generator as Faker;
 $factory->define(\App\Models\ThematicArea::class, function (Faker $faker) {
     return [
         'name'=> $faker->word,
-        'description'=> $faker->sentence(2)
+        'description'=> $faker->sentence(2),
+        'updated_at' => null,
     ];
 });
