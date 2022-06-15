@@ -148,8 +148,6 @@
     </x-jet-dialog-modal>
 
     @push('scripts')
-        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
         <script>
             Livewire.on('deletePlace', placeId => {
                 Swal.fire({

@@ -24,7 +24,7 @@
         </x-slot>
 
         <x-slot name="footer">
-            <x-button color="green"
+            <x-button color="blue"
                       wire:click="update('{{ $placeId }}')">
                 Actualizar
             </x-button>
@@ -32,8 +32,6 @@
     </x-jet-dialog-modal>
 
     @push('scripts')
-        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
         <script>
             Livewire.on('placeUpdated', () => {
                 Swal.fire(
