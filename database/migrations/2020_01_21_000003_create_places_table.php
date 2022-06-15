@@ -15,8 +15,8 @@ class CreatePlacesTable extends Migration
     {
         Schema::create('places', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 45);
-            $table->string('description', 45);
+            $table->string('name', 30);
+            $table->string('description', 2000);
             $table->foreignId('place_id')->nullable()->references('id')->on('places')->onDelete('cascade');
             $table->foreignId('creator')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('updater')->nullable()->references('id')->on('users')->onDelete('cascade');

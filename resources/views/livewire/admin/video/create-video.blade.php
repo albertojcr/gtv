@@ -52,7 +52,7 @@
         </x-slot>
 
         <x-slot name="footer">
-            <x-button color="green" wire:click="save">
+            <x-button wire:click="save">
                 Crear
             </x-button>
         </x-slot>
