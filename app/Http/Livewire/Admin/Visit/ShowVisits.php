@@ -14,8 +14,6 @@ class ShowVisits extends Component
 
     protected $listeners = ['delete', 'render'];
 
-    public $pointName;
-
     public $detailsModal = [
         'open' => false,
         'id' => null,
