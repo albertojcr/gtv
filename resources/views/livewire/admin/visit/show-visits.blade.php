@@ -55,14 +55,6 @@
                             <span class="font-medium text-blue-600 cursor-pointer" wire:click="show('{{ $visit->id }}')">
                                 <i class="fa-solid fa-eye"></i>
                             </span>
-                            <span class="font-medium text-yellow-400 cursor-pointer"
-                                  wire:click="$emitTo('admin.visit.edit-visits', 'openEditModal', '{{ $visit->id }}')">
-                                <i class="fa-solid fa-pencil"></i>
-                            </span>
-                            <span class="font-medium text-red-500 cursor-pointer"
-                                  wire:click="$emit('deleteVisit', '{{ $visit->id }}')">
-                                <i class="fa-solid fa-trash"></i>
-                            </span>
                         </td>
                     </tr>
                 @endforeach
@@ -130,30 +122,4 @@
             </x-button>
         </x-slot>
     </x-jet-dialog-modal>
-
-    @push('scripts')
-        <script>
-            Livewire.on('deleteVisit', visitId => {
-                Swal.fire({
-                    title: '¿Quieres eliminar esta Visita?',
-                    text: 'Esta operación es irreversible',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    cancelButtonText: "Cancelar",
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'Eliminar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        Livewire.emitTo('admin.visit.show-visit', 'delete', visitId)
-                        Swal.fire(
-                            '¡Hecho!',
-                            'La visita ha sido eliminado.',
-                            'success'
-                        )
-                    }
-                })
-            });
-        </script>
-    @endpush
 </div>
