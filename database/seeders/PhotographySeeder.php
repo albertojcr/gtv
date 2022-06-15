@@ -16,6 +16,7 @@ class PhotographySeeder extends Seeder
     public function run()
     {
         Storage::disk('public')->deleteDirectory('photos');
+        Storage::disk('public')->makeDirectory('photos');
 
         factory(Photography::class, 30)->create();
     }
