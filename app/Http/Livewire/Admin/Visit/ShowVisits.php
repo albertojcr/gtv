@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Visit;
 
+use App\Models\PointOfInterest;
 use App\Models\Visit;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -12,6 +13,8 @@ class ShowVisits extends Component
     use WithPagination;
 
     protected $listeners = ['delete', 'render'];
+
+    public $pointName;
 
     public $detailsModal = [
         'open' => false,
@@ -40,6 +43,7 @@ class ShowVisits extends Component
         $this->detailsModal['latitude'] = $visit->latitude;
         $this->detailsModal['longitude'] = $visit->longitude;
         $this->detailsModal['point_of_interest_id'] = $visit->point_of_interest_id;
+        $this->detailsModal['createdAt'] = $visit->created_at;
     }
 
     public function delete(Visit $visit)
@@ -49,7 +53,7 @@ class ShowVisits extends Component
 
     public function render()
     {
-        return view('livewire.admin.show-visits', ['visits' => Visit::paginate(20)]);
+        return view('livewire.admin.visit.show-visits', ['visits' => Visit::paginate(20)]);
     }
 
 

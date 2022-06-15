@@ -4,7 +4,7 @@
 
         @hasanyrole('Administrador|Profesor')
         <button type="button"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ml-auto"
+                class="ml-12 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ml-auto"
                 wire:click="$emitTo('admin.visit.create-visit', 'openCreationModal')">
             Añadir
         </button>
@@ -12,8 +12,7 @@
     </div>
 
     @if(count($visits))
-        @livewire('admin.visit.edit-visit')
-
+        @livewire('admin.visit.edit-visits')
         <x-table>
             <x-slot name="thead">
                 <th scope="col" class="px-6 py-3">
@@ -30,12 +29,6 @@
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Punto de Interes
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Creador
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Actualizador
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Fecha creación
@@ -64,14 +57,14 @@
                             <div >{{ $visit->point_of_interest_id }}</div>
                         </td>
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                            {{ $visit->created_at }}
+                            <div>{{ $visit->created_at }}</div>
                         </td>
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap flex gap-4">
                             <span class="font-medium text-blue-600 cursor-pointer" wire:click="show('{{ $visit->id }}')">
                                 <i class="fa-solid fa-eye"></i>
                             </span>
                             <span class="font-medium text-yellow-400 cursor-pointer"
-                                  wire:click="$emitTo('admin.visit.edit-visit', 'openEditModal', '{{ $visit->id }}')">
+                                  wire:click="$emitTo('admin.visit.edit-visits', 'openEditModal', '{{ $visit->id }}')">
                                 <i class="fa-solid fa-pencil"></i>
                             </span>
                             <span class="font-medium text-red-500 cursor-pointer"
@@ -84,9 +77,9 @@
             </x-slot>
         </x-table>
 
-        @if($visit->hasPages())
+        @if($visits->hasPages())
             <div class="mt-6">
-                {{ $visit->links() }}
+                {{ $visits->links() }}
             </div>
         @endif
     @else
@@ -118,27 +111,22 @@
                 </div>
                 <div>
                     <x-jet-label>
-                        Agente: {{ $detailsModal['useragnt'] }}
+                        Agente: {{ $detailsModal['useragent'] }}
                     </x-jet-label>
                 </div>
                 <div>
                     <x-jet-label>
-                        Agente: {{ $detailsModal['useragnt'] }}
+                        Agente: {{ $detailsModal['ssoo'] }}
                     </x-jet-label>
                 </div>
                 <div>
                     <x-jet-label>
-                        Agente: {{ $detailsModal['useragnt'] }}
+                        Agente: {{ $detailsModal['ssooversion'] }}
                     </x-jet-label>
                 </div>
                 <div>
                     <x-jet-label>
                         Punto de Interest: {{ $detailsModal['point_of_interest_id'] }}
-                    </x-jet-label>
-                </div>
-                <div>
-                    <x-jet-label>
-                        Fecha de creación: {{ $detailsModal['createdAt'] }}
                     </x-jet-label>
                 </div>
             </div>
