@@ -6,14 +6,10 @@
             <button wire:click="$toggle('createForm.open')" type="button" class="text-white bg-blue-700
                 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm
                 px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none
-                dark:focus:ring-blue-800 ml-auto" style="margin-left:10px;">
+                dark:focus:ring-blue-800 ml-auto">
                 Añadir
             </button>
         </div>
-
-
-
-
 
         @if(count($photographies))
             <x-table>
@@ -89,15 +85,15 @@
                             <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                                 <span class="font-medium text-blue-600 cursor-pointer"
                                       wire:click="show('{{ $photography->id }}')">
-                                    <i class="fa-solid fa-eye"></i> Ver
+                                    <i class="fa-solid fa-eye"></i>
                                 </span>
                                 <span class="font-medium text-blue-600 cursor-pointer mr-3"
                                       wire:click="edit('{{ $photography->id }}')">
-                                    <i class="fa-solid fa-pencil"></i> Editar
+                                    <i class="fa-solid fa-pencil"></i>
                                 </span>
                                 <span class="font-medium text-red-500 cursor-pointer"
                                       wire:click="$emit('deletePhotography', '{{ $photography->id }}')">
-                                    <i class="fa-solid fa-trash"></i> Eliminar
+                                    <i class="fa-solid fa-trash"></i>
                                 </span>
                             </td>
                         </tr>
@@ -207,12 +203,9 @@
                         Fotografía
                     </label>
 
-                    <input type="file" id="Fotografía" class="bg-gray-100 text-gray-900 text-sm rounded-lg
-                        focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
-                        dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
-                        dark:focus:border-blue-500" wire:model="createForm.route">
+                    <x-jet-input class="w-full" type="file" wire:model="createForm.route"></x-jet-input>
 
-                    @error('createForm.route') <span class="text-red-600">{{ $message }}</span> @enderror
+                    <x-jet-input-error for="editForm.route" class="mt-2" />
                 </div>
                 <div class="mb-6">
                     <label for="pointsOfInterest" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
@@ -280,7 +273,7 @@
                         Cambiar fotografía
                     </x-jet-label>
 
-                    <x-jet-input type="file" wire:model="editForm.route"></x-jet-input>
+                    <x-jet-input class="w-full"  type="file" wire:model="editForm.route"></x-jet-input>
 
                     <x-jet-input-error for="editForm.route" class="mt-2" />
                 </div>
