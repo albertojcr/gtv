@@ -4,22 +4,29 @@
 
 namespace Database\Factories;
 
-use App\PointOfInterest;
-use App\ThematicArea;
-use App\User;
-use App\Video;
+use App\Models\PointOfInterest;
+use App\Models\User;
+use App\Models\Video;
 use Faker\Generator as Faker;
 
 $factory->define(Video::class, function (Faker $faker) {
+    $pointOfInterest = $faker->randomElement(PointOfInterest::all()->pluck('id')->toArray());
+    $thematicAreas = PointOfInterest::find($pointOfInterest)->thematicAreas->pluck('id')->toArray();
+    $description = $faker->sentence(5);
+
+    $foundVideos = PointOfInterest::find($pointOfInterest)->videos;
+
+    \count($foundVideos) > 0
+        ? $order = \count($foundVideos) + 1
+        : $order = 1;
+
     return [
-        'name'  =>  $faker->sentence,
-        'order'=> $faker->randomDigit,
-        'published' => $faker->boolean,
-        'thematic_area_id' => $faker->randomElement(ThematicArea::all()->pluck('id')->toArray()),
+        'route' => 'videos/' . $faker->uuid() . '.mp4',
+        'point_of_interest_id' => $pointOfInterest,
+        'order' => $order,
         'creator' => $faker->randomElement(User::all()->pluck('id')->toArray()),
-        'updater' => $faker->randomElement(User::all()->pluck('id')->toArray()),
-        'point_of_interest_id' => $faker->randomElement(PointOfInterest::all()->pluck('id')->toArray()),
-        'date_create' => $faker->dateTimeThisMonth,
-        'last_update' => $faker->dateTimeThisMonth,
+        'updater' => null,
+        'thematic_area_id' => $faker->randomElement($thematicAreas),
+        'description' => $description,
     ];
 });

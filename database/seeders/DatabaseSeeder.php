@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,13 +14,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(ThematicAreasTableSeeder::class);
-        $this->call(UsersTableSeeder::class);
-        $this->call(PlacesTableSeeder::class);
-        $this->call(PointOfInterestsTableSeeder::class);
-        $this->call(PhotographiesTableSeeder::class);
-        $this->call(VisitsTableSeeder::class);
-        $this->call(VideosTableSeeder::class);
-        $this->call(Video_itemsTableSeeder::class);
+        Storage::disk('public')->deleteDirectory('videos');
+        Storage::disk('public')->makeDirectory('videos');
+
+        $this->call(ThematicAreaSeeder::class);
+        $this->call(UserSeeder::class);
+        $this->call(PlaceSeeder::class);
+        $this->call(PointOfInterestSeeder::class);
+        $this->call(PhotographySeeder::class);
+        $this->call(VisitSeeder::class);
+        $this->call(VideoSeeder::class);
+        $this->call(VideoItemSeeder::class);
     }
 }

@@ -14,21 +14,11 @@ class CreateVideoItemsTable extends Migration
     public function up()
     {
         Schema::create('video_items', function (Blueprint $table) {
-            $table->bigIncrements('id');
-
-            $table->unsignedBigInteger('video_id');
-            $table->foreign('video_id')->on('videos')->references('id')->onDelete('cascade');
-            $table->index(["video_id"], 'fk_video_item_video1_idx');
-
-            $table->string('url', 245)->nullable();
-
+            $table->id();
+            $table->foreignId('video_id')->references('id')->on('videos')->onDelete('cascade');
             $table->string('quality', 45)->nullable();
-
             $table->string('format', 45)->nullable();
-
-            $table->string('orientation')->nullable();
-
-            $table->string('language', 10)->nullable();
+            $table->string('orientation', 45)->nullable();
 
             $table->timestamps();
             $table->softDeletes();

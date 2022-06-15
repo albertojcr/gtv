@@ -12,15 +12,7 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $policies = [
-        'App\User' => 'App\Policies\UserPolicy',
-        'App\Photography' => 'App\Policies\PhotographyPolicy',
-        'App\Place' => 'App\Policies\PlacePolicy',
-        'App\PointOfInterest' => 'App\Policies\PointOfInterestPolicy',
-        'App\ThematicArea' => 'App\Policies\ThematicAreaPolicy',
-        'App\Video' => 'App\Policies\VideoPolicy',
-        'Spatie\Permission\Models\Role' => 'App\Policies\RolePolicy'
-    ];
+    protected $policies = [];
 
     /**
      * Register any authentication / authorization services.
@@ -30,9 +22,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        Gate::before(function ($user, $ability) {
-            return $user->hasRole('Super Admin') ? true : null;
-        });
     }
 }

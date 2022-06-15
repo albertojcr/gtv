@@ -6,16 +6,15 @@ use App\Events\AdminInformed;
 use App\Events\UserWasRegisted;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateUsersRequest;
-use App\Photography;
-use App\Place;
-use App\ThematicArea;
-use App\User;
-use App\Video;
+use App\Models\Photography;
+use App\Models\ThematicArea;
+use App\Models\User;
+use App\Models\Video;
+use Hashids\Hashids;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
-use Hashids\Hashids;
 
 class UsersController extends Controller
 {
@@ -41,8 +40,6 @@ class UsersController extends Controller
         $data = $this->validate($request, [
             'login' => 'required | unique:users',
             'email' => 'required | string | unique:users',
-            'name' => 'required',
-            'surnames' => 'required'
         ], [
             'login.required' => 'El nombre de usuario es requerido',
             'login.unique' => 'El nombre de usuario ya existe en nuestros registros',
@@ -50,8 +47,6 @@ class UsersController extends Controller
             'email.string' => 'El correo no es valido',
             'email.email' => 'El correo no es valido',
             'email.unique' => 'El correo electronico ya existe en nuestros registros',
-            'name.required' => 'El nombre es requerido',
-            'surnames.required' => 'El campo apellidos es requerido',
         ]);
 
         $data['password'] = Str::random(8);

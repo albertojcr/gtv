@@ -14,25 +14,13 @@ class CreatePlacesTable extends Migration
     public function up()
     {
         Schema::create('places', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name', 45);
-            $table->string('url', 45)->nullable();;
-            $table->string('description', 45)->nullable();
+            $table->id();
+            $table->string('name', 30);
+            $table->string('description', 2000);
+            $table->foreignId('place_id')->nullable()->references('id')->on('places')->onDelete('cascade');
+            $table->foreignId('creator')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('updater')->nullable()->references('id')->on('users')->onDelete('cascade');
 
-            $table->unsignedBigInteger('place_id')->nullable();
-            $table->foreign('place_id')->on('places')->references('id')->onDelete('cascade');
-            $table->index(["place_id"], 'fk_place_place1_idx');
-
-            $table->timestamp('date_create')->nullable();
-            $table->timestamp('last_update')->nullable();
-
-            $table->unsignedBigInteger('creator')->nullable();
-            $table->foreign('creator')->on('users')->references('id')->onDelete('cascade');
-            $table->index(["creator"], 'fk_place_user1_idx');
-
-            $table->unsignedBigInteger('updater')->nullable();
-            $table->foreign('updater')->on('users')->references('id')->onDelete('cascade');
-            $table->index(["updater"], 'fk_place_user2_idx');
             $table->softDeletes();
             $table->timestamps();
         });

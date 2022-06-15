@@ -18,15 +18,6 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        'App\Events\UserWasRegisted' => [
-            'App\Listeners\SendLoginCredentials',
-        ],
-        'App\Events\AdminInformed' => [
-            'App\Listeners\UserRegistered',
-        ],
-        'Illuminate\Auth\Events\Login' => [
-               'App\Listeners\SuccessfulLogin',
-           ]
     ];
 
     /**
@@ -36,8 +27,5 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        parent::boot();
-
-        //
     }
 }

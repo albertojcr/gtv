@@ -4,22 +4,20 @@
 
 namespace Database\Factories;
 
-use App\Photography;
-use App\PointOfInterest;
-use App\ThematicArea;
-use App\User;
+use App\Models\Photography;
+use App\Models\PointOfInterest;
+use App\Models\ThematicArea;
+use App\Models\User;
 use Faker\Generator as Faker;
 
 $factory->define(Photography::class, function (Faker $faker) {
     return [
-        'name'  =>  $faker->sentence,
-        'point_of_interest_id' => $faker->randomElement(PointOfInterest::all()->pluck('id')->toArray()),
+        'route' => 'https://via.placeholder.com/640x480?text=Foto',
         'order' => $faker->randomDigit,
-        'published' => $faker->boolean,
-        'creator' => $faker->randomElement(User::all()->pluck('id')->toArray()),
-        'updater' => $faker->randomElement(User::all()->pluck('id')->toArray()),
+        'point_of_interest_id' => $faker->randomElement(PointOfInterest::all()->pluck('id')->toArray()),
         'thematic_area_id' => $faker->randomElement(ThematicArea::all()->pluck('id')->toArray()),
-        'date_create' => $faker->dateTimeThisMonth,
-        'last_update' => $faker->dateTimeThisMonth,
+        'creator' => $faker->randomElement(User::all()->pluck('id')->toArray()),
+        'updater' => null,
+        'updated_at' => null,
     ];
 });
