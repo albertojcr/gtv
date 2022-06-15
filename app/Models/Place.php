@@ -11,11 +11,6 @@ class Place extends Model
 
     protected $guarded = [];
 
-    public function users()
-    {
-        return $this->belongsToMany(User::class);
-    }
-
     public function place()
     {
         return $this->belongsTo(Place::class, 'place_id');
@@ -29,5 +24,10 @@ class Place extends Model
     public function updater()
     {
         return $this->belongsTo(User::class, 'updater');
+    }
+
+    public function pointsOfInterest()
+    {
+        return $this->hasMany(PointOfInterest::class);
     }
 }
