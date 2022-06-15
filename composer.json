@@ -10,6 +10,7 @@
     "require": {
         "php": "^8.0.2",
         "consoletvs/charts": "6.*",
+        "enqueue/amqp-bunny": "^0.10.9",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^9.0",
         "laravel/jetstream": "^2.8",
@@ -20,7 +21,8 @@
         "livewire/livewire": "^2.5",
         "simplesoftwareio/simple-qrcode": "^4.2",
         "spatie/laravel-permission": "^5",
-        "vinkla/hashids": "^10.0"
+        "vinkla/hashids": "^10.0",
+        "vladimir-yuldashev/laravel-queue-rabbitmq": "^12.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.19",
