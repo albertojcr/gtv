@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Admin\Video;
 
+use App\Jobs\ProcessVideo;
+use App\Jobs\ProcessVideoItem;
 use App\Models\PointOfInterest;
 use App\Models\Video;
 use App\Models\VideoItem;
@@ -94,9 +96,13 @@ class CreateVideo extends Component
             'description' => $this->createForm['description'],
         ]);
 
-        VideoItem::create([
+        ProcessVideo::dispatch($video);
+
+        $videoItem = VideoItem::create([
             'video_id' => $video->id,
         ]);
+
+        ProcessVideoItem::dispatch($videoItem);
 
         $this->reset('videoTemporaryUrl');
         $this->reset('createForm');

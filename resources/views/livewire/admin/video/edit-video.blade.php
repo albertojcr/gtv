@@ -44,7 +44,7 @@
         </x-slot>
 
         <x-slot name="footer">
-            <x-button color="green" wire:click="update('{{ $videoId }}')">
+            <x-button wire:click="update('{{ $videoId }}')">
                 Actualizar
             </x-button>
         </x-slot>

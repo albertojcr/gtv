@@ -6,7 +6,7 @@
             <button wire:click="$toggle('createForm.open')" type="button" class="text-white bg-blue-700
                 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm
                 px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none
-                dark:focus:ring-blue-800 ml-auto" style="margin-left:10px;">
+                dark:focus:ring-blue-800 ml-auto">
                 Añadir
             </button>
         </div>
@@ -52,18 +52,17 @@
                             <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                                 {{ $thematicArea->updated_at }}
                             </td>
-                            <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                                <span class="font-medium text-blue-600 cursor-pointer"
-                                      wire:click="show('{{ $thematicArea->id }}')">
-                                    <i class="fa-solid fa-eye"></i> Ver
+                            <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap flex gap-4">
+                                <span class="font-medium text-blue-600 cursor-pointer" wire:click="show('{{ $thematicArea->id }}')">
+                                    <i class="fa-solid fa-eye"></i>
                                 </span>
-                                <span class="font-medium text-blue-600 cursor-pointer mr-3"
-                                      wire:click="edit('{{ $thematicArea->id }}')">
-                                    <i class="fa-solid fa-pencil"></i> Editar
+                                    <span class="font-medium text-yellow-400 cursor-pointer"
+                                          wire:click="edit('{{ $thematicArea->id }}')">
+                                    <i class="fa-solid fa-pencil"></i>
                                 </span>
-                                <span class="font-medium text-red-500 cursor-pointer"
-                                      wire:click="$emit('deleteThematicArea', '{{ $thematicArea->id }}')">
-                                    <i class="fa-solid fa-trash"></i> Eliminar
+                                    <span class="font-medium text-red-500 cursor-pointer"
+                                          wire:click="$emit('deleteThematicArea', '{{ $thematicArea->id }}')">
+                                    <i class="fa-solid fa-trash"></i>
                                 </span>
                             </td>
                         </tr>
@@ -133,7 +132,7 @@
                         Nombre
                     </x-jet-label>
 
-                    <x-jet-input type="text" wire:model="createForm.name"></x-jet-input>
+                    <input wire:model="createForm.name" type="text" id="name" minlength="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
 
                     <x-jet-input-error for="createForm.name" class="mt-2" />
                 </div>
@@ -174,7 +173,7 @@
                         Nombre
                     </x-jet-label>
 
-                    <x-jet-input type="text" wire:model="editForm.name"></x-jet-input>
+                    <input wire:model="editForm.name" type="text" id="name" minlength="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
 
                     <x-jet-input-error for="editForm.name" class="mt-2" />
                 </div>
