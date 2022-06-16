@@ -26,7 +26,7 @@ class CreatePoint extends Component
         'createForm.distance' => 'required|numeric',
         'createForm.latitude' => 'required|numeric',
         'createForm.longitude' => 'required||numeric',
-        'createForm.place' => 'required|exist:places,id',
+        'createForm.place' => 'required|exists:places,id',
     ];
 
     protected $validationAttributes = [

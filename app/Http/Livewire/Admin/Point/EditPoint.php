@@ -23,24 +23,24 @@ class EditPoint extends Component
     ];
 
     protected $rules = [
-        'createForm.distance' => 'required|number',
-        'createForm.latitude' => 'required|number',
-        'createForm.longitude' => 'required|number',
-        'createForm.place' => 'required|exist:places,id',
+        'editForm.distance' => 'required|numeric',
+        'editForm.latitude' => 'required|numeric',
+        'editForm.longitude' => 'required|numeric',
+        'editForm.place' => 'required|exists:places,id',
     ];
 
     protected $validationAttributes = [
-        'createForm.distance' => 'distancia',
-        'createForm.latitude' => 'latitud',
-        'createForm.longitude' => 'longitud',
-        'createForm.place' => 'sitio',
+        'editForm.distance' => 'distancia',
+        'editForm.latitude' => 'latitud',
+        'editForm.longitude' => 'longitud',
+        'editForm.place' => 'sitio',
     ];
 
     public function openEditModal(PointOfInterest $point)
     {
         $this->reset(['editForm']);
 
-        $this->pointid = $point->id;
+        $this->pointId = $point->id;
         $this->editForm['distance'] = $point->distance ;
         $this->editForm['latitude'] = $point->latitude;
         $this->editForm['longitude'] = $point->longitude;
@@ -53,7 +53,7 @@ class EditPoint extends Component
 
     public function getPlaces()
     {
-        $this->place = Place::all();
+        $this->places = Place::all();
     }
 
     public function update(PointOfInterest $point)
@@ -72,7 +72,7 @@ class EditPoint extends Component
         $this->reset(['editForm']);
 
         $this->emitTo('admin.point.show-point', 'render');
-        $this->emit('PointUpdated');
+        $this->emit('pointUpdated');
     }
 
     public function render()
