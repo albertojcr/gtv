@@ -9,8 +9,6 @@ class WelcomeController extends Controller
 {
     public function __invoke()
     {
-        $places = Place::all();
-
-        return view('welcome', compact('places'));
+        return view('welcome');
     }
 }
