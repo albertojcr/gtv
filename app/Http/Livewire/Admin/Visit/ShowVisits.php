@@ -12,6 +12,8 @@ class ShowVisits extends Component
 {
     use WithPagination;
 
+    public $pointName;
+
     protected $listeners = ['delete', 'render'];
 
     public $detailsModal = [
@@ -30,18 +32,26 @@ class ShowVisits extends Component
 
     public function show(Visit $visit)
     {
+        $this->pointName = $this->getPointName($visit->point_of_interest_id);
+
         $this->detailsModal['open'] = true;
         $this->detailsModal['id'] = $visit->id;
         $this->detailsModal['hour'] = $visit->hour;
         $this->detailsModal['deviceid'] = $visit->deviceid;
         $this->detailsModal['appversion'] = $visit->appversion;
-        $this->detailsModal['useragnt'] = $visit->useragent;
+        $this->detailsModal['useragent'] = $visit->useragent;
         $this->detailsModal['ssoo'] = $visit->ssoo;
         $this->detailsModal['ssooversion'] = $visit->ssooversion;
         $this->detailsModal['latitude'] = $visit->latitude;
         $this->detailsModal['longitude'] = $visit->longitude;
-        $this->detailsModal['point_of_interest_id'] = $visit->point_of_interest_id;
+        $this->detailsModal['point_of_interest_id'] = $this->pointName;
         $this->detailsModal['createdAt'] = $visit->created_at;
+
+    }
+
+    public function getPointName($pointId)
+    {
+        return PointOfInterest::find($pointId);
     }
 
     public function delete(Visit $visit)

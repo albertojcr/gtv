@@ -4,7 +4,6 @@
     </div>
 
     @if(count($visits))
-        @livewire('admin.visit.edit-visits')
         <x-table>
             <x-slot name="thead">
                 <th scope="col" class="px-6 py-3">
@@ -100,17 +99,18 @@
                 </div>
                 <div>
                     <x-jet-label>
-                        Agente: {{ $detailsModal['ssoo'] }}
+                        Sistema Operativo: {{ $detailsModal['ssoo'] }}
                     </x-jet-label>
                 </div>
                 <div>
                     <x-jet-label>
-                        Agente: {{ $detailsModal['ssooversion'] }}
+                        Version Sistema Operativo: {{ $detailsModal['ssooversion'] }}
                     </x-jet-label>
                 </div>
                 <div>
                     <x-jet-label>
-                        Punto de Interest: {{ $detailsModal['point_of_interest_id'] }}
+                        Punto de Interest:
+                        {!!QrCode::size(100)->generate(json_encode($detailsModal['point_of_interest_id'], JSON_PRETTY_PRINT)) !!}
                     </x-jet-label>
                 </div>
             </div>
