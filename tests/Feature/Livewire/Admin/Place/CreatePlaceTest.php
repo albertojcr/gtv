@@ -60,6 +60,6 @@ class CreatePlaceTest extends TestCase
             ->call('save')
             ->assertHasErrors(['createForm.description' => 'required']);
 
-        $this->assertDatabaseCount('place', 0);
+        $this->assertDatabaseCount('places', 0);
     }
 }
