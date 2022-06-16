@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire\Admin\User;
 
+use App\Mail\UserCreated;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Spatie\Permission\Models\Role;
@@ -25,7 +27,7 @@ class CreateUser extends Component
     ];
 
     protected $rules = [
-        'createForm.avatar' => 'image',
+        'createForm.avatar' => '',
         'createForm.name' => 'required|string',
         'createForm.email' => 'required|confirmed|string|max:45|unique:users,email',
         'createForm.password' => 'required|confirmed|string|min:8|max:500',
@@ -59,17 +61,21 @@ class CreateUser extends Component
     {
         $this->validate();
 
-        $avatarRoute = $this->createForm['avatar']->store('public/user-avatars');
+        if (null !== $this->createForm['avatar']) {
+            $avatarRoute = $this->createForm['avatar']->store('public/user-avatars');
+        }
 
         $user = User::create([
             'name' => $this->createForm['name'],
             'email' => $this->createForm['email'],
             'password'=> \bcrypt($this->createForm['password']),
-            'profile_photo_path' => $avatarRoute,
+            'profile_photo_path' => $avatarRoute ?? null,
         ]);
 
         $role = Role::findById($this->createForm['role']);
         $user->assignRole($role);
+
+        Mail::to('admin@mail.com')->send(new UserCreated($user));
 
         $this->reset('createForm');
         $this->emit('userCreated');
