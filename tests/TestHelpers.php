@@ -8,6 +8,7 @@ use App\Models\ThematicArea;
 use App\Models\User;
 use App\Models\Video;
 use App\Models\VideoItem;
+use App\Models\Visit;
 use Faker\Factory;
 use Spatie\Permission\Models\Role;
 
@@ -38,6 +39,12 @@ trait TestHelpers
     {
         return \factory(PointOfInterest::class)->create([
             'place_id' => $placeId,
+        ]);
+    }
+
+    protected function createVisit($pointId){
+        return \factory(Visit::class)->create([
+           'point_of_interest_id' => $pointId,
         ]);
     }
 

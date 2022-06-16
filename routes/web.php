@@ -24,3 +24,4 @@ Route::get('users', ListUsers::class)->name('users.index');
 Route::get('areas-tematicas', ThematicAreas::class)->name('thematic-areas.index');
 Route::get('places', ListPlaces::class)->name('places.index');
 
+Route::get('visits', ShowVisits::class)->name('admin.visit.show');
