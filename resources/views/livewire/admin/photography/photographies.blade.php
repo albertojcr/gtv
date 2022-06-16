@@ -83,11 +83,11 @@
                                 @endif
                             </td>
                             <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                                <span class="font-medium text-blue-600 cursor-pointer"
+                                <span class="font-medium text-blue-600 cursor-pointer mr-3"
                                       wire:click="show('{{ $photography->id }}')">
                                     <i class="fa-solid fa-eye"></i>
                                 </span>
-                                <span class="font-medium text-blue-600 cursor-pointer mr-3"
+                                <span class="font-medium text-yellow-400 cursor-pointer mr-3"
                                       wire:click="edit('{{ $photography->id }}')">
                                     <i class="fa-solid fa-pencil"></i>
                                 </span>
