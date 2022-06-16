@@ -20,6 +20,14 @@ class Photographies extends Component
 
     public $listeners = ['delete'];
 
+    public $search;
+    public $searchColumn = 'id';
+
+    public $sortField = 'id';
+    public $sortDirection = 'desc';
+
+    protected $queryString = ['search'];
+
     public $createForm = [
         'open' => false,
         'route' => null,
@@ -104,7 +112,7 @@ class Photographies extends Component
         $this->createForm['thematicAreaId'] = '';
         $this->thematicAreas = PointOfInterest::find($this->createForm['pointOfInterestId'])->thematicAreas;
 
-        $this->createForm['thematicAreaId'] = $this->thematicAreas[0]->id;
+        //$this->createForm['thematicAreaId'] = $this->thematicAreas[0]->id;
     }
 
     public function updatedEditFormPointOfInterestId()
@@ -112,7 +120,7 @@ class Photographies extends Component
         $this->editForm['thematicAreaId'] = '';
         $this->thematicAreas = PointOfInterest::find($this->editForm['pointOfInterestId'])->thematicAreas;
 
-        $this->editForm['thematicAreaId'] = $this->thematicAreas[0]->id;
+        //$this->editForm['thematicAreaId'] = $this->thematicAreas[0]->id;
     }
 
     public function save()
@@ -182,8 +190,8 @@ class Photographies extends Component
         $this->showModal['route'] = $photography->route;
         $this->showModal['order'] = $photography->order;
         $this->showModal['pointOfInterestId'] = $photography['point_of_interest_id'];
-        $this->showModal['thematicAreaId'] = $photography->thematicArea->id;
-        $this->showModal['thematicAreaName'] = $photography->thematicArea->name;
+        $this->showModal['thematicAreaId'] = $photography->thematicArea->id ?? '';
+        $this->showModal['thematicAreaName'] = $photography->thematicArea->name ?? '';
 
         $this->showModal['creatorId'] = User::find($photography->creator)->id;
         $this->showModal['creatorName'] = User::find($photography->creator)->name;
@@ -201,7 +209,7 @@ class Photographies extends Component
         $this->thematicAreas = PointOfInterest::find($photography['point_of_interest_id'])->thematicAreas;
 
         $this->editForm['pointOfInterestId'] = $photography['point_of_interest_id'];
-        $this->editForm['thematicAreaId'] = $photography->thematicArea->id;
+        $this->editForm['thematicAreaId'] = $photography->thematicArea->id ?? '';
 
         $this->editModal['id'] = $photography->id;
         $this->editModal['route'] = $photography->route;
@@ -214,18 +222,46 @@ class Photographies extends Component
         $photography->delete();
     }
 
+    public function sort($field)
+    {
+        if ($this->sortField === $field && $this->sortDirection !== 'desc') {
+            $this->sortDirection = 'desc';
+        } else {
+            $this->sortDirection = 'asc';
+        }
+
+        $this->sortField = $field;
+    }
+
+    public function resetFilters()
+    {
+        $this->reset(['search', 'sortField', 'sortDirection']);
+        $this->resetPage();
+    }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
+        $this->reset(['page']);
+
         if (auth()->user()->hasRole('Profesor')){
             $photographies = Photography::where('thematic_area_id', auth()->user()->thematic_area_id)
-                ->orderBy('id', 'desc')
+                ->where($this->searchColumn, 'like', '%'. $this->search .'%')
+                ->orderBy($this->sortField, $this->sortDirection)
                 ->paginate(10);
-        } else if (auth()->user()->hasRole('Estudiante')) {
+        } else if (auth()->user()->hasRole('Alumno')) {
             $photographies = Photography::where('creator', auth()->user()->id)
-                ->orderBy('id', 'desc')
+                ->where($this->searchColumn, 'like', '%'. $this->search .'%')
+                ->orderBy($this->sortField, $this->sortDirection)
                 ->paginate(10);
         } else {
-            $photographies = Photography::orderBy('id', 'desc')->paginate(10);
+            $photographies = Photography::where($this->searchColumn, 'like', '%'. $this->search .'%')
+                ->orderBy($this->sortField, $this->sortDirection)
+                ->paginate(10);
         }
 
         return view('livewire.admin.photography.photographies', compact('photographies'));

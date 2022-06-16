@@ -75,18 +75,20 @@
                             {{\App\Models\User::find($point->creator)->name}}
                         </td>
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                            {{\App\Models\User::find($point->updater)->name}}
+                            @if($point->updater)
+                                {{\App\Models\User::find($point->updater)->name}}
+                            @endif
                         </td>
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                             {{$point->created_at}}
                         </td>
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap flex gap-4">
                             <span class="font-medium text-yellow-400 cursor-pointer"
-                                  wire:click="$emitTo('admin.point.edit', 'openEditModal', '')">
+                                  wire:click="$emitTo('admin.point.edit-point', 'openEditModal', '{{$point->id}}')">
                                 <i class="fa-solid fa-pencil"></i>
                             </span>
                             <span class="font-medium text-red-500 cursor-pointer"
-                                  wire:click="$emit('deletePoint', '')">
+                                  wire:click="$emit('deletePoint', '{{$point->id}}')">
                                 <i class="fa-solid fa-trash"></i>
                             </span>
                         </td>
@@ -181,7 +183,7 @@
                     confirmButtonText: 'Eliminar'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Livewire.emitTo('admin.point.showpoint', 'delete', pointId)
+                        Livewire.emitTo('admin.point.show-point', 'delete', pointId)
                         Swal.fire(
                             '¡Hecho!',
                             'El punto ha sido borrado.',

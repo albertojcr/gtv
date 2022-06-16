@@ -26,8 +26,7 @@ class UpdatePlaceTest extends TestCase
         $this->actingAs($adminUser);
 
         Livewire::test(EditPlace::class)
-            ->set('editForm.description', 'New name')
-            ->set('editForm.description', 'New description')
+            ->set('editForm.name', 'New name')
             ->call('update', $placeA)
             ->assertHasErrors(['editForm.description' => 'required']);
 
