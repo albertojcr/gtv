@@ -12,6 +12,14 @@ class ThematicAreas extends Component
 
     public $listeners = ['delete'];
 
+    public $search;
+    public $searchColumn = 'id';
+
+    public $sortField = 'id';
+    public $sortDirection = 'asc';
+
+    protected $queryString = ['search'];
+
     public $createForm = [
         'open' => false,
         'name' => '',
@@ -114,12 +122,36 @@ class ThematicAreas extends Component
         $thematicArea->delete();
     }
 
+    public function sort($field)
+    {
+        if ($this->sortField === $field && $this->sortDirection !== 'desc') {
+            $this->sortDirection = 'desc';
+        } else {
+            $this->sortDirection = 'asc';
+        }
+
+        $this->sortField = $field;
+    }
+
+    public function resetFilters()
+    {
+        $this->reset(['search', 'sortField', 'sortDirection']);
+        $this->resetPage();
+    }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
         if(auth()->user()->hasRole('Super Administrador')
             || auth()->user()->hasRole('Administrador')) {
 
-            $thematicAreas = ThematicArea::paginate(10);
+            $thematicAreas = ThematicArea::where($this->searchColumn, 'like', '%'. $this->search .'%')
+                ->orderBy($this->sortField, $this->sortDirection)
+                ->paginate(10);
         }
 
         return view('livewire.admin.thematic-area.thematic-areas', compact('thematicAreas'));
