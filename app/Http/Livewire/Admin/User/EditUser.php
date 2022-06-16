@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin\User;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Spatie\Permission\Models\Role;
@@ -66,7 +67,7 @@ class EditUser extends Component
 
         $this->validate();
 
-        $user->update([
+        $isUpdated = $user->update([
             'name' => $this->editForm['name'],
             'email' => $this->editForm['email'],
             'password'=> \bcrypt($this->editForm['password']),
@@ -74,6 +75,10 @@ class EditUser extends Component
 
         $role = Role::findById($this->editForm['role']);
         $user->syncRoles($role);
+
+        if ($isUpdated) {
+            Log::info('User with ID ' . auth()->user()->id . ' edited the following user ' . $user);
+        }
 
         $this->editForm['open'] = false;
         $this->reset(['editForm']);

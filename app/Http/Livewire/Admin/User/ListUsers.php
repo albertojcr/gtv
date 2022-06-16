@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin\User;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -48,7 +49,11 @@ class ListUsers extends Component
             Storage::delete($user->profile_photo_path);
         }
 
-        $user->delete();
+        $isDeleted = $user->delete();
+
+        if ($isDeleted) {
+            Log::alert('User with ID ' . auth()->user()->id . ' removed an user ' . $user);
+        }
     }
 
     public function render()
