@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\Models\Photography;
 use App\Models\Place;
 use App\Models\PointOfInterest;
 use App\Models\ThematicArea;
@@ -69,5 +70,10 @@ trait TestHelpers
         ]);
 
         return $video;
+    }
+
+    protected function createPhotography()
+    {
+        return \factory(Photography::class)->create();
     }
 }
