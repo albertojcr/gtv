@@ -54,7 +54,7 @@ class ListPlaces extends Component
     {
         $place->delete();
 
-        Log::info('Place with ID ' . $place->id . ' was updated ' . $place);
+        Log::info('Place with ID ' . $place->id . ' was deleted ' . $place);
     }
 
     public function sort($field)

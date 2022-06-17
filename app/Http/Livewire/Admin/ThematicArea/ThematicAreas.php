@@ -127,7 +127,7 @@ class ThematicAreas extends Component
 
         $thematicArea->delete();
 
-        Log::info('Thematic area with ID ' . $thematicArea->id . ' was updated ' . $thematicArea);
+        Log::info('Thematic area with ID ' . $thematicArea->id . ' was deleted ' . $thematicArea);
     }
 
     public function sort($field)
