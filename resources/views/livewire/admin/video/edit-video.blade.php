@@ -12,6 +12,7 @@
                         Punto de interés
                     </x-jet-label>
                     <select wire:model="editForm.pointOfInterest" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-1">
+                        <option value="" selected disabled>Elige uno</option>
                         @foreach($pointsOfInterest as $pointOfInterest)
                             <option value="{{ $pointOfInterest->id }}" @if($pointOfInterest->id === $editForm['pointOfInterest']) {{ 'selected' }} @endif>
                                 {{ $pointOfInterest->id }}
@@ -25,6 +26,7 @@
                         Área temática
                     </x-jet-label>
                     <select wire:model="editForm.thematicArea" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-1">
+                        <option value="" selected disabled>Elige una</option>
                         @foreach($thematicAreas as $thematicArea)
                             <option value="{{ $thematicArea->id }}" @if($thematicArea->id === $editForm['thematicArea']) {{ 'selected' }} @endif>
                                 {{ $thematicArea->name }}

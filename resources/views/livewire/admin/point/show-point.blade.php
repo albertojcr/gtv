@@ -1,14 +1,12 @@
 <div>
     <div class="flex items-center mb-6">
-        <h1 class="text-2xl font-semibold text-gray-700">Listado de Puntos de Interes</h1>
+        <h1 class="text-2xl font-semibold text-gray-700">Listado de puntos de interés</h1>
 
-        @hasanyrole('Administrador|Profesor')
         <button type="button"
                 class="ml-12 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ml-auto"
                 wire:click="$emitTo('admin.point.create-point', 'openCreationModal')">
             Añadir
         </button>
-        @endhasanyrole
     </div>
 
     @livewire('admin.point.create-point')
@@ -88,7 +86,7 @@
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                             {{$point->created_at}}
                         </td>
-                        <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap flex gap-4">
+                        <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap flex gap-4 mt-10">
                             <span class="font-medium text-yellow-400 cursor-pointer"
                                   wire:click="$emitTo('admin.point.edit-point', 'openEditModal', '{{$point->id}}')">
                                 <i class="fa-solid fa-pencil"></i>

@@ -40,7 +40,7 @@ class EditVideo extends Component
         $this->videoId = $video->id;
         $this->videoRoute = Storage::url($video->route);
         $this->editForm['pointOfInterest'] = $video->pointOfInterest->id;
-        $this->editForm['thematicArea'] = $video->thematicArea->id;
+        $this->editForm['thematicArea'] = $video->thematicArea->id ?? '';
         $this->editForm['description'] = $video->description;
 
         $this->getPointsOfInterest();

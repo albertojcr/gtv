@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Admin\Places;
 
 use App\Models\Place;
 use App\Models\User;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -45,6 +45,8 @@ class ListPlaces extends Component
     public function delete(Place $place)
     {
         $place->delete();
+
+        Log::info('Place with ID ' . $place->id . ' was updated ' . $place);
     }
 
     public function render()

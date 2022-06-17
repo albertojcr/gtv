@@ -3,7 +3,6 @@
 namespace Tests\Feature\Livewire\Admin\ThematicArea;
 
 use App\Http\Livewire\Admin\ThematicArea\ThematicAreas;
-use App\Models\ThematicArea;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -33,7 +32,7 @@ class CreateThematicAreaTest extends TestCase
     }
 
     /** @test */
-    public function itCreatesAThematicAreaWithEmptyName()
+    public function itDoesNotCreateAThematicAreaWithEmptyName()
     {
         $adminUser = $this->createAdmin();
 
@@ -42,21 +41,15 @@ class CreateThematicAreaTest extends TestCase
         $this->assertDatabaseCount('thematic_areas', 0);
 
         Livewire::test(ThematicAreas::class)
-            ->set('createForm.name', '')
             ->set('createForm.description', 'Descripción')
-            ->call('save');
+            ->call('save')
+            ->assertHasErrors(['createForm.name' => 'required']);
 
-        $this->assertDatabaseCount('thematic_areas', 1);
-
-        $this->assertDatabaseHas('thematic_areas', [
-            'id' => 1,
-            'name' => '',
-            'description' => 'Descripción',
-        ]);
+        $this->assertDatabaseCount('thematic_areas', 0);
     }
 
     /** @test */
-    public function itCreatesAThematicAreaWithEmptyDescription()
+    public function itDoesNotCreateAThematicAreaWithEmptyDescription()
     {
         $adminUser = $this->createAdmin();
 
@@ -66,16 +59,10 @@ class CreateThematicAreaTest extends TestCase
 
         Livewire::test(ThematicAreas::class)
             ->set('createForm.name', 'Nombre')
-            ->set('createForm.description', '')
-            ->call('save');
+            ->call('save')
+            ->assertHasErrors(['createForm.description' => 'required']);
 
-        $this->assertDatabaseCount('thematic_areas', 1);
-
-        $this->assertDatabaseHas('thematic_areas', [
-            'id' => 1,
-            'name' => 'Nombre',
-            'description' => '',
-        ]);
+        $this->assertDatabaseCount('thematic_areas', 0);
     }
 
     /** @test */

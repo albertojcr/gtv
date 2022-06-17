@@ -2,13 +2,11 @@
     <div class="flex items-center mb-6">
         <h1 class="text-2xl font-semibold text-gray-700">Listado de vídeos</h1>
 
-        @hasanyrole('Administrador|Profesor')
-            <button type="button"
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ml-auto"
-                    wire:click="$emitTo('admin.video.create-video', 'openCreationModal')">
-                Añadir
-            </button>
-        @endhasanyrole
+        <button type="button"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ml-auto"
+                wire:click="$emitTo('admin.video.create-video', 'openCreationModal')">
+            Añadir
+        </button>
     </div>
 
     @livewire('admin.video.create-video')
@@ -63,7 +61,11 @@
                             {{ $video->order }}
                         </td>
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                            {{ $video->thematicArea->name }}
+                            @if( ! is_null($video->thematic_area_id))
+                                {{ $video->thematicArea->name }}
+                            @else
+                               <span class="text-red-600">Sin área temática</span>
+                            @endif
                         </td>
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                             {{ \App\Models\User::find($video->creator)->name }}
@@ -136,7 +138,11 @@
                 </div>
                 <div>
                     <x-jet-label>
-                        Área temática: {{ $detailsModal['thematicAreaName'] }} ({{ $detailsModal['thematicAreaId'] }})
+                        @if( ! empty($detailsModal['thematicAreaId']))
+                            Área temática: {{ $detailsModal['thematicAreaName'] }} ({{ $detailsModal['thematicAreaId'] }})
+                        @else
+                            Área temática: <span class="text-red-600">Sin área temática</span>
+                        @endif
                     </x-jet-label>
                 </div>
                 <div>

@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Admin\Point;
 
 use App\Models\PointOfInterest;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\WithPagination;
 use function view;
@@ -52,6 +53,8 @@ class ShowPoint extends Component
     public function delete(PointOfInterest $pointOfInterest)
     {
         $pointOfInterest->delete();
+
+        Log::info('Point with ID ' . $pointOfInterest->id . ' was deleted ' . $pointOfInterest);
     }
 
     public function render()

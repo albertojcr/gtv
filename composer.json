@@ -9,8 +9,10 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "arcanedev/log-viewer": "^9.0",
         "consoletvs/charts": "6.*",
         "enqueue/amqp-bunny": "^0.10.9",
+        "fedeisas/laravel-mail-css-inliner": "dev-master",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^9.0",
         "laravel/jetstream": "^2.8",
