@@ -199,7 +199,7 @@ class Welcome extends Component
         $this->detailsModalPoints['distance'] = $point->distance;
         $this->detailsModalPoints['latitude'] = $point->latitude;
         $this->detailsModalPoints['longitude'] = $point->longitude;
-        $this->detailsModalPoints['placeId'] = $point->place;
+        $this->detailsModalPoints['placeId'] = $point->place->id;
         $this->detailsModalPoints['placeName'] = $point->place->name;
         $this->detailsModalPoints['creatorName'] = User::find($point->creator)->name;
         $this->detailsModalPoints['creatorId'] = $point->creator;
