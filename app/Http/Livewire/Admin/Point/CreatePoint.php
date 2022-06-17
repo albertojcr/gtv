@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Point;
 
+use App\Jobs\ProcessPointOfInterest;
 use App\Models\Place;
 use App\Models\PointOfInterest;
 use Livewire\Component;
@@ -56,7 +57,7 @@ class CreatePoint extends Component
     {
         $this->validate();
 
-        PointOfInterest::create([
+        $pointOfInterest = PointOfInterest::create([
             'distance' => $this->createForm['distance'],
             'latitude' => $this->createForm['latitude'],
             'longitude' => $this->createForm['longitude'],
@@ -64,6 +65,8 @@ class CreatePoint extends Component
             'creator' => auth()->user()->id,
             'updater' => null,
         ]);
+
+        ProcessPointOfInterest::dispatch($pointOfInterest);
 
         $this->reset('createForm');
         $this->emit('PointCreated');
