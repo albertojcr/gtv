@@ -175,8 +175,6 @@ class Welcome extends Component
 
     public function showVisits(Visit $visit)
     {
-        $this->pointName = $this->getPointName($visit->point_of_interest_id);
-
         $this->detailsModalVisits['open'] = true;
         $this->detailsModalVisits['id'] = $visit->id;
         $this->detailsModalVisits['hour'] = $visit->hour;
@@ -187,7 +185,7 @@ class Welcome extends Component
         $this->detailsModalVisits['ssooversion'] = $visit->ssooversion;
         $this->detailsModalVisits['latitude'] = $visit->latitude;
         $this->detailsModalVisits['longitude'] = $visit->longitude;
-        $this->detailsModalVisits['point_of_interest_id'] = $this->pointName;
+        $this->detailsModalVisits['point_of_interest_id'] = $visit->pointOfInterest;
         $this->detailsModalVisits['createdAt'] = $visit->created_at;
 
     }

@@ -450,9 +450,15 @@
                 </div>
 
                 <div class="mb-4">
+                    @if($detailsModalAreas['updatedAt'] == NULL)
+                        <x-jet-label>
+                            Fecha de actualización: No se ha actualizado
+                        </x-jet-label>
+                    @else
                     <x-jet-label>
                         Fecha de actualización: {{ $detailsModalAreas['updatedAt'] }}
                     </x-jet-label>
+                    @endif
                 </div>
             </div>
         </x-slot>
