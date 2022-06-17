@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Admin\Places;
 
 use App\Models\Place;
 use App\Models\User;
-use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithPagination;
 

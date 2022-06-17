@@ -61,7 +61,9 @@ class ShowVisits extends Component
 
     public function render()
     {
-        return view('livewire.admin.visit.show-visits', ['visits' => Visit::paginate(20)]);
+        $visits = Visit::orderByDesc('id')->paginate(10);
+
+        return view('livewire.admin.visit.show-visits', compact('visits'));
     }
 
 
