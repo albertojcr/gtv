@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 
 $factory->define(PointOfInterest::class, function (Faker $faker) {
     return [
-        'qr' => Str::random(35),
+        'name' => $faker->city,
         'distance' => $faker->randomNumber(2),
         'latitude' => $faker->latitude(3, 20),
         'longitude' => $faker->longitude(3, 20),

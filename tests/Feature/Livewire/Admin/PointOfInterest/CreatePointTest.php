@@ -25,6 +25,7 @@ class CreatePointTest extends TestCase
 
 
         Livewire::test(CreatePoint::class)
+            ->set('createForm.name', 'Prueba')
             ->set('createForm.distance', '99')
             ->set('createForm.latitude', '10')
             ->set('createForm.longitude', '15')
@@ -38,6 +39,27 @@ class CreatePointTest extends TestCase
             'creator' => $adminUser->id,
             'updater' => null,
         ]);
+    }
+
+    /** @test */
+    public function TestNameIsRequired()
+    {
+        $adminUser = $this->createAdmin();
+        $place = $this->createPlace();
+
+        $this->actingAs($adminUser);
+
+        $this->assertDatabaseCount('point_of_interests', 0);
+
+        Livewire::test(CreatePoint::class)
+            ->set('createForm.distance', '45')
+            ->set('createForm.latitude', '10')
+            ->set('createForm.longitude', '15')
+            ->set('createForm.place', $place->id)
+            ->call('save')
+            ->assertHasErrors(['createForm.name' => 'required']);
+
+        $this->assertDatabaseCount('point_of_interests', 0);
     }
 
     /** @test */
@@ -136,7 +158,7 @@ class CreatePointTest extends TestCase
             ->set('createForm.longitude', '15')
             ->set('createForm.place', '99999')
             ->call('save')
-            ->assertHasErrors(['createForm.place' => 'exist']);
+            ->assertHasErrors(['createForm.place' => 'exists']);
 
         $this->assertDatabaseCount('point_of_interests', 0);
     }
@@ -157,7 +179,7 @@ class CreatePointTest extends TestCase
             ->set('createForm.longitude', '15')
             ->set('createForm.place', $place->id)
             ->call('save')
-            ->assertHasErrors(['createForm.place' => 'number']);
+            ->assertHasErrors(['createForm.distance' => 'numeric']);
 
         $this->assertDatabaseCount('point_of_interests', 0);
     }
@@ -178,7 +200,7 @@ class CreatePointTest extends TestCase
             ->set('createForm.longitude', '15')
             ->set('createForm.place', $place->id)
             ->call('save')
-            ->assertHasErrors(['createForm.place' => 'number']);
+            ->assertHasErrors(['createForm.latitude' => 'numeric']);
 
         $this->assertDatabaseCount('point_of_interests', 0);
     }
@@ -199,7 +221,7 @@ class CreatePointTest extends TestCase
             ->set('createForm.longitude', 'aaaaaaaaa')
             ->set('createForm.place', $place->id)
             ->call('save')
-            ->assertHasErrors(['createForm.place' => 'number']);
+            ->assertHasErrors(['createForm.longitude' => 'numeric']);
 
         $this->assertDatabaseCount('point_of_interests', 0);
     }

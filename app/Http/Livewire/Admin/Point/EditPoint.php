@@ -17,6 +17,7 @@ class EditPoint extends Component
 
     public $editForm = [
         'open' => false,
+        'name' => '',
         'distance' => '',
         'latitude' => '',
         'longitude' => '',
@@ -24,6 +25,7 @@ class EditPoint extends Component
     ];
 
     protected $rules = [
+        'editForm.name' => 'required',
         'editForm.distance' => 'required|numeric',
         'editForm.latitude' => 'required|numeric',
         'editForm.longitude' => 'required|numeric',
@@ -31,6 +33,7 @@ class EditPoint extends Component
     ];
 
     protected $validationAttributes = [
+        'editForm.name' => 'nombre',
         'editForm.distance' => 'distancia',
         'editForm.latitude' => 'latitud',
         'editForm.longitude' => 'longitud',
@@ -42,6 +45,7 @@ class EditPoint extends Component
         $this->reset(['editForm']);
 
         $this->pointId = $point->id;
+        $this->editForm['name'] = $point->name ;
         $this->editForm['distance'] = $point->distance ;
         $this->editForm['latitude'] = $point->latitude;
         $this->editForm['longitude'] = $point->longitude;
@@ -63,6 +67,7 @@ class EditPoint extends Component
 
         $point->update([
             'updater' => auth()->user()->id,
+            'name' => $this->editForm['name'],
             'distance' => $this->editForm['distance'],
             'latitude' => $this->editForm['latitude'],
             'longitude' => $this->editForm['longitude'],

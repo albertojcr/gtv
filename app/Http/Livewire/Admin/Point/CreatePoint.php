@@ -17,6 +17,7 @@ class CreatePoint extends Component
 
     public $createForm = [
         'open' => false,
+        'name' => '',
         'distance' => '',
         'latitude' => '',
         'longitude' => '',
@@ -24,6 +25,7 @@ class CreatePoint extends Component
     ];
 
     protected $rules = [
+        'createForm.name' => 'required',
         'createForm.distance' => 'required|numeric',
         'createForm.latitude' => 'required|numeric',
         'createForm.longitude' => 'required||numeric',
@@ -31,6 +33,7 @@ class CreatePoint extends Component
     ];
 
     protected $validationAttributes = [
+        'createForm.name' => 'nombre',
         'createForm.distance' => 'distancia',
         'createForm.latitude' => 'latitud',
         'createForm.longitude' => 'longitud',
@@ -57,7 +60,8 @@ class CreatePoint extends Component
     {
         $this->validate();
 
-        $pointOfInterest = PointOfInterest::create([
+        PointOfInterest::create([
+            'name' => $this->createForm['name'],
             'distance' => $this->createForm['distance'],
             'latitude' => $this->createForm['latitude'],
             'longitude' => $this->createForm['longitude'],
