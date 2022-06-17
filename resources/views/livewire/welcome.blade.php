@@ -62,7 +62,9 @@
                 </tbody>
             </table>
         </div>
+        @endrole
 
+        @hasanyrole('Administrador|Profesor')
         {{--TABLA VISITAS   ID-SSOO-PUNTO DE INTERÉS--}}
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -110,9 +112,6 @@
             </table>
         </div>
 
-        @endrole
-
-        @hasanyrole('Administrador|Profesor')
 
         {{--TABLA ÁREAS TEMÁTICAS   ID-NOMBRE-DESCRIPCIÓN--}}
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -210,6 +209,8 @@
             </table>
         </div>
 
+        @hasanyrole('Administrador|Profesor')
+
         {{--TABLA LUGARES   ID-NOMBRE-DESCRIPCION--}}
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -256,6 +257,8 @@
                 </tbody>
             </table>
         </div>
+
+        @endhasanyrole
 
         {{--TABLA VIDEOS   ID-DESCRIPCIÓN-AREA--}}
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
