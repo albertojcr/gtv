@@ -60,7 +60,7 @@ class CreatePoint extends Component
     {
         $this->validate();
 
-        PointOfInterest::create([
+        $pointOfInterest = PointOfInterest::create([
             'name' => $this->createForm['name'],
             'distance' => $this->createForm['distance'],
             'latitude' => $this->createForm['latitude'],

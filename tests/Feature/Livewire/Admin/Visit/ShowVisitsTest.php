@@ -23,9 +23,9 @@ class ShowVisitsTest extends TestCase
 
         $this->get('visits')
             ->assertOk()
-            ->assertSeeInOrder([
-                $visitA->ssoo,
-                $visitB->ssoo,
+            ->assertSee([
+                $visitA->deviceid,
+                $visitB->deviceid,
             ]);
     }
 }

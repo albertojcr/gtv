@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 
 class PointOfInterest extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     protected $guarded = [];
     protected $dates = ['created_at','updated_at','creation_date', 'last_update_date'];
