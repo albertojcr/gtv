@@ -2,12 +2,14 @@
 
 namespace Tests;
 
+use App\Models\Photography;
 use App\Models\Place;
 use App\Models\PointOfInterest;
 use App\Models\ThematicArea;
 use App\Models\User;
 use App\Models\Video;
 use App\Models\VideoItem;
+use App\Models\Visit;
 use Faker\Factory;
 use Spatie\Permission\Models\Role;
 
@@ -17,13 +19,11 @@ trait TestHelpers
     {
         $adminRole = Role::create(['name' => 'Administrador']);
 
-        $user = new User;
-        $user->login = 'admin';
-        $user->password = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'; // password
-        $user->salt = 'salt-here';
-        $user->email = 'admin@mail.com';
-        $user->profile = 'Profile description here';
-        $user->save();
+        $user = User::create([
+            'name' => 'Admin',
+            'email' => 'admin@mail.com',
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        ]);
         $user->assignRole($adminRole);
 
         return $user;
@@ -38,6 +38,12 @@ trait TestHelpers
     {
         return \factory(PointOfInterest::class)->create([
             'place_id' => $placeId,
+        ]);
+    }
+
+    protected function createVisit($pointId){
+        return \factory(Visit::class)->create([
+           'point_of_interest_id' => $pointId,
         ]);
     }
 
@@ -64,5 +70,10 @@ trait TestHelpers
         ]);
 
         return $video;
+    }
+
+    protected function createPhotography()
+    {
+        return \factory(Photography::class)->create();
     }
 }

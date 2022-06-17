@@ -1,23 +1,32 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
-
 namespace Database\Factories;
 
 use App\Models\PointOfInterest;
-use App\Models\Visit;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Visit::class, function (Faker $faker) {
-    return [
-        'hour' => $faker->dateTime(),
-        'deviceid' => $faker->uuid,
-        'appversion' => $faker->numberBetween(1, 10),
-        'useragent' => $faker->word,
-        'ssoo' => $faker->word,
-        'ssooversion' => $faker->numberBetween(1, 10),
-        'latitude' => $faker->latitude,
-        'longitude' => $faker->longitude,
-        'point_of_interest_id' => $faker->randomElement(PointOfInterest::all()->pluck('id')->toArray())
-    ];
-});
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
+ */
+class VisitFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition()
+    {
+        return [
+            'hour' => $this->faker->dateTime(),
+            'deviceid' => $this->faker->uuid,
+            'appversion' => $this->faker->numberBetween(1, 10),
+            'useragent' => $this->faker->word,
+            'ssoo' => $this->faker->word,
+            'ssooversion' => $this->faker->numberBetween(1, 10),
+            'latitude' => $this->faker->latitude,
+            'longitude' => $this->faker->longitude,
+            'point_of_interest_id' => $this->faker->randomElement(PointOfInterest::all()->pluck('id')->toArray())
+        ];
+    }
+}

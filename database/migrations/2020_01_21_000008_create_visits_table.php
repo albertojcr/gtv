@@ -23,7 +23,7 @@ class CreateVisitsTable extends Migration
             $table->string('ssooversion',45);
             $table->decimal('latitude',10,8);
             $table->decimal('longitude',11,8);
-            $table->foreignId('point_of_interest_id')->references('id')->on('point_of_interests')->onDelete('cascade');
+            $table->foreignId('point_of_interest_id')->nullable()->references('id')->on('point_of_interests')->onDelete('cascade');
 
             $table->timestamps();
             $table->softDeletes();

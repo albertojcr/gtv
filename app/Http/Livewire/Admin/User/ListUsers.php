@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin\User;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -12,6 +13,14 @@ class ListUsers extends Component
     use WithPagination;
 
     public $listeners = ['delete', 'render'];
+
+    public $search;
+    public $searchColumn = 'id';
+
+    public $sortField = 'id';
+    public $sortDirection = 'desc';
+
+    protected $queryString = ['search'];
 
     public $detailsModal = [
         'open' => false,
@@ -44,17 +53,44 @@ class ListUsers extends Component
 
     public function delete(User $user)
     {
-        if(Storage::exists($user->profile_photo_path)) {
+        if(! is_null($user->profile_photo_path) && Storage::exists($user->profile_photo_path)) {
             Storage::delete($user->profile_photo_path);
         }
 
-        $user->delete();
+        $isDeleted = $user->delete();
+
+        if ($isDeleted) {
+            Log::alert('User with ID ' . auth()->user()->id . ' removed an user ' . $user);
+        }
+    }
+
+    public function sort($field)
+    {
+        if ($this->sortField === $field && $this->sortDirection !== 'desc') {
+            $this->sortDirection = 'desc';
+        } else {
+            $this->sortDirection = 'asc';
+        }
+
+        $this->sortField = $field;
+    }
+
+    public function resetFilters()
+    {
+        $this->reset(['search', 'sortField', 'sortDirection']);
+        $this->resetPage();
+    }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
     }
 
     public function render()
     {
         $users = User::where('email', '<>', auth()->user()->email)
-            ->orderBy('id')
+            ->where($this->searchColumn, 'like', '%'. $this->search .'%')
+            ->orderBy($this->sortField, $this->sortDirection)
             ->paginate(10);
 
         return view('livewire.admin.user.list-users', compact('users'));

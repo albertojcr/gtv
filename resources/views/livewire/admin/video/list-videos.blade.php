@@ -2,13 +2,32 @@
     <div class="flex items-center mb-6">
         <h1 class="text-2xl font-semibold text-gray-700">Listado de vídeos</h1>
 
-        @hasanyrole('Administrador|Profesor')
-            <button type="button"
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ml-auto"
-                    wire:click="$emitTo('admin.video.create-video', 'openCreationModal')">
-                Añadir
-            </button>
-        @endhasanyrole
+        <button type="button"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ml-auto"
+                wire:click="$emitTo('admin.video.create-video', 'openCreationModal')">
+            Añadir
+        </button>
+    </div>
+
+    <div class="mb-3">
+        <div class="inline">
+            <select class="text-black  bg-blue-100 hover:bg-grey-200 focus:ring-4 focus:ring-blue-300
+                    font-medium rounded-lg text-sm py-1.5 dark:bg-blue-600 dark:hover:bg-blue-700
+                    focus:outline-none dark:focus:ring-blue-800 ml-auto" wire:model="searchColumn">
+                <option value="id">ID</option>
+                <option value="description">DESCRIPCIÓN</option>
+                <option value="point_of_interest_id">PUNTO DE INTERÉS</option>
+                <option value="thematic_area_id">ÁREA TEMÁTICA</option>
+                <option value="creator">CREADOR</option>
+                <option value="updater">ACTUALIZADOR</option>
+                <option value="created_at">FECHA DE CREACIÓN</option>
+            </select>
+        </div>
+
+        <x-jet-input class="py-1 border-black" type="text" wire:model="search"
+                     placeholder="Buscar ..."></x-jet-input>
+
+        <x-jet-button wire:click="resetFilters">Eliminar filtros</x-jet-button>
     </div>
 
     @livewire('admin.video.create-video')
@@ -18,29 +37,64 @@
 
         <x-table>
             <x-slot name="thead">
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('id')">
                     ID
+                    @if($sortField === 'id' && $sortDirection === 'asc')
+                        <i class="fa-solid fa-arrow-up">
+                            @elseif($sortField === 'id' && $sortDirection === 'desc')
+                                <i class="fa-solid fa-arrow-down"></i>
+                    @endif
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('description')">
                     Descripción
+                    @if($sortField === 'description' && $sortDirection === 'asc')
+                        <i class="fa-solid fa-arrow-up">
+                            @elseif($sortField === 'description' && $sortDirection === 'desc')
+                                <i class="fa-solid fa-arrow-down"></i>
+                    @endif
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('point_of_interest_id')">
                     Punto de interés
+                    @if($sortField === 'point_of_interest_id' && $sortDirection === 'asc')
+                        <i class="fa-solid fa-arrow-up">
+                            @elseif($sortField === 'point_of_interest_id' && $sortDirection === 'desc')
+                                <i class="fa-solid fa-arrow-down"></i>
+                    @endif
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Orden
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('thematic_area_id')">
                     Área temática
+                    @if($sortField === 'thematic_area_id' && $sortDirection === 'asc')
+                        <i class="fa-solid fa-arrow-up">
+                            @elseif($sortField === 'thematic_area_id' && $sortDirection === 'desc')
+                                <i class="fa-solid fa-arrow-down"></i>
+                    @endif
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('creator')">
                     Creador
+                    @if($sortField === 'creator' && $sortDirection === 'asc')
+                        <i class="fa-solid fa-arrow-up">
+                            @elseif($sortField === 'creator' && $sortDirection === 'desc')
+                                <i class="fa-solid fa-arrow-down"></i>
+                    @endif
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('updater')">
                     Actualizador
+                    @if($sortField === 'updater' && $sortDirection === 'asc')
+                        <i class="fa-solid fa-arrow-up">
+                            @elseif($sortField === 'updater' && $sortDirection === 'desc')
+                                <i class="fa-solid fa-arrow-down"></i>
+                    @endif
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('created_at')">
                     Fecha creación
+                    @if($sortField === 'created_at' && $sortDirection === 'asc')
+                        <i class="fa-solid fa-arrow-up">
+                            @elseif($sortField === 'created_at' && $sortDirection === 'desc')
+                                <i class="fa-solid fa-arrow-down"></i>
+                    @endif
                 </th>
                 <th scope="col" class="px-6 py-3">
                     <span class="sr-only">Actions</span>
@@ -57,13 +111,21 @@
                             {{ $video->description }}
                         </td>
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                            {{ $video->pointOfInterest->id }}
+                            @if( ! is_null($video->pointOfInterest))
+                                {{ $video->pointOfInterest->id }}
+                            @else
+                                <span class="text-red-600">Ninguno</span>
+                            @endif
                         </td>
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                             {{ $video->order }}
                         </td>
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                            {{ $video->thematicArea->name }}
+                            @if( ! is_null($video->thematic_area_id) &&  ! is_null($video->pointOfInterest))
+                                {{ $video->thematicArea->name }}
+                            @else
+                               <span class="text-red-600">Ninguna</span>
+                            @endif
                         </td>
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                             {{ \App\Models\User::find($video->creator)->name }}
@@ -131,12 +193,20 @@
                 </div>
                 <div>
                     <x-jet-label>
-                        Punto de interés: {{ $detailsModal['pointOfInterest'] }}
+                        @if( ! empty($detailsModal['pointOfInterest']))
+                            Punto de interés: {{ $detailsModal['pointOfInterest'] }}
+                        @else
+                            Punto de interés: <span class="text-red-600">Ninguno</span>
+                        @endif
                     </x-jet-label>
                 </div>
                 <div>
                     <x-jet-label>
-                        Área temática: {{ $detailsModal['thematicAreaName'] }} ({{ $detailsModal['thematicAreaId'] }})
+                        @if( ! empty($detailsModal['thematicAreaId']) && ! empty($detailsModal['pointOfInterest']))
+                            Área temática: {{ $detailsModal['thematicAreaName'] }} ({{ $detailsModal['thematicAreaId'] }})
+                        @else
+                            Área temática: <span class="text-red-600">Ninguna</span>
+                        @endif
                     </x-jet-label>
                 </div>
                 <div>

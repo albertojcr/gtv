@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Places;
 
+use App\Jobs\ProcessPlace;
 use App\Models\Place;
 use Livewire\Component;
 
@@ -34,12 +35,14 @@ class CreatePlace extends Component
     {
         $this->validate();
 
-        Place::create([
+        $place = Place::create([
             'name' => $this->createForm['name'],
             'description' => $this->createForm['description'],
             'creator' => auth()->user()->id,
             'updater' => auth()->user()->id,
         ]);
+
+        ProcessPlace::dispatch($place);
 
         $this->reset('createForm');
         $this->emit('placeCreated');

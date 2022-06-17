@@ -2,9 +2,6 @@
 
 namespace Tests\Feature\Livewire\Admin\ThematicArea;
 
-use App\Http\Livewire\Admin\ThematicArea\ThematicAreas;
-use App\Models\ThematicArea;
-use Livewire\Livewire;
 use Tests\TestCase;
 
 class ListThematicAreaTest extends TestCase
@@ -21,7 +18,7 @@ class ListThematicAreaTest extends TestCase
 
         $this->actingAs($adminUser);
 
-        $this->get('areas-tematicas')
+        $this->get('thematic-areas')
             ->assertOk()
             ->assertSeeInOrder([
                 $thematicArea1->description,

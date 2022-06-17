@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire\Admin\ThematicArea;
 
+use App\Jobs\ProcessThematicArea;
 use App\Models\ThematicArea;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -11,6 +13,14 @@ class ThematicAreas extends Component
     use WithPagination;
 
     public $listeners = ['delete'];
+
+    public $search;
+    public $searchColumn = 'id';
+
+    public $sortField = 'id';
+    public $sortDirection = 'asc';
+
+    protected $queryString = ['search'];
 
     public $createForm = [
         'open' => false,
@@ -28,10 +38,10 @@ class ThematicAreas extends Component
     ];
 
     protected $validationAttributes = [
-        'createForm.name'        => 'nombre',
+        'createForm.name' => 'nombre',
         'createForm.description' => 'descripción',
 
-        'editForm.name'        => 'nombre',
+        'editForm.name' => 'nombre',
         'editForm.description' => 'descripción',
     ];
 
@@ -78,11 +88,13 @@ class ThematicAreas extends Component
     {
         $this->validate();
 
-        ThematicArea::create([
-            'name'        => $this->createForm['name'],
+        $thematicArea = ThematicArea::create([
+            'name' => $this->createForm['name'],
             'description' => $this->createForm['description'],
             'updated_at' => null,
         ]);
+
+        ProcessThematicArea::dispatch($thematicArea);
 
         $this->reset('createForm');
 
@@ -101,6 +113,8 @@ class ThematicAreas extends Component
 
         $thematicArea->update();
 
+        Log::info('Thematic area with ID ' . $thematicArea->id . ' was updated ' . $thematicArea);
+
         $this->editModal['open'] = false;
         $this->reset(['editForm']);
 
@@ -112,16 +126,42 @@ class ThematicAreas extends Component
         $thematicArea->pointsOfInterest()->detach();
 
         $thematicArea->delete();
+
+        Log::info('Thematic area with ID ' . $thematicArea->id . ' was deleted ' . $thematicArea);
+    }
+
+    public function sort($field)
+    {
+        if ($this->sortField === $field && $this->sortDirection !== 'desc') {
+            $this->sortDirection = 'desc';
+        } else {
+            $this->sortDirection = 'asc';
+        }
+
+        $this->sortField = $field;
+    }
+
+    public function resetFilters()
+    {
+        $this->reset(['search', 'sortField', 'sortDirection']);
+        $this->resetPage();
+    }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
     }
 
     public function render()
     {
-        if(auth()->user()->hasRole('Super Administrador')
-            || auth()->user()->hasRole('Administrador')) {
+        if (auth()->user()->hasRole('Administrador')
+            || auth()->user()->hasRole('Profesor')) {
 
-            $thematicAreas = ThematicArea::paginate(10);
+            $thematicAreas = ThematicArea::where($this->searchColumn, 'like', '%' . $this->search . '%')
+                ->orderBy($this->sortField, $this->sortDirection)
+                ->paginate(10);
+
+            return view('livewire.admin.thematic-area.thematic-areas', compact('thematicAreas'));
         }
-
-        return view('livewire.admin.thematic-area.thematic-areas', compact('thematicAreas'));
     }
 }

@@ -14,6 +14,14 @@ class ListVideos extends Component
 
     public $listeners = ['delete', 'render'];
 
+    public $search;
+    public $searchColumn = 'id';
+
+    public $sortField = 'id';
+    public $sortDirection = 'desc';
+
+    protected $queryString = ['search'];
+
     public $detailsModal = [
         'open' => false,
         'id' => null,
@@ -38,9 +46,9 @@ class ListVideos extends Component
         $this->detailsModal['description'] = $video->description;
         $this->detailsModal['route'] = Storage::url($video->route);
         $this->detailsModal['order'] = $video->order;
-        $this->detailsModal['pointOfInterest'] = $video->pointOfInterest->id;
-        $this->detailsModal['thematicAreaName'] = $video->thematicArea->name;
-        $this->detailsModal['thematicAreaId'] = $video->thematicArea->id;
+        $this->detailsModal['pointOfInterest'] = $video->pointOfInterest->id ?? '';
+        $this->detailsModal['thematicAreaName'] = $video->thematicArea->name ?? '';
+        $this->detailsModal['thematicAreaId'] = $video->thematicArea->id ?? '';
         $this->detailsModal['creatorName'] = User::find($video->creator)->name;
         $this->detailsModal['creatorId'] = $video->creator;
         $this->detailsModal['updaterName'] = $video->updater ? User::find($video->updater)->name : null;;
@@ -58,12 +66,38 @@ class ListVideos extends Component
         $video->delete();
     }
 
+    public function sort($field)
+    {
+        if ($this->sortField === $field && $this->sortDirection !== 'desc') {
+            $this->sortDirection = 'desc';
+        } else {
+            $this->sortDirection = 'asc';
+        }
+
+        $this->sortField = $field;
+    }
+
+    public function resetFilters()
+    {
+        $this->reset(['search', 'sortField', 'sortDirection']);
+        $this->resetPage();
+    }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
         if (auth()->user()->hasRole('Alumno')) {
-            $videos = Video::where('creator', auth()->user()->id)->orderByDesc('id')->paginate(10);
+            $videos = Video::where($this->searchColumn, 'like', '%'. $this->search .'%')
+                ->orderBy($this->sortField, $this->sortDirection)
+                ->paginate(10);
         } else {
-            $videos = Video::orderByDesc('id')->paginate(10);
+            $videos = Video::where($this->searchColumn, 'like', '%'. $this->search .'%')
+                ->orderBy($this->sortField, $this->sortDirection)
+                ->paginate(10);
         }
 
         return view('livewire.admin.video.list-videos', compact('videos'));

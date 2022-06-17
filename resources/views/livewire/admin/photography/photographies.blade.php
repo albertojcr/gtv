@@ -11,35 +11,98 @@
             </button>
         </div>
 
+        <div class="mb-3">
+            <div class="inline">
+                <select class="text-black  bg-blue-100 hover:bg-grey-200 focus:ring-4 focus:ring-blue-300
+                    font-medium rounded-lg text-sm py-1.5 dark:bg-blue-600 dark:hover:bg-blue-700
+                    focus:outline-none dark:focus:ring-blue-800 ml-auto" wire:model="searchColumn">
+                    <option value="id">ID</option>
+                    <option value="point_of_interest_id">PUNTO DE INTERÉS</option>
+                    @hasanyrole('Administrador|Profesor')
+                        <option value="thematic_area_id">ÁREA TEMÁTICA</option>
+                        <option value="creator">CREADOR</option>
+                        <option value="Updater">ACTUALIZADOR</option>
+                    @endhasanyrole
+                    <option value="created_at">FECHA DE CREACIÓN</option>
+                    <option value="updated_at">FECHA DE ACTUALIZACIÓN</option>
+                </select>
+            </div>
+
+            <x-jet-input class="py-1 border-black" type="text" wire:model="search"
+                placeholder="Buscar ..."></x-jet-input>
+
+            <x-jet-button wire:click="resetFilters">Eliminar filtros</x-jet-button>
+        </div>
+
         @if(count($photographies))
             <x-table>
                 <x-slot name="thead">
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('id')">
                         ID
+                        @if($sortField === 'id' && $sortDirection === 'asc')
+                            <i class="fa-solid fa-arrow-up">
+                        @elseif($sortField === 'id' && $sortDirection === 'desc')
+                            <i class="fa-solid fa-arrow-down"></i>
+                        @endif
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Ruta
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('order')">
                         Orden
+                        @if($sortField === 'order' && $sortDirection === 'asc')
+                            <i class="fa-solid fa-arrow-up">
+                        @elseif($sortField === 'order' && $sortDirection === 'desc')
+                            <i class="fa-solid fa-arrow-down"></i>
+                        @endif
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('point_of_interest_id')">
                         Punto de interés
+                        @if($sortField === 'point_of_interest_id' && $sortDirection === 'asc')
+                            <i class="fa-solid fa-arrow-up">
+                        @elseif($sortField === 'point_of_interest_id' && $sortDirection === 'desc')
+                            <i class="fa-solid fa-arrow-down"></i>
+                        @endif
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('thematic_area_id')">
                         Área temática
+                        @if($sortField === 'thematic_area_id' && $sortDirection === 'asc')
+                            <i class="fa-solid fa-arrow-up">
+                        @elseif($sortField === 'thematic_area_id' && $sortDirection === 'desc')
+                            <i class="fa-solid fa-arrow-down"></i>
+                        @endif
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('creator')">
                         Creador
+                        @if($sortField === 'creator' && $sortDirection === 'asc')
+                            <i class="fa-solid fa-arrow-up">
+                        @elseif($sortField === 'creator' && $sortDirection === 'desc')
+                            <i class="fa-solid fa-arrow-down"></i>
+                        @endif
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('updater')">
                         Actualizador
+                        @if($sortField === 'updater' && $sortDirection === 'asc')
+                            <i class="fa-solid fa-arrow-up">
+                        @elseif($sortField === 'updater' && $sortDirection === 'desc')
+                            <i class="fa-solid fa-arrow-down"></i>
+                        @endif
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('created_at')">
                         Fecha creación
+                        @if($sortField === 'created_at' && $sortDirection === 'asc')
+                            <i class="fa-solid fa-arrow-up">
+                        @elseif($sortField === 'created_at' && $sortDirection === 'desc')
+                            <i class="fa-solid fa-arrow-down"></i>
+                        @endif
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('updated_at')">
                         Fecha actualización
+                        @if($sortField === 'updated_at' && $sortDirection === 'asc')
+                            <i class="fa-solid fa-arrow-up">
+                        @elseif($sortField === 'updated_at' && $sortDirection === 'desc')
+                            <i class="fa-solid fa-arrow-down"></i>
+                        @endif
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Acciones
@@ -61,17 +124,32 @@
                                 {{ $photography->order }}
                             </td>
                             <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                                {{ $photography->point_of_interest_id }}
+                                @if( ! empty($photography->point_of_interest_id))
+                                    {{ $photography->point_of_interest_id }}
+                                @else
+                                    <span class="text-red-600">Ninguno</span>
+                                @endif
                             </td>
                             <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                                {{ \App\Models\ThematicArea::find($photography->thematic_area_id)->name }}
+                                @if( ! is_null($photography->thematic_area_id) && ! empty($photography->point_of_interest_id))
+                                    {{ \App\Models\ThematicArea::find($photography->thematic_area_id)->name }}
+                                    (ID: {{ $photography->thematic_area_id }})
+                                @else
+                                    <p class="text-red-600">Ninguna</p>
+                                @endif
                             </td>
                             <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                                 {{ \App\Models\User::find($photography->creator)->name }}
+                                @role('Administrador')
+                                    (ID: {{ \App\Models\User::find($photography->creator)->id }})
+                                @endrole
                             </td>
                             <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                                 @if($photography->updater)
                                     {{ \App\Models\User::find($photography->updater)->name }}
+                                    @role('Administrador')
+                                    (ID: {{ \App\Models\User::find($photography->updater)->id }})
+                                    @endrole
                                 @endif
                             </td>
                             <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
@@ -83,11 +161,11 @@
                                 @endif
                             </td>
                             <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                                <span class="font-medium text-blue-600 cursor-pointer"
+                                <span class="font-medium text-blue-600 cursor-pointer mr-3"
                                       wire:click="show('{{ $photography->id }}')">
                                     <i class="fa-solid fa-eye"></i>
                                 </span>
-                                <span class="font-medium text-blue-600 cursor-pointer mr-3"
+                                <span class="font-medium text-yellow-400 cursor-pointer mr-3"
                                       wire:click="edit('{{ $photography->id }}')">
                                     <i class="fa-solid fa-pencil"></i>
                                 </span>
@@ -136,17 +214,34 @@
                     </x-jet-label>
                 </div>
 
-                <div class="mb-4">
-                    <x-jet-label>
-                        Punto de interes: {{ $showModal['pointOfInterestId'] }}
-                    </x-jet-label>
-                </div>
+                @if( ! empty($showModal['pointOfInterestId']))
+                    <div class="mb-4">
+                        <x-jet-label>
+                            Punto de interés: {{ $showModal['pointOfInterestId'] }}
+                        </x-jet-label>
+                    </div>
 
-                <div class="mb-4">
-                    <x-jet-label>
-                        Área temática: {{ $showModal['thematicAreaName'] }} (ID: {{ $showModal['thematicAreaId'] }})
-                    </x-jet-label>
-                </div>
+                    <div class="mb-4">
+                        <x-jet-label>
+                            @if( ! empty($showModal['thematicAreaId']))
+                                Área temática: {{ $showModal['thematicAreaName'] }} (ID: {{ $showModal['thematicAreaId'] }})
+                            @else
+                                Área temática: <span class="text-red-600">Ninguna</span>
+                            @endif
+                        </x-jet-label>
+                    </div>
+                @else
+                    <div class="mb-4">
+                        <x-jet-label>
+                            Punto de interés: <span class="text-red-600">Ninguno</span>
+                        </x-jet-label>
+                    </div>
+                    <div class="mb-4">
+                        <x-jet-label>
+                            Área temática: <span class="text-red-600">Ninguna</span>
+                        </x-jet-label>
+                    </div>
+                @endif
 
                 <div class="mb-4">
                     <x-jet-label>
@@ -203,7 +298,7 @@
                         Fotografía
                     </label>
 
-                    <x-jet-input class="w-full" type="file" wire:model="createForm.route"></x-jet-input>
+                    <input type="file" wire:model="createForm.route" class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 mt-1"></input>
 
                     <x-jet-input-error for="editForm.route" class="mt-2" />
                 </div>
@@ -215,7 +310,7 @@
                 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600
                 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             wire:model="createForm.pointOfInterestId">
-                        <option>Seleccione un punto de interes</option>
+                        <option>Seleccione un punto de interés</option>
                         @foreach ($pointsOfInterest as $pointOfInterest)
                             <option value="{{ $pointOfInterest->id}}">{{ $pointOfInterest->id }}</option>
                         @endforeach
@@ -232,9 +327,11 @@
                 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             wire:model="createForm.thematicAreaId">
                         <option>Seleccione un area de temática</option>
-                        @foreach ($thematicAreas as $thematicArea)
-                            <option value="{{ $thematicArea->id }}">{{ $thematicArea->name }}</option>
-                        @endforeach
+                        @if( ! is_null($thematicAreas))
+                            @foreach ($thematicAreas as $thematicArea)
+                                <option value="{{ $thematicArea->id }}">{{ $thematicArea->name }}</option>
+                            @endforeach
+                        @endif
                     </select>
                     @error('createForm.thematicAreaId') <span class="text-red-600">{{ $message }}</span> @enderror
                 </div>
@@ -242,11 +339,8 @@
         </x-slot>
 
         <x-slot name="footer">
-            <x-button style="margin-right: 10px;" wire:click="save">
+            <x-button wire:click="save">
                 Crear
-            </x-button>
-            <x-button wire:click="$toggle('createForm.open')">
-                Cerrar
             </x-button>
         </x-slot>
     </x-jet-dialog-modal>
@@ -303,9 +397,12 @@
                             text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full
                             p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
                             dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-1">
-                        @foreach($thematicAreas as $thematicArea)
-                            <option value="{{ $thematicArea->id }}">{{ $thematicArea->name }}</option>
-                        @endforeach
+                        <option value="">Seleccione un area de temática</option>
+                        @if( ! is_null($thematicAreas))
+                            @foreach($thematicAreas as $thematicArea)
+                                <option value="{{ $thematicArea->id }}">{{ $thematicArea->name }}</option>
+                            @endforeach
+                        @endif
                     </select>
 
                     <x-jet-input-error for="editForm.thematicAreaId" class="mt-2" />
@@ -316,9 +413,6 @@
         <x-slot name="footer">
             <x-button style="margin-right: 10px;" wire:click="update({{ $editModal['id'] }})">
                 Actualizar
-            </x-button>
-            <x-button wire:click="$toggle('editModal.open')">
-                Cerrar
             </x-button>
         </x-slot>
     </x-jet-dialog-modal>

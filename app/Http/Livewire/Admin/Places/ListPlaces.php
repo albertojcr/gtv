@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Admin\Places;
 
 use App\Models\Place;
 use App\Models\User;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -13,6 +13,14 @@ class ListPlaces extends Component
     use WithPagination;
 
     public $listeners = ['delete', 'render'];
+
+    public $search;
+    public $searchColumn = 'id';
+
+    public $sortField = 'id';
+    public $sortDirection = 'desc';
+
+    protected $queryString = ['search'];
 
     public $detailsModal = [
         'open' => false,
@@ -45,14 +53,43 @@ class ListPlaces extends Component
     public function delete(Place $place)
     {
         $place->delete();
+
+        Log::info('Place with ID ' . $place->id . ' was deleted ' . $place);
+    }
+
+    public function sort($field)
+    {
+        if ($this->sortField === $field && $this->sortDirection !== 'desc') {
+            $this->sortDirection = 'desc';
+        } else {
+            $this->sortDirection = 'asc';
+        }
+
+        $this->sortField = $field;
+    }
+
+    public function resetFilters()
+    {
+        $this->reset(['search', 'sortField', 'sortDirection']);
+        $this->resetPage();
+    }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
     }
 
     public function render()
     {
         if (auth()->user()->hasRole('Alumno')) {
-            $places = Place::where('creator', auth()->user()->id)->orderByDesc('id')->paginate(10);
+            $places = Place::where('creator', auth()->user()->id)
+                ->where($this->searchColumn, 'like', '%'. $this->search .'%')
+                ->orderBy($this->sortField, $this->sortDirection)
+                ->paginate(10);
         } else {
-            $places = Place::orderByDesc('id')->paginate(10);
+            $places = Place::where($this->searchColumn, 'like', '%'. $this->search .'%')
+                ->orderBy($this->sortField, $this->sortDirection)
+                ->paginate(10);
         }
 
         return view('livewire.admin.places.list-places', compact('places'));
