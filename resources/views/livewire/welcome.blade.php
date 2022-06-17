@@ -1,5 +1,5 @@
 <div>
-        <h1>Bienvenido {{auth()->user()->name}}</h1>
+    <h1 class="text-2xl font-semibold text-gray-700">Bienvenido <span class="text-blue-500 font-bold">{{ auth()->user()->name }}</span></h1>
 
     @hasanyrole('Administrador|Profesor|Alumno')
 
