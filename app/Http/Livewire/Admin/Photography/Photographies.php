@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Photography;
 
+use App\Jobs\ProcessPhotography;
 use App\Models\Photography;
 use App\Models\PointOfInterest;
 use App\Models\ThematicArea;
@@ -131,15 +132,17 @@ class Photographies extends Component
 
         $order = Photography::where('point_of_interest_id', $this->createForm['pointOfInterestId'])->count();
 
-        Photography::create([
+        $photography = Photography::create([
             'route' => 'storage/photos/' . $this->createForm['route']->getFilename(),
-            'order' =>  $order +1,
+            'order' =>  $order + 1,
             'point_of_interest_id' => $this->createForm['pointOfInterestId'],
             'thematic_area_id' => $this->createForm['thematicAreaId'],
             'creator' => auth()->user()->id,
             'updater' => null,
             'updated_at' => null,
         ]);
+
+        ProcessPhotography::dispatch($photography);
 
         $this->reset('createForm');
 
@@ -248,12 +251,7 @@ class Photographies extends Component
     {
         $this->reset(['page']);
 
-        if (auth()->user()->hasRole('Profesor')){
-            $photographies = Photography::where('thematic_area_id', auth()->user()->thematic_area_id)
-                ->where($this->searchColumn, 'like', '%'. $this->search .'%')
-                ->orderBy($this->sortField, $this->sortDirection)
-                ->paginate(10);
-        } else if (auth()->user()->hasRole('Alumno')) {
+        if (auth()->user()->hasRole('Alumno')) {
             $photographies = Photography::where('creator', auth()->user()->id)
                 ->where($this->searchColumn, 'like', '%'. $this->search .'%')
                 ->orderBy($this->sortField, $this->sortDirection)

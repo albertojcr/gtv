@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\WelcomeController;
 use App\Http\Livewire\Admin\Point\ShowPoint;
 use App\Http\Livewire\Admin\Photography\Photographies;
 use App\Http\Livewire\Admin\Places\ListPlaces;
@@ -9,9 +8,10 @@ use App\Http\Livewire\Admin\User\ListUsers;
 use App\Http\Livewire\Admin\Video\ListVideos;
 use App\Http\Livewire\Admin\VideoItem\ListVideoItems;
 use App\Http\Livewire\Admin\Visit\ShowVisits;
+use App\Http\Livewire\Welcome;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', WelcomeController::class)->name('welcome');
+Route::get('/', Welcome::class)->name('welcome');
 
 Route::get('fotografias', Photographies::class)->name('photographies.index');
 
