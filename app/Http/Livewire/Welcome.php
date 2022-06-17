@@ -328,18 +328,13 @@ class Welcome extends Component
                 ->paginate(3);
         }
 
-        if(auth()->user()->hasRole('Alumno')) {
-            $places = Place::where('creator', auth()->user()->id)
-                ->orderByDesc('id')
-                ->paginate(3);
-        } else {
+        if( ! auth()->user()->hasRole('Alumno')) {
             $places = Place::orderByDesc('id')
                 ->paginate(3);
         }
 
         if (auth()->user()->hasRole('Profesor')){
-            $photographies = Photography::where('thematic_area_id', auth()->user()->thematic_area_id)
-                ->where($this->searchColumn, 'like', '%'. $this->search .'%')
+            $photographies = Photography::where($this->searchColumn, 'like', '%'. $this->search .'%')
                 ->orderBy($this->sortField, $this->sortDirection)
                 ->paginate(3);
         } else if (auth()->user()->hasRole('Alumno')) {
@@ -358,7 +353,7 @@ class Welcome extends Component
 
             return view('livewire.welcome', compact('videos', 'thematicAreas', 'users', 'visits', 'points', 'places', 'photographies'));
         }else{
-            return view('livewire.welcome', compact('videos',  'points', 'places', 'photographies'));
+            return view('livewire.welcome', compact('videos',  'points', 'photographies'));
         }
 
     }
