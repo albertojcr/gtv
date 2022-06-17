@@ -20,7 +20,7 @@ class DeletePointTest extends TestCase
 
         $this->actingAs($adminUser);
 
-        $this->assertDatabaseCount('point_of_interests', 0);
+        $this->assertDatabaseCount('point_of_interests', 1);
 
         $this->assertDatabaseHas('point_of_interests', [
             'distance' => $pointOfInterest->distance,
@@ -29,9 +29,8 @@ class DeletePointTest extends TestCase
             'place_id' => $pointOfInterest->place_id,
         ]);
 
-
         Livewire::test(ShowPoint::class)
-            ->call('delete', $pointOfInterest);
+            ->call('delete', $pointOfInterest->id);
 
         $this->assertDatabaseCount('point_of_interests', 0);
     }

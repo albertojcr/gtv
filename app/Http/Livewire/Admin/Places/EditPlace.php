@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin\Places;
 
 use App\Models\Place;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class EditPlace extends Component
@@ -47,6 +48,8 @@ class EditPlace extends Component
             'description' => $this->editForm['description'],
             'updater' => auth()->user()->id,
         ]);
+
+        Log::info('Place with ID ' . $place->id . ' was updated ' . $place);
 
         $this->editForm['open'] = false;
         $this->reset(['editForm']);

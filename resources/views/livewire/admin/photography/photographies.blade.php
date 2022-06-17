@@ -124,14 +124,18 @@
                                 {{ $photography->order }}
                             </td>
                             <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                                {{ $photography->point_of_interest_id }}
+                                @if( ! empty($photography->point_of_interest_id))
+                                    {{ $photography->point_of_interest_id }}
+                                @else
+                                    <span class="text-red-600">Ninguno</span>
+                                @endif
                             </td>
                             <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                                @if( ! is_null($photography->thematic_area_id))
+                                @if( ! is_null($photography->thematic_area_id) && ! empty($photography->point_of_interest_id))
                                     {{ \App\Models\ThematicArea::find($photography->thematic_area_id)->name }}
                                     (ID: {{ $photography->thematic_area_id }})
                                 @else
-                                    <p class="text-red-600">Sin área temática</p>
+                                    <p class="text-red-600">Ninguna</p>
                                 @endif
                             </td>
                             <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
@@ -210,21 +214,34 @@
                     </x-jet-label>
                 </div>
 
-                <div class="mb-4">
-                    <x-jet-label>
-                        Punto de interes: {{ $showModal['pointOfInterestId'] }}
-                    </x-jet-label>
-                </div>
+                @if( ! empty($showModal['pointOfInterestId']))
+                    <div class="mb-4">
+                        <x-jet-label>
+                            Punto de interés: {{ $showModal['pointOfInterestId'] }}
+                        </x-jet-label>
+                    </div>
 
-                <div class="mb-4">
-                    <x-jet-label>
-                        @if( ! empty($showModal['thematicAreaId']))
-                            Área temática: {{ $showModal['thematicAreaName'] }} (ID: {{ $showModal['thematicAreaId'] }})
-                        @else
-                            Área temática: <span class="text-red-600">Sin área temática</span>
-                        @endif
-                    </x-jet-label>
-                </div>
+                    <div class="mb-4">
+                        <x-jet-label>
+                            @if( ! empty($showModal['thematicAreaId']))
+                                Área temática: {{ $showModal['thematicAreaName'] }} (ID: {{ $showModal['thematicAreaId'] }})
+                            @else
+                                Área temática: <span class="text-red-600">Ninguna</span>
+                            @endif
+                        </x-jet-label>
+                    </div>
+                @else
+                    <div class="mb-4">
+                        <x-jet-label>
+                            Punto de interés: <span class="text-red-600">Ninguno</span>
+                        </x-jet-label>
+                    </div>
+                    <div class="mb-4">
+                        <x-jet-label>
+                            Área temática: <span class="text-red-600">Ninguna</span>
+                        </x-jet-label>
+                    </div>
+                @endif
 
                 <div class="mb-4">
                     <x-jet-label>
@@ -293,7 +310,7 @@
                 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600
                 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             wire:model="createForm.pointOfInterestId">
-                        <option>Seleccione un punto de interes</option>
+                        <option>Seleccione un punto de interés</option>
                         @foreach ($pointsOfInterest as $pointOfInterest)
                             <option value="{{ $pointOfInterest->id}}">{{ $pointOfInterest->id }}</option>
                         @endforeach
@@ -310,9 +327,11 @@
                 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             wire:model="createForm.thematicAreaId">
                         <option>Seleccione un area de temática</option>
-                        @foreach ($thematicAreas as $thematicArea)
-                            <option value="{{ $thematicArea->id }}">{{ $thematicArea->name }}</option>
-                        @endforeach
+                        @if( ! is_null($thematicAreas))
+                            @foreach ($thematicAreas as $thematicArea)
+                                <option value="{{ $thematicArea->id }}">{{ $thematicArea->name }}</option>
+                            @endforeach
+                        @endif
                     </select>
                     @error('createForm.thematicAreaId') <span class="text-red-600">{{ $message }}</span> @enderror
                 </div>
@@ -379,9 +398,11 @@
                             p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
                             dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-1">
                         <option value="">Seleccione un area de temática</option>
-                        @foreach($thematicAreas as $thematicArea)
-                            <option value="{{ $thematicArea->id }}">{{ $thematicArea->name }}</option>
-                        @endforeach
+                        @if( ! is_null($thematicAreas))
+                            @foreach($thematicAreas as $thematicArea)
+                                <option value="{{ $thematicArea->id }}">{{ $thematicArea->name }}</option>
+                            @endforeach
+                        @endif
                     </select>
 
                     <x-jet-input-error for="editForm.thematicAreaId" class="mt-2" />

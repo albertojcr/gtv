@@ -18,7 +18,7 @@ class ListThematicAreaTest extends TestCase
 
         $this->actingAs($adminUser);
 
-        $this->get('areas-tematicas')
+        $this->get('thematic-areas')
             ->assertOk()
             ->assertSeeInOrder([
                 $thematicArea1->description,

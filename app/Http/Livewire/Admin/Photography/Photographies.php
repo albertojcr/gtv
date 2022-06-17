@@ -7,6 +7,7 @@ use App\Models\Photography;
 use App\Models\PointOfInterest;
 use App\Models\ThematicArea;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
@@ -52,11 +53,11 @@ class Photographies extends Component
 
     protected $validationAttributes = [
         'createForm.route' => 'fotografía',
-        'createForm.pointOfInterestId' => 'punto de interes',
+        'createForm.pointOfInterestId' => 'punto de interés',
         'createForm.thematicAreaId' => 'área temática',
 
         'editForm.route' => 'fotografía',
-        'editForm.pointOfInterestId' => 'punto de interes',
+        'editForm.pointOfInterestId' => 'punto de interés',
         'editForm.thematicAreaId' => 'área temática',
     ];
 
@@ -168,6 +169,8 @@ class Photographies extends Component
 
         $photography->update();
 
+        Log::info('Photography with ID ' . $photography->id . ' was updated ' . $photography);
+
         $this->reset(['editForm']);
         $this->reset(['editModal']);
 
@@ -205,9 +208,13 @@ class Photographies extends Component
     {
         $this->reset(['editForm']);
 
-        $this->thematicAreas = PointOfInterest::find($photography['point_of_interest_id'])->thematicAreas;
+        if ( ! is_null($photography['point_of_interest_id'])) {
+            $this->thematicAreas = PointOfInterest::find($photography['point_of_interest_id'])->thematicAreas;
+        } else {
+            $this->thematicAreas = null;
+        }
 
-        $this->editForm['pointOfInterestId'] = $photography['point_of_interest_id'];
+        $this->editForm['pointOfInterestId'] = $photography['point_of_interest_id'] ?? '';
         $this->editForm['thematicAreaId'] = $photography->thematicArea->id ?? '';
 
         $this->editModal['id'] = $photography->id;
@@ -219,6 +226,8 @@ class Photographies extends Component
     public function delete(Photography $photography)
     {
         $photography->delete();
+
+        Log::info('Photography with ID ' . $photography->id . ' was deleted ' . $photography);
     }
 
     public function sort($field)

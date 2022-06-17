@@ -2,13 +2,11 @@
     <div class="flex items-center mb-6">
         <h1 class="text-2xl font-semibold text-gray-700">Listado de puntos de interés</h1>
 
-        @hasanyrole('Administrador|Profesor')
         <button type="button"
                 class="ml-12 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ml-auto"
                 wire:click="$emitTo('admin.point.create-point', 'openCreationModal')">
             Añadir
         </button>
-        @endhasanyrole
     </div>
 
     <div class="mb-3">
@@ -50,6 +48,9 @@
                             @elseif($sortField === 'id' && $sortDirection === 'desc')
                                 <i class="fa-solid fa-arrow-down"></i>
                     @endif
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Nombre
                 </th>
                 <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('distance')">
                     Distancia
@@ -122,6 +123,9 @@
                             {{$point->id}}
                         </td>
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                            {{$point->name}}
+                        </td>
+                        <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                             {{$point->distance}}
                         </td>
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
@@ -176,6 +180,11 @@
 
         <x-slot name="content">
             <div class="space-y-3">
+                <div>
+                    <x-jet-label>
+                        Nombre: {{ $detailsModal['name']}}
+                    </x-jet-label>
+                </div>
                 <div>
                     <x-jet-label>
                         Distancia: {{ $detailsModal['distance']}}
