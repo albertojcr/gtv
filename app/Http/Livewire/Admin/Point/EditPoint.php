@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Admin\Point;
 
 use App\Models\Place;
 use App\Models\PointOfInterest;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use function view;
 
@@ -67,6 +68,8 @@ class EditPoint extends Component
             'longitude' => $this->editForm['longitude'],
             'place_id' => $this->editForm['place'],
         ]);
+
+        Log::info('Point of interest with ID ' . $point->id . ' was updated ' . $point);
 
         $this->editForm['open'] = false;
         $this->reset(['editForm']);

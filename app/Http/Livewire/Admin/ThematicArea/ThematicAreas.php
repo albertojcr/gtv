@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Admin\ThematicArea;
 
 use App\Jobs\ProcessThematicArea;
 use App\Models\ThematicArea;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -112,6 +113,8 @@ class ThematicAreas extends Component
 
         $thematicArea->update();
 
+        Log::info('Thematic area with ID ' . $thematicArea->id . ' was updated ' . $thematicArea);
+
         $this->editModal['open'] = false;
         $this->reset(['editForm']);
 
@@ -123,6 +126,8 @@ class ThematicAreas extends Component
         $thematicArea->pointsOfInterest()->detach();
 
         $thematicArea->delete();
+
+        Log::info('Thematic area with ID ' . $thematicArea->id . ' was updated ' . $photography);
     }
 
     public function sort($field)

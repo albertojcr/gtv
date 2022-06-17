@@ -7,6 +7,7 @@ use App\Models\Photography;
 use App\Models\PointOfInterest;
 use App\Models\ThematicArea;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
@@ -172,6 +173,8 @@ class Photographies extends Component
 
         $photography->update();
 
+        Log::info('Photography with ID ' . $photography->id . ' was updated ' . $photography);
+
         $this->reset(['editForm']);
         $this->reset(['editModal']);
 
@@ -223,6 +226,8 @@ class Photographies extends Component
     public function delete(Photography $photography)
     {
         $photography->delete();
+
+        Log::info('Photography with ID ' . $photography->id . ' was deleted ' . $photography);
     }
 
     public function sort($field)
