@@ -1,10 +1,11 @@
 <div>
     <h1 class="text-2xl font-semibold text-gray-700">Bienvenido <span class="text-blue-500 font-bold">{{ auth()->user()->name }}</span></h1>
 
-    @role('Administrador')
+    <div class="mt-6 space-y-10">
+        @role('Administrador')
 
         {{--TABLA USUARIOS   ID-NOMBRE-EMAIL--}}
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-6">
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -61,9 +62,9 @@
                 </tbody>
             </table>
         </div>
-    
+
         {{--TABLA VISITAS   ID-SSOO-PUNTO DE INTERÉS--}}
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-6">
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -109,12 +110,12 @@
             </table>
         </div>
 
-    @endrole
+        @endrole
 
-    @hasanyrole('Administrador|Profesor')
+        @hasanyrole('Administrador|Profesor')
 
         {{--TABLA ÁREAS TEMÁTICAS   ID-NOMBRE-DESCRIPCIÓN--}}
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-6">
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -160,194 +161,195 @@
             </table>
         </div>
 
-    @endhasanyrole
+        @endhasanyrole
 
-    {{--TABLA PUNTOS DE INTERÉS   ID-DISTANCIA-SITIO--}}
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-6">
-        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-                <th scope="col" class="px-6 py-3" colspan="2">
-                    ÚLTIMOS PUNTOS DE INTERÉS CREADOS
-                </th>
-                <th scope="col" class="px-6 py-3 text-right" colspan="2">
-                    TOTAL - {{$countpoints}}
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td class="px-6 py-3">
-                    ID
-                </td>
-                <td class="px-6 py-3">
-                    DISTANCIA
-                </td>
-                <td class="px-6 py-3">
-                    SITIO
-                </td>
-            </tr>
-            @foreach($points as $point)
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td class="px-6 py-4">
-                        {{$point->id}}
+        {{--TABLA PUNTOS DE INTERÉS   ID-DISTANCIA-SITIO--}}
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3" colspan="2">
+                        ÚLTIMOS PUNTOS DE INTERÉS CREADOS
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-right" colspan="2">
+                        TOTAL - {{$countpoints}}
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="px-6 py-3">
+                        ID
                     </td>
-                    <td class="px-6 py-4">
-                        {{$point->distance}}
+                    <td class="px-6 py-3">
+                        DISTANCIA
                     </td>
-                    <td class="px-6 py-4">
-                        {{$point->place->name}}
-                    </td>
-                    <td class="px-6 py-4 text-right">
-                        <button wire:click="showPoints('{{ $point->id }}')" class="text-orange-500 hover:text-orange-400 hover:underline ml-2 font-semibold">
-                            Ver más
-                        </button>
+                    <td class="px-6 py-3">
+                        SITIO
                     </td>
                 </tr>
-            @endforeach
-            </tbody>
-        </table>
-    </div>
+                @foreach($points as $point)
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4">
+                            {{$point->id}}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{$point->distance}}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{$point->place->name}}
+                        </td>
+                        <td class="px-6 py-4 text-right">
+                            <button wire:click="showPoints('{{ $point->id }}')" class="text-orange-500 hover:text-orange-400 hover:underline ml-2 font-semibold">
+                                Ver más
+                            </button>
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
 
-    {{--TABLA LUGARES   ID-NOMBRE-DESCRIPCION--}}
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-6">
-        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-                <th scope="col" class="px-6 py-3" colspan="2">
-                    ÚLTIMOS LUGARES CREADOS
-                </th>
-                <th scope="col" class="px-6 py-3 text-right" colspan="2">
-                    TOTAL - {{$countplaces}}
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td class="px-6 py-3">
-                    ID
-                </td>
-                <td class="px-6 py-3">
-                    NOMBRE
-                </td>
-                <td class="px-6 py-3">
-                    DESCRIPCIÓN
-                </td>
-            </tr>
-            @foreach($places as $place)
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td class="px-6 py-4">
-                        {{ $place->id }}
+        {{--TABLA LUGARES   ID-NOMBRE-DESCRIPCION--}}
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3" colspan="2">
+                        ÚLTIMOS LUGARES CREADOS
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-right" colspan="2">
+                        TOTAL - {{$countplaces}}
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="px-6 py-3">
+                        ID
                     </td>
-                    <td class="px-6 py-4">
-                        {{ $place->name }}
+                    <td class="px-6 py-3">
+                        NOMBRE
                     </td>
-                    <td class="px-6 py-4">
-                        {{ $place->description }}
-                    </td>
-                    <td class="px-6 py-4 text-right">
-                        <button wire:click="showPlaces('{{ $place->id }}')" class="text-orange-500 hover:text-orange-400 hover:underline ml-2 font-semibold">
-                            Ver más
-                        </button>
+                    <td class="px-6 py-3">
+                        DESCRIPCIÓN
                     </td>
                 </tr>
-            @endforeach
-            </tbody>
-        </table>
-    </div>
+                @foreach($places as $place)
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4">
+                            {{ $place->id }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $place->name }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $place->description }}
+                        </td>
+                        <td class="px-6 py-4 text-right">
+                            <button wire:click="showPlaces('{{ $place->id }}')" class="text-orange-500 hover:text-orange-400 hover:underline ml-2 font-semibold">
+                                Ver más
+                            </button>
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
 
-    {{--TABLA VIDEOS   ID-DESCRIPCIÓN-AREA--}}
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-6">
-        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-                <th scope="col" class="px-6 py-3" colspan="2">
-                    ÚLTIMOS VIDEOS SUBIDOS
-                </th>
-                <th scope="col" class="px-6 py-3 text-right" colspan="2">
-                    TOTAL - {{$countvideos}}
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td class="px-6 py-3">
-                    ID
-                </td>
-                <td class="px-6 py-3">
-                    DESCRIPCIÓN
-                </td>
-                <td class="px-6 py-3">
-                    ÁREA TEMÁTICA
-                </td>
-            </tr>
-            @foreach($videos as $video)
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td class="px-6 py-4">
-                        {{ $video->id }}
+        {{--TABLA VIDEOS   ID-DESCRIPCIÓN-AREA--}}
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3" colspan="2">
+                        ÚLTIMOS VIDEOS SUBIDOS
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-right" colspan="2">
+                        TOTAL - {{$countvideos}}
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="px-6 py-3">
+                        ID
                     </td>
-                    <td class="px-6 py-4">
-                        {{ $video->description }}
+                    <td class="px-6 py-3">
+                        DESCRIPCIÓN
                     </td>
-                    <td class="px-6 py-4">
-                        {{ $video->thematicArea->name }}
-                    </td>
-                    <td class="px-6 py-4 text-right">
-                        <button wire:click="showVideos('{{ $video->id }}')" class="text-orange-500 hover:text-orange-400 hover:underline ml-2 font-semibold">
-                            Ver más
-                        </button>
+                    <td class="px-6 py-3">
+                        ÁREA TEMÁTICA
                     </td>
                 </tr>
-            @endforeach
-            </tbody>
-        </table>
-    </div>
+                @foreach($videos as $video)
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4">
+                            {{ $video->id }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $video->description }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $video->thematicArea->name }}
+                        </td>
+                        <td class="px-6 py-4 text-right">
+                            <button wire:click="showVideos('{{ $video->id }}')" class="text-orange-500 hover:text-orange-400 hover:underline ml-2 font-semibold">
+                                Ver más
+                            </button>
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
 
-    {{--TABLA FOTOGRAFÍAS   ID-PUNTO INTERÉS-ÁREA TEMÁTICA--}}
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-6">
-        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-                <th scope="col" class="px-6 py-3" colspan="2">
-                    ÚLTIMAS FOTOGRAFÍAS SUBIDAS
-                </th>
-                <th scope="col" class="px-6 py-3 text-right" colspan="2">
-                    TOTAL - {{$countphotographies}}
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td class="px-6 py-3">
-                    ID
-                </td>
-                <td class="px-6 py-3">
-                    PUNTO INTERÉS
-                </td>
-                <td class="px-6 py-3">
-                    ÁREA TEMÁTICA
-                </td>
-            </tr>
-            @foreach($photographies as $photography)
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td class="px-6 py-4">
-                        {{ $photography->id }}
+        {{--TABLA FOTOGRAFÍAS   ID-PUNTO INTERÉS-ÁREA TEMÁTICA--}}
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3" colspan="2">
+                        ÚLTIMAS FOTOGRAFÍAS SUBIDAS
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-right" colspan="2">
+                        TOTAL - {{$countphotographies}}
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="px-6 py-3">
+                        ID
                     </td>
-                    <td class="px-6 py-4">
-                        {{ $photography->point_of_interest_id }}
+                    <td class="px-6 py-3">
+                        PUNTO INTERÉS
                     </td>
-                    <td class="px-6 py-4">
-                        {{ $photography->thematic_area_id }}
-                    </td>
-                    <td class="px-6 py-4 text-right">
-                        <button wire:click="showPhotographies('{{ $photography->id }}')" class="text-orange-500 hover:text-orange-400 hover:underline ml-2 font-semibold">
-                            Ver más
-                        </button>
+                    <td class="px-6 py-3">
+                        ÁREA TEMÁTICA
                     </td>
                 </tr>
-            @endforeach
-            </tbody>
-        </table>
+                @foreach($photographies as $photography)
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4">
+                            {{ $photography->id }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $photography->point_of_interest_id }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $photography->thematic_area_id }}
+                        </td>
+                        <td class="px-6 py-4 text-right">
+                            <button wire:click="showPhotographies('{{ $photography->id }}')" class="text-orange-500 hover:text-orange-400 hover:underline ml-2 font-semibold">
+                                Ver más
+                            </button>
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 
 
