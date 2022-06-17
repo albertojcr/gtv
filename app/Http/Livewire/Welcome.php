@@ -314,9 +314,8 @@ class Welcome extends Component
         if(auth()->user()->hasRole('Administrador')
             || auth()->user()->hasRole('Profesor')) {
 
-            $visits = Visit::all()
-                ->sortByDesc('id')
-                ->find(3);
+            $visits = Visit::orderByDesc('id')
+                ->paginate(3);
         }
 
         if (auth()->user()->hasRole('Alumno')) {
