@@ -1,5 +1,6 @@
 <div>
 
+
     @hasanyrole('Administrador|Profesor|Alumno')
 
     {{--TABLA VIDEOS   ID-DESCRIPCIÓN-AREA--}}
@@ -499,7 +500,7 @@
                 </div>
                 <div>
                     <x-jet-label>
-                        Rol: {{ $user->roles->first()->name }}
+                        Rol: {{ $detailsModalUsers['rol'] }}
                     </x-jet-label>
                 </div>
                 <div>

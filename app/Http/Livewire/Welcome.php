@@ -64,6 +64,7 @@ class Welcome extends Component
         'id' => null,
         'name' => '',
         'email' => '',
+        'rol' => '',
         'password' => '',
         'emailVerifiedAt' => '',
         'createdAt' => '',
@@ -168,6 +169,7 @@ class Welcome extends Component
         $this->detailsModalUsers['name'] = $user->name;
         $this->detailsModalUsers['email'] = $user->email;
         $this->detailsModalUsers['password'] = $user->password;
+        $this->detailsModalUsers['rol'] = $user->roles->first()->name;
         $this->detailsModalUsers['emailVerifiedAt'] = $user->email_verified_at;
         $this->detailsModalUsers['createdAt'] = $user->created_at;
         $this->detailsModalUsers['updatedAt'] = $user->updated_at;
@@ -350,6 +352,13 @@ class Welcome extends Component
                 ->paginate(3);
         }
 
-        return view('livewire.welcome', compact('videos', 'thematicAreas', 'users', 'visits', 'points', 'places', 'photographies'));
+        if(auth()->user()->hasRole('Administrador')
+            || auth()->user()->hasRole('Profesor')) {
+
+            return view('livewire.welcome', compact('videos', 'thematicAreas', 'users', 'visits', 'points', 'places', 'photographies'));
+        }else{
+            return view('livewire.welcome', compact('videos',  'points', 'places', 'photographies'));
+        }
+
     }
 }
