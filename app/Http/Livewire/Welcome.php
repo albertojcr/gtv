@@ -22,6 +22,7 @@ class Welcome extends Component
     public $countpoints;
     public $countplaces;
     public $countphotographies;
+    public $nombreUsuario;
 
     public $search;
     public $searchColumn = 'id';

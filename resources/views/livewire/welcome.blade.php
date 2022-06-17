@@ -1,5 +1,5 @@
 <div>
-
+        <h1>Bienvenido {{auth()->user()->name}}</h1>
 
     @hasanyrole('Administrador|Profesor|Alumno')
 
