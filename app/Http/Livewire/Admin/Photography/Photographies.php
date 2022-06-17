@@ -51,11 +51,11 @@ class Photographies extends Component
 
     protected $validationAttributes = [
         'createForm.route' => 'fotografía',
-        'createForm.pointOfInterestId' => 'punto de interes',
+        'createForm.pointOfInterestId' => 'punto de interés',
         'createForm.thematicAreaId' => 'área temática',
 
         'editForm.route' => 'fotografía',
-        'editForm.pointOfInterestId' => 'punto de interes',
+        'editForm.pointOfInterestId' => 'punto de interés',
         'editForm.thematicAreaId' => 'área temática',
     ];
 
@@ -111,16 +111,12 @@ class Photographies extends Component
     {
         $this->createForm['thematicAreaId'] = '';
         $this->thematicAreas = PointOfInterest::find($this->createForm['pointOfInterestId'])->thematicAreas;
-
-        //$this->createForm['thematicAreaId'] = $this->thematicAreas[0]->id;
     }
 
     public function updatedEditFormPointOfInterestId()
     {
         $this->editForm['thematicAreaId'] = '';
         $this->thematicAreas = PointOfInterest::find($this->editForm['pointOfInterestId'])->thematicAreas;
-
-        //$this->editForm['thematicAreaId'] = $this->thematicAreas[0]->id;
     }
 
     public function save()
@@ -206,9 +202,13 @@ class Photographies extends Component
     {
         $this->reset(['editForm']);
 
-        $this->thematicAreas = PointOfInterest::find($photography['point_of_interest_id'])->thematicAreas;
+        if ( ! is_null($photography['point_of_interest_id'])) {
+            $this->thematicAreas = PointOfInterest::find($photography['point_of_interest_id'])->thematicAreas;
+        } else {
+            $this->thematicAreas = null;
+        }
 
-        $this->editForm['pointOfInterestId'] = $photography['point_of_interest_id'];
+        $this->editForm['pointOfInterestId'] = $photography['point_of_interest_id'] ?? '';
         $this->editForm['thematicAreaId'] = $photography->thematicArea->id ?? '';
 
         $this->editModal['id'] = $photography->id;

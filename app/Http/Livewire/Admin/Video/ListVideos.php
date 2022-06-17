@@ -38,7 +38,7 @@ class ListVideos extends Component
         $this->detailsModal['description'] = $video->description;
         $this->detailsModal['route'] = Storage::url($video->route);
         $this->detailsModal['order'] = $video->order;
-        $this->detailsModal['pointOfInterest'] = $video->pointOfInterest->id;
+        $this->detailsModal['pointOfInterest'] = $video->pointOfInterest->id ?? '';
         $this->detailsModal['thematicAreaName'] = $video->thematicArea->name ?? '';
         $this->detailsModal['thematicAreaId'] = $video->thematicArea->id ?? '';
         $this->detailsModal['creatorName'] = User::find($video->creator)->name;

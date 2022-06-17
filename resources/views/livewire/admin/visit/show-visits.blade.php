@@ -45,7 +45,11 @@
                             <div>{{ $visit->ssooversion }}</div>
                         </td>
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                            <div >{{ $visit->point_of_interest_id }}</div>
+                            @if( ! empty($visit->point_of_interest_id))
+                                <div >{{ $visit->point_of_interest_id }}</div>
+                            @else
+                                <span class="text-red-600">Ninguno</span>
+                            @endif
                         </td>
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                             <div>{{ $visit->created_at }}</div>

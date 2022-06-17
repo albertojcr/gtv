@@ -39,7 +39,7 @@ class EditVideo extends Component
 
         $this->videoId = $video->id;
         $this->videoRoute = Storage::url($video->route);
-        $this->editForm['pointOfInterest'] = $video->pointOfInterest->id;
+        $this->editForm['pointOfInterest'] = $video->pointOfInterest->id ?? '';
         $this->editForm['thematicArea'] = $video->thematicArea->id ?? '';
         $this->editForm['description'] = $video->description;
 
@@ -56,7 +56,11 @@ class EditVideo extends Component
 
     public function getThematicAreas()
     {
-        $selectedPointOfInterest = PointOfInterest::find($this->editForm['pointOfInterest']);
+        if ( ! empty($this->thematicAreas)) {
+            $selectedPointOfInterest = PointOfInterest::find($this->editForm['pointOfInterest']);
+        } else {
+            $selectedPointOfInterest = PointOfInterest::first();
+        }
         $this->thematicAreas = $selectedPointOfInterest->thematicAreas;
     }
 

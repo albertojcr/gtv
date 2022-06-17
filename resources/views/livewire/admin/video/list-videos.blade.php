@@ -57,16 +57,20 @@
                             {{ $video->description }}
                         </td>
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                            {{ $video->pointOfInterest->id }}
+                            @if( ! is_null($video->pointOfInterest))
+                                {{ $video->pointOfInterest->id }}
+                            @else
+                                <span class="text-red-600">Ninguno</span>
+                            @endif
                         </td>
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                             {{ $video->order }}
                         </td>
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                            @if( ! is_null($video->thematic_area_id))
+                            @if( ! is_null($video->thematic_area_id) &&  ! is_null($video->pointOfInterest))
                                 {{ $video->thematicArea->name }}
                             @else
-                               <span class="text-red-600">Sin área temática</span>
+                               <span class="text-red-600">Ninguna</span>
                             @endif
                         </td>
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
@@ -135,15 +139,19 @@
                 </div>
                 <div>
                     <x-jet-label>
-                        Punto de interés: {{ $detailsModal['pointOfInterest'] }}
+                        @if( ! empty($detailsModal['pointOfInterest']))
+                            Punto de interés: {{ $detailsModal['pointOfInterest'] }}
+                        @else
+                            Punto de interés: <span class="text-red-600">Ninguno</span>
+                        @endif
                     </x-jet-label>
                 </div>
                 <div>
                     <x-jet-label>
-                        @if( ! empty($detailsModal['thematicAreaId']))
+                        @if( ! empty($detailsModal['thematicAreaId']) && ! empty($detailsModal['pointOfInterest']))
                             Área temática: {{ $detailsModal['thematicAreaName'] }} ({{ $detailsModal['thematicAreaId'] }})
                         @else
-                            Área temática: <span class="text-red-600">Sin área temática</span>
+                            Área temática: <span class="text-red-600">Ninguna</span>
                         @endif
                     </x-jet-label>
                 </div>
