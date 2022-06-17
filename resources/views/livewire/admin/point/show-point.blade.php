@@ -1,6 +1,6 @@
 <div>
     <div class="flex items-center mb-6">
-        <h1 class="text-2xl font-semibold text-gray-700">Listado de Puntos de Interes</h1>
+        <h1 class="text-2xl font-semibold text-gray-700">Listado de puntos de interés</h1>
 
         @hasanyrole('Administrador|Profesor')
         <button type="button"
@@ -82,7 +82,7 @@
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                             {{$point->created_at}}
                         </td>
-                        <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap flex gap-4">
+                        <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap flex gap-4 mt-10">
                             <span class="font-medium text-yellow-400 cursor-pointer"
                                   wire:click="$emitTo('admin.point.edit-point', 'openEditModal', '{{$point->id}}')">
                                 <i class="fa-solid fa-pencil"></i>

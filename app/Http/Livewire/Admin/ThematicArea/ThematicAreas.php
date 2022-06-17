@@ -146,9 +146,12 @@ class ThematicAreas extends Component
 
     public function render()
     {
-        if(auth()->user()->hasRole('Super Administrador')
-            || auth()->user()->hasRole('Administrador')) {
-
+        if (auth()->user()->hasRole('Alumno')) {
+            $thematicAreas = ThematicArea::where('creator', auth()->user()->id)->orderByDesc('id')
+                ->where($this->searchColumn, 'like', '%'. $this->search .'%')
+                ->orderBy($this->sortField, $this->sortDirection)
+                ->paginate(10);
+        } else {
             $thematicAreas = ThematicArea::where($this->searchColumn, 'like', '%'. $this->search .'%')
                 ->orderBy($this->sortField, $this->sortDirection)
                 ->paginate(10);

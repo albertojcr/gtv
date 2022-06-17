@@ -281,7 +281,7 @@
                         Fotografía
                     </label>
 
-                    <x-jet-input class="w-full" type="file" wire:model="createForm.route"></x-jet-input>
+                    <input type="file" wire:model="createForm.route" class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 mt-1"></input>
 
                     <x-jet-input-error for="editForm.route" class="mt-2" />
                 </div>
@@ -320,11 +320,8 @@
         </x-slot>
 
         <x-slot name="footer">
-            <x-button style="margin-right: 10px;" wire:click="save">
+            <x-button wire:click="save">
                 Crear
-            </x-button>
-            <x-button wire:click="$toggle('createForm.open')">
-                Cerrar
             </x-button>
         </x-slot>
     </x-jet-dialog-modal>
@@ -395,9 +392,6 @@
         <x-slot name="footer">
             <x-button style="margin-right: 10px;" wire:click="update({{ $editModal['id'] }})">
                 Actualizar
-            </x-button>
-            <x-button wire:click="$toggle('editModal.open')">
-                Cerrar
             </x-button>
         </x-slot>
     </x-jet-dialog-modal>

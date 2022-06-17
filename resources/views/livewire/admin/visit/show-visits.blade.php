@@ -1,6 +1,6 @@
 <div>
     <div class="flex items-center mb-6">
-        <h1 class="text-2xl font-semibold text-gray-700">Listado de vídeos</h1>
+        <h1 class="text-2xl font-semibold text-gray-700">Listado de visitas</h1>
     </div>
 
     @if(count($visits))
