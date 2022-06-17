@@ -18,36 +18,67 @@ class EditPointTest extends TestCase
         $adminUser = $this->createAdmin();
         $place = $this->createPlace();
         $pointOfInterest = factory(PointOfInterest::class)->create([
-            'latitude' => '12',
-            'longitude' => '16',
             'place_id' => $place->id,
         ]);
 
         $this->assertDatabaseCount('point_of_interests', 1);
-
-        $this->assertDatabaseHas('point_of_interests', [
-            'longitude' => $pointOfInterest->longitude,
-            'latitude' => $pointOfInterest->latitude,
-            'place_id' => $place->id,
-            'creator' => $adminUser->id,
-            'updater' => null,
-        ]);
 
         $this->actingAs($adminUser);
 
         $place2 = $this->createPlace();
 
         Livewire::test(EditPoint::class)
+            ->set('editForm.name', 'Prueba')
+            ->set('editForm.distance', '30')
+            ->set('editForm.latitude', '84')
+            ->set('editForm.longitude', '78')
             ->set('editForm.place', $place2->id)
-            ->set('editForm.longitude', '99')
             ->call('update', $pointOfInterest);
 
         $this->assertDatabaseCount('point_of_interests', 1);
-
         $this->assertDatabaseHas('point_of_interests', [
-            'longitude' => '99',
-            'latitude' => $pointOfInterest->latitude,
+            'id' => $pointOfInterest->id,
+            'name' => 'Prueba',
+            'distance' => '30',
+            'latitude' => '84',
+            'longitude' => '78',
             'place_id' => $place2->id,
+            'creator' => $adminUser->id,
+            'updater' => $adminUser->id,
+        ]);
+    }
+
+    /** @test */
+    public function TestNameIsRequired()
+    {
+        $adminUser = $this->createAdmin();
+        $place = $this->createPlace();
+        $pointOfInterest = factory(PointOfInterest::class)->create([
+            'place_id' => $place->id,
+        ]);
+
+        $this->assertDatabaseCount('point_of_interests', 1);
+
+        $this->actingAs($adminUser);
+
+        $place2 = $this->createPlace();
+
+        Livewire::test(EditPoint::class)
+            ->set('editForm.distance', '30')
+            ->set('editForm.latitude', '84')
+            ->set('editForm.longitude', '78')
+            ->set('editForm.place', $place2->id)
+            ->call('update', $pointOfInterest)
+            ->assertHasErrors(['editForm.name' => 'required']);;
+
+        $this->assertDatabaseCount('point_of_interests', 1);
+        $this->assertDatabaseHas('point_of_interests', [
+            'id' => $pointOfInterest->id,
+            'name' => $pointOfInterest->name,
+            'distance' => $pointOfInterest->distance,
+            'latitude' => $pointOfInterest->latitude,
+            'longitude' => $pointOfInterest->longitude,
+            'place_id' => $place->id,
             'creator' => $adminUser->id,
             'updater' => $adminUser->id,
         ]);
@@ -59,37 +90,33 @@ class EditPointTest extends TestCase
         $adminUser = $this->createAdmin();
         $place = $this->createPlace();
         $pointOfInterest = factory(PointOfInterest::class)->create([
-            'latitude' => '12',
-            'longitude' => '16',
             'place_id' => $place->id,
         ]);
 
         $this->assertDatabaseCount('point_of_interests', 1);
-
-        $this->assertDatabaseHas('point_of_interests', [
-            'longitude' => $pointOfInterest->longitude,
-            'latitude' => $pointOfInterest->latitude,
-            'place_id' => $place->id,
-            'creator' => $adminUser->id,
-            'updater' => null,
-        ]);
 
         $this->actingAs($adminUser);
 
+        $place2 = $this->createPlace();
+
         Livewire::test(EditPoint::class)
-            ->set('editForm.latitude', '10')
-            ->set('editForm.longitude', '15')
-            ->set('editForm.place', $place->id)
+            ->set('editForm.name', 'Prueba')
+            ->set('editForm.latitude', '84')
+            ->set('editForm.longitude', '78')
+            ->set('editForm.place', $place2->id)
             ->call('update', $pointOfInterest)
-            ->assertHasErrors(['editForm.distance' => 'required']);
+            ->assertHasErrors(['editForm.distance' => 'required']);;
 
         $this->assertDatabaseCount('point_of_interests', 1);
-        $this->assertDatabaseHas('points_of_interests', [
-            'longitude' => $pointOfInterest->longitude,
+        $this->assertDatabaseHas('point_of_interests', [
+            'id' => $pointOfInterest->id,
+            'name' => $pointOfInterest->name,
+            'distance' => $pointOfInterest->distance,
             'latitude' => $pointOfInterest->latitude,
+            'longitude' => $pointOfInterest->longitude,
             'place_id' => $place->id,
             'creator' => $adminUser->id,
-            'updater' => null,
+            'updater' => $adminUser->id,
         ]);
     }
 
@@ -99,37 +126,33 @@ class EditPointTest extends TestCase
         $adminUser = $this->createAdmin();
         $place = $this->createPlace();
         $pointOfInterest = factory(PointOfInterest::class)->create([
-            'latitude' => '12',
-            'longitude' => '16',
             'place_id' => $place->id,
         ]);
 
         $this->assertDatabaseCount('point_of_interests', 1);
-
-        $this->assertDatabaseHas('point_of_interests', [
-            'longitude' => $pointOfInterest->longitude,
-            'latitude' => $pointOfInterest->latitude,
-            'place_id' => $place->id,
-            'creator' => $adminUser->id,
-            'updater' => null,
-        ]);
 
         $this->actingAs($adminUser);
 
+        $place2 = $this->createPlace();
+
         Livewire::test(EditPoint::class)
-            ->set('editForm.distance', '10')
-            ->set('editForm.longitude', '15')
-            ->set('editForm.place', $place->id)
+            ->set('editForm.name', 'Prueba')
+            ->set('editForm.distance', '20')
+            ->set('editForm.longitude', '78')
+            ->set('editForm.place', $place2->id)
             ->call('update', $pointOfInterest)
-            ->assertHasErrors(['editForm.latitude' => 'required']);
+            ->assertHasErrors(['editForm.latitude' => 'required']);;
 
         $this->assertDatabaseCount('point_of_interests', 1);
-        $this->assertDatabaseHas('points_of_interests', [
-            'longitude' => $pointOfInterest->longitude,
+        $this->assertDatabaseHas('point_of_interests', [
+            'id' => $pointOfInterest->id,
+            'name' => $pointOfInterest->name,
+            'distance' => $pointOfInterest->distance,
             'latitude' => $pointOfInterest->latitude,
+            'longitude' => $pointOfInterest->longitude,
             'place_id' => $place->id,
             'creator' => $adminUser->id,
-            'updater' => null,
+            'updater' => $adminUser->id,
         ]);
     }
 
@@ -139,37 +162,33 @@ class EditPointTest extends TestCase
         $adminUser = $this->createAdmin();
         $place = $this->createPlace();
         $pointOfInterest = factory(PointOfInterest::class)->create([
-            'latitude' => '12',
-            'longitude' => '16',
             'place_id' => $place->id,
         ]);
 
         $this->assertDatabaseCount('point_of_interests', 1);
-
-        $this->assertDatabaseHas('point_of_interests', [
-            'longitude' => $pointOfInterest->longitude,
-            'latitude' => $pointOfInterest->latitude,
-            'place_id' => $place->id,
-            'creator' => $adminUser->id,
-            'updater' => null,
-        ]);
 
         $this->actingAs($adminUser);
 
+        $place2 = $this->createPlace();
+
         Livewire::test(EditPoint::class)
-            ->set('editForm.distance', '10')
-            ->set('editForm.latitude', '15')
-            ->set('editForm.place', $place->id)
+            ->set('editForm.name', 'Prueba')
+            ->set('editForm.distance', '20')
+            ->set('editForm.latitude', '84')
+            ->set('editForm.place', $place2->id)
             ->call('update', $pointOfInterest)
-            ->assertHasErrors(['editForm.longitude' => 'required']);
+            ->assertHasErrors(['editForm.longitude' => 'required']);;
 
         $this->assertDatabaseCount('point_of_interests', 1);
-        $this->assertDatabaseHas('points_of_interests', [
-            'longitude' => $pointOfInterest->longitude,
+        $this->assertDatabaseHas('point_of_interests', [
+            'id' => $pointOfInterest->id,
+            'name' => $pointOfInterest->name,
+            'distance' => $pointOfInterest->distance,
             'latitude' => $pointOfInterest->latitude,
+            'longitude' => $pointOfInterest->longitude,
             'place_id' => $place->id,
             'creator' => $adminUser->id,
-            'updater' => null,
+            'updater' => $adminUser->id,
         ]);
     }
 
@@ -179,38 +198,33 @@ class EditPointTest extends TestCase
         $adminUser = $this->createAdmin();
         $place = $this->createPlace();
         $pointOfInterest = factory(PointOfInterest::class)->create([
-            'latitude' => '12',
-            'longitude' => '16',
             'place_id' => $place->id,
         ]);
 
         $this->assertDatabaseCount('point_of_interests', 1);
 
-        $this->assertDatabaseHas('point_of_interests', [
-            'longitude' => $pointOfInterest->longitude,
-            'latitude' => $pointOfInterest->latitude,
-            'place_id' => $place->id,
-            'creator' => $adminUser->id,
-            'updater' => null,
-        ]);
-
         $this->actingAs($adminUser);
+
         $place2 = $this->createPlace();
 
         Livewire::test(EditPoint::class)
-            ->set('editForm.distance', '10')
-            ->set('editForm.latitude', '15')
-            ->set('editForm.place', $place2->id)
+            ->set('editForm.name', 'Prueba')
+            ->set('editForm.distance', '20')
+            ->set('editForm.latitude', '84')
+            ->set('editForm.longitude', '78')
             ->call('update', $pointOfInterest)
-            ->assertHasErrors(['editForm.place' => 'required']);
+            ->assertHasErrors(['editForm.place' => 'required']);;
 
         $this->assertDatabaseCount('point_of_interests', 1);
-        $this->assertDatabaseHas('points_of_interests', [
-            'longitude' => $pointOfInterest->longitude,
+        $this->assertDatabaseHas('point_of_interests', [
+            'id' => $pointOfInterest->id,
+            'name' => $pointOfInterest->name,
+            'distance' => $pointOfInterest->distance,
             'latitude' => $pointOfInterest->latitude,
+            'longitude' => $pointOfInterest->longitude,
             'place_id' => $place->id,
             'creator' => $adminUser->id,
-            'updater' => null,
+            'updater' => $adminUser->id,
         ]);
     }
 
@@ -220,38 +234,34 @@ class EditPointTest extends TestCase
         $adminUser = $this->createAdmin();
         $place = $this->createPlace();
         $pointOfInterest = factory(PointOfInterest::class)->create([
-            'latitude' => '12',
-            'longitude' => '16',
             'place_id' => $place->id,
         ]);
 
         $this->assertDatabaseCount('point_of_interests', 1);
 
-        $this->assertDatabaseHas('point_of_interests', [
-            'longitude' => $pointOfInterest->longitude,
-            'latitude' => $pointOfInterest->latitude,
-            'place_id' => $place->id,
-            'creator' => $adminUser->id,
-            'updater' => null,
-        ]);
-
         $this->actingAs($adminUser);
+
         $place2 = $this->createPlace();
 
         Livewire::test(EditPoint::class)
-            ->set('editForm.distance', '10')
-            ->set('editForm.latitude', '15')
-            ->set('editForm.place', '99999999')
+            ->set('editForm.name', 'Prueba')
+            ->set('editForm.distance', '20')
+            ->set('editForm.latitude', '84')
+            ->set('editForm.longitude', '78')
+            ->set('editForm.place', '99')
             ->call('update', $pointOfInterest)
-            ->assertHasErrors(['editForm.place' => 'exist']);
+            ->assertHasErrors(['editForm.place' => 'exists']);;
 
         $this->assertDatabaseCount('point_of_interests', 1);
-        $this->assertDatabaseHas('points_of_interests', [
-            'longitude' => $pointOfInterest->longitude,
+        $this->assertDatabaseHas('point_of_interests', [
+            'id' => $pointOfInterest->id,
+            'name' => $pointOfInterest->name,
+            'distance' => $pointOfInterest->distance,
             'latitude' => $pointOfInterest->latitude,
+            'longitude' => $pointOfInterest->longitude,
             'place_id' => $place->id,
             'creator' => $adminUser->id,
-            'updater' => null,
+            'updater' => $adminUser->id,
         ]);
     }
 
@@ -261,38 +271,34 @@ class EditPointTest extends TestCase
         $adminUser = $this->createAdmin();
         $place = $this->createPlace();
         $pointOfInterest = factory(PointOfInterest::class)->create([
-            'latitude' => '12',
-            'longitude' => '16',
             'place_id' => $place->id,
         ]);
 
         $this->assertDatabaseCount('point_of_interests', 1);
-
-        $this->assertDatabaseHas('point_of_interests', [
-            'longitude' => $pointOfInterest->longitude,
-            'latitude' => $pointOfInterest->latitude,
-            'place_id' => $place->id,
-            'creator' => $adminUser->id,
-            'updater' => null,
-        ]);
 
         $this->actingAs($adminUser);
 
+        $place2 = $this->createPlace();
+
         Livewire::test(EditPoint::class)
+            ->set('editForm.name', 'Prueba')
             ->set('editForm.distance', 'aaaaaa')
-            ->set('editForm.latitude', '10')
-            ->set('editForm.longitude', '15')
-            ->set('editForm.place', $place->id)
+            ->set('editForm.latitude', '84')
+            ->set('editForm.longitude', '78')
+            ->set('editForm.place', $place2->id)
             ->call('update', $pointOfInterest)
-            ->assertHasErrors(['editForm.distance' => 'number']);
+            ->assertHasErrors(['editForm.distance' => 'numeric']);;
 
         $this->assertDatabaseCount('point_of_interests', 1);
-        $this->assertDatabaseHas('points_of_interests', [
-            'longitude' => $pointOfInterest->longitude,
+        $this->assertDatabaseHas('point_of_interests', [
+            'id' => $pointOfInterest->id,
+            'name' => $pointOfInterest->name,
+            'distance' => $pointOfInterest->distance,
             'latitude' => $pointOfInterest->latitude,
+            'longitude' => $pointOfInterest->longitude,
             'place_id' => $place->id,
             'creator' => $adminUser->id,
-            'updater' => null,
+            'updater' => $adminUser->id,
         ]);
     }
 
@@ -302,37 +308,34 @@ class EditPointTest extends TestCase
         $adminUser = $this->createAdmin();
         $place = $this->createPlace();
         $pointOfInterest = factory(PointOfInterest::class)->create([
-            'latitude' => '12',
-            'longitude' => '16',
             'place_id' => $place->id,
         ]);
 
         $this->assertDatabaseCount('point_of_interests', 1);
-
-        $this->assertDatabaseHas('point_of_interests', [
-            'longitude' => $pointOfInterest->longitude,
-            'latitude' => $pointOfInterest->latitude,
-            'place_id' => $place->id,
-            'creator' => $adminUser->id,
-            'updater' => null,
-        ]);
 
         $this->actingAs($adminUser);
 
+        $place2 = $this->createPlace();
+
         Livewire::test(EditPoint::class)
-            ->set('editForm.latitude', 'aaaaaaa')
-            ->set('editForm.longitude', '15')
-            ->set('editForm.place', $place->id)
+            ->set('editForm.name', 'Prueba')
+            ->set('editForm.distance', '20')
+            ->set('editForm.latitude', 'aaaaaaaa')
+            ->set('editForm.longitude', '78')
+            ->set('editForm.place', $place2->id)
             ->call('update', $pointOfInterest)
-            ->assertHasErrors(['editForm.latitude' => 'number']);
+            ->assertHasErrors(['editForm.latitude' => 'numeric']);;
 
         $this->assertDatabaseCount('point_of_interests', 1);
-        $this->assertDatabaseHas('points_of_interests', [
-            'longitude' => $pointOfInterest->longitude,
+        $this->assertDatabaseHas('point_of_interests', [
+            'id' => $pointOfInterest->id,
+            'name' => $pointOfInterest->name,
+            'distance' => $pointOfInterest->distance,
             'latitude' => $pointOfInterest->latitude,
+            'longitude' => $pointOfInterest->longitude,
             'place_id' => $place->id,
             'creator' => $adminUser->id,
-            'updater' => null,
+            'updater' => $adminUser->id,
         ]);
     }
 
@@ -342,37 +345,34 @@ class EditPointTest extends TestCase
         $adminUser = $this->createAdmin();
         $place = $this->createPlace();
         $pointOfInterest = factory(PointOfInterest::class)->create([
-            'latitude' => '12',
-            'longitude' => '16',
             'place_id' => $place->id,
         ]);
 
         $this->assertDatabaseCount('point_of_interests', 1);
-
-        $this->assertDatabaseHas('point_of_interests', [
-            'longitude' => $pointOfInterest->longitude,
-            'latitude' => $pointOfInterest->latitude,
-            'place_id' => $place->id,
-            'creator' => $adminUser->id,
-            'updater' => null,
-        ]);
 
         $this->actingAs($adminUser);
 
+        $place2 = $this->createPlace();
+
         Livewire::test(EditPoint::class)
-            ->set('editForm.latitude', '10')
-            ->set('editForm.longitude', 'aaaaaaaaaa')
-            ->set('editForm.place', $place->id)
+            ->set('editForm.name', 'Prueba')
+            ->set('editForm.distance', '20')
+            ->set('editForm.latitude', '84')
+            ->set('editForm.longitude', 'aaaaaaa')
+            ->set('editForm.place', $place2->id)
             ->call('update', $pointOfInterest)
-            ->assertHasErrors(['editForm.longitude' => 'number']);
+            ->assertHasErrors(['editForm.longitude' => 'numeric']);;
 
         $this->assertDatabaseCount('point_of_interests', 1);
-        $this->assertDatabaseHas('points_of_interests', [
-            'longitude' => $pointOfInterest->longitude,
+        $this->assertDatabaseHas('point_of_interests', [
+            'id' => $pointOfInterest->id,
+            'name' => $pointOfInterest->name,
+            'distance' => $pointOfInterest->distance,
             'latitude' => $pointOfInterest->latitude,
+            'longitude' => $pointOfInterest->longitude,
             'place_id' => $place->id,
             'creator' => $adminUser->id,
-            'updater' => null,
+            'updater' => $adminUser->id,
         ]);
     }
 }
