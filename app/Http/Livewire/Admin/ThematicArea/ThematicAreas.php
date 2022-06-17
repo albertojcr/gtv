@@ -38,10 +38,10 @@ class ThematicAreas extends Component
     ];
 
     protected $validationAttributes = [
-        'createForm.name'        => 'nombre',
+        'createForm.name' => 'nombre',
         'createForm.description' => 'descripción',
 
-        'editForm.name'        => 'nombre',
+        'editForm.name' => 'nombre',
         'editForm.description' => 'descripción',
     ];
 
@@ -89,7 +89,7 @@ class ThematicAreas extends Component
         $this->validate();
 
         $thematicArea = ThematicArea::create([
-            'name'        => $this->createForm['name'],
+            'name' => $this->createForm['name'],
             'description' => $this->createForm['description'],
             'updated_at' => null,
         ]);
@@ -155,19 +155,20 @@ class ThematicAreas extends Component
     public function render()
     {
 
-        if(auth()->user()->hasRole('Administrador')
+        if (auth()->user()->hasRole('Administrador')
             || auth()->user()->hasRole('Profesor')) {
-        if (auth()->user()->hasRole('Alumno')) {
-            $thematicAreas = ThematicArea::where('creator', auth()->user()->id)->orderByDesc('id')
-                ->where($this->searchColumn, 'like', '%'. $this->search .'%')
-                ->orderBy($this->sortField, $this->sortDirection)
-                ->paginate(10);
-        } else {
-            $thematicAreas = ThematicArea::where($this->searchColumn, 'like', '%'. $this->search .'%')
-                ->orderBy($this->sortField, $this->sortDirection)
-                ->paginate(10);
-        }
+            if (auth()->user()->hasRole('Alumno')) {
+                $thematicAreas = ThematicArea::where('creator', auth()->user()->id)->orderByDesc('id')
+                    ->where($this->searchColumn, 'like', '%' . $this->search . '%')
+                    ->orderBy($this->sortField, $this->sortDirection)
+                    ->paginate(10);
+            } else {
+                $thematicAreas = ThematicArea::where($this->searchColumn, 'like', '%' . $this->search . '%')
+                    ->orderBy($this->sortField, $this->sortDirection)
+                    ->paginate(10);
+            }
 
-        return view('livewire.admin.thematic-area.thematic-areas', compact('thematicAreas'));
+            return view('livewire.admin.thematic-area.thematic-areas', compact('thematicAreas'));
+        }
     }
 }
