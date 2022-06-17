@@ -21,7 +21,7 @@ class ListPhotographyTest extends TestCase
 
         $this->assertDatabaseCount('photographies', 2);
 
-        $this->get('fotografias')
+        $this->get('photographies')
             ->assertOk()
             ->assertSeeInOrder([
                 $photographyA->id,
