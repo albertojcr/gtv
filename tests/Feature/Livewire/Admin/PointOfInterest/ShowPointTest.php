@@ -23,12 +23,13 @@ class ShowPointTest extends TestCase
 
         $this->assertDatabaseCount('point_of_interests', 2);
 
-        $this->get('points')
+        $this->get('points-of-interest')
             ->assertOk()
             ->assertSeeInOrder([
-                $pointOfInterest1->latitude,
                 $pointOfInterest2->latitude,
-            ]);
+                $pointOfInterest1->latitude,
+            ]);;
+
     }
 }
 
