@@ -45,7 +45,7 @@ class ListUsers extends Component
 
     public function delete(User $user)
     {
-        if(Storage::exists($user->profile_photo_path)) {
+        if(! is_null($user->profile_photo_path) && Storage::exists($user->profile_photo_path)) {
             Storage::delete($user->profile_photo_path);
         }
 
