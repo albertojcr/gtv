@@ -9,6 +9,26 @@
         </button>
     </div>
 
+    <div class="mb-3">
+        <div class="inline">
+            <select class="text-black  bg-blue-100 hover:bg-grey-200 focus:ring-4 focus:ring-blue-300
+                    font-medium rounded-lg text-sm py-1.5 dark:bg-blue-600 dark:hover:bg-blue-700
+                    focus:outline-none dark:focus:ring-blue-800 ml-auto" wire:model="searchColumn">
+                <option value="id">ID</option>
+                <option value="description">DESCRIPCIÓN</option>
+                <option value="point_of_interest_id">PUNTO DE INTERÉS</option>
+                <option value="thematic_area_id">ÁREA TEMÁTICA</option>
+                <option value="creator">CREADOR</option>
+                <option value="updater">ACTUALIZADOR</option>
+                <option value="created_at">FECHA DE CREACIÓN</option>
+            </select>
+        </div>
+
+        <x-jet-input class="py-1 border-black" type="text" wire:model="search"
+                     placeholder="Buscar ..."></x-jet-input>
+
+        <x-jet-button wire:click="resetFilters">Eliminar filtros</x-jet-button>
+
     @livewire('admin.video.create-video')
 
     @if(count($videos))
@@ -16,29 +36,64 @@
 
         <x-table>
             <x-slot name="thead">
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('id')">
                     ID
+                    @if($sortField === 'id' && $sortDirection === 'asc')
+                        <i class="fa-solid fa-arrow-up">
+                            @elseif($sortField === 'id' && $sortDirection === 'desc')
+                                <i class="fa-solid fa-arrow-down"></i>
+                    @endif
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('description')">
                     Descripción
+                    @if($sortField === 'description' && $sortDirection === 'asc')
+                        <i class="fa-solid fa-arrow-up">
+                            @elseif($sortField === 'description' && $sortDirection === 'desc')
+                                <i class="fa-solid fa-arrow-down"></i>
+                    @endif
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('point_of_interest_id')">
                     Punto de interés
+                    @if($sortField === 'point_of_interest_id' && $sortDirection === 'asc')
+                        <i class="fa-solid fa-arrow-up">
+                            @elseif($sortField === 'point_of_interest_id' && $sortDirection === 'desc')
+                                <i class="fa-solid fa-arrow-down"></i>
+                    @endif
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Orden
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('thematic_area_id')">
                     Área temática
+                    @if($sortField === 'thematic_area_id' && $sortDirection === 'asc')
+                        <i class="fa-solid fa-arrow-up">
+                            @elseif($sortField === 'thematic_area_id' && $sortDirection === 'desc')
+                                <i class="fa-solid fa-arrow-down"></i>
+                    @endif
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('creator')">
                     Creador
+                    @if($sortField === 'creator' && $sortDirection === 'asc')
+                        <i class="fa-solid fa-arrow-up">
+                            @elseif($sortField === 'creator' && $sortDirection === 'desc')
+                                <i class="fa-solid fa-arrow-down"></i>
+                    @endif
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('updater')">
                     Actualizador
+                    @if($sortField === 'updater' && $sortDirection === 'asc')
+                        <i class="fa-solid fa-arrow-up">
+                            @elseif($sortField === 'updater' && $sortDirection === 'desc')
+                                <i class="fa-solid fa-arrow-down"></i>
+                    @endif
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('created_at')">
                     Fecha creación
+                    @if($sortField === 'created_at' && $sortDirection === 'asc')
+                        <i class="fa-solid fa-arrow-up">
+                            @elseif($sortField === 'created_at' && $sortDirection === 'desc')
+                                <i class="fa-solid fa-arrow-down"></i>
+                    @endif
                 </th>
                 <th scope="col" class="px-6 py-3">
                     <span class="sr-only">Actions</span>

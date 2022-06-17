@@ -17,10 +17,10 @@
                     font-medium rounded-lg text-sm py-1.5 dark:bg-blue-600 dark:hover:bg-blue-700
                     focus:outline-none dark:focus:ring-blue-800 ml-auto" wire:model="searchColumn">
                     <option value="id">ID</option>
-                    <option value="name">Nombre</option>
-                    <option value="description">Descripción</option>
-                    <option value="created_at">Fecha de creación</option>
-                    <option value="updated_at">Fecha de actualización</option>
+                    <option value="name">NOMBRE</option>
+                    <option value="description">DESCRIPCIÓN</option>
+                    <option value="created_at">FECHA DE CREACIÓN</option>
+                    <option value="updated_at">FECHA DE ACTUALIZACIÓN</option>
                 </select>
             </div>
 

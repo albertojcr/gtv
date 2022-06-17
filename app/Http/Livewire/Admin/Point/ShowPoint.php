@@ -15,6 +15,14 @@ class ShowPoint extends Component
 
     public $listeners = ['delete', 'render'];
 
+    public $search;
+    public $searchColumn = 'id';
+
+    public $sortField = 'id';
+    public $sortDirection = 'desc';
+
+    protected $queryString = ['search'];
+
     public $detailsModal = [
         'open' => false,
         'id' => null,
@@ -57,12 +65,38 @@ class ShowPoint extends Component
         Log::info('Point with ID ' . $pointOfInterest->id . ' was deleted ' . $pointOfInterest);
     }
 
+    public function sort($field)
+    {
+        if ($this->sortField === $field && $this->sortDirection !== 'desc') {
+            $this->sortDirection = 'desc';
+        } else {
+            $this->sortDirection = 'asc';
+        }
+
+        $this->sortField = $field;
+    }
+
+    public function resetFilters()
+    {
+        $this->reset(['search', 'sortField', 'sortDirection']);
+        $this->resetPage();
+    }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
         if (auth()->user()->hasRole('Alumno')) {
-            $points = PointOfInterest::where('creator', auth()->user()->id)->orderByDesc('id')->paginate(10);
+            $points = PointOfInterest::where($this->searchColumn, 'like', '%'. $this->search .'%')
+                ->orderBy($this->sortField, $this->sortDirection)
+                ->paginate(10);
         } else {
-            $points = PointOfInterest::orderByDesc('id')->paginate(10);
+            $points = PointOfInterest::where($this->searchColumn, 'like', '%'. $this->search .'%')
+                ->orderBy($this->sortField, $this->sortDirection)
+                ->paginate(10);
         }
 
         return view('livewire.admin.point.show-point', compact('points'));
