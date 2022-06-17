@@ -48,41 +48,41 @@
                 </th>
                 <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('name')">
                     Nombre
-                    @if($sortField === 'id' && $sortDirection === 'asc')
+                    @if($sortField === 'name' && $sortDirection === 'asc')
                         <i class="fa-solid fa-arrow-up">
-                            @elseif($sortField === 'id' && $sortDirection === 'desc')
+                            @elseif($sortField === 'name' && $sortDirection === 'desc')
                                 <i class="fa-solid fa-arrow-down"></i>
                     @endif
                 </th>
                 <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('email')">
                     Email
-                    @if($sortField === 'id' && $sortDirection === 'asc')
+                    @if($sortField === 'email' && $sortDirection === 'asc')
                             <i class="fa-solid fa-arrow-up">
-                        @elseif($sortField === 'id' && $sortDirection === 'desc')
+                        @elseif($sortField === 'email' && $sortDirection === 'desc')
                             <i class="fa-solid fa-arrow-down"></i>
                         @endif
                 </th>
                 <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('role')">
                     Rol
-                    @if($sortField === 'id' && $sortDirection === 'asc')
+                    @if($sortField === 'role' && $sortDirection === 'asc')
                             <i class="fa-solid fa-arrow-up">
-                        @elseif($sortField === 'id' && $sortDirection === 'desc')
+                        @elseif($sortField === 'role' && $sortDirection === 'desc')
                             <i class="fa-solid fa-arrow-down"></i>
                         @endif
                 </th>
                 <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('created_at')">
                     Fecha creación
-                    @if($sortField === 'id' && $sortDirection === 'asc')
+                    @if($sortField === 'created_at' && $sortDirection === 'asc')
                             <i class="fa-solid fa-arrow-up">
-                        @elseif($sortField === 'id' && $sortDirection === 'desc')
+                        @elseif($sortField === 'created_at' && $sortDirection === 'desc')
                             <i class="fa-solid fa-arrow-down"></i>
                         @endif
                 </th>
                 <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('updated_at')">
                     Fecha actualización
-                    @if($sortField === 'id' && $sortDirection === 'asc')
+                    @if($sortField === 'updated_at' && $sortDirection === 'asc')
                             <i class="fa-solid fa-arrow-up">
-                        @elseif($sortField === 'id' && $sortDirection === 'desc')
+                        @elseif($sortField === 'updated_at' && $sortDirection === 'desc')
                             <i class="fa-solid fa-arrow-down"></i>
                         @endif
                 </th>

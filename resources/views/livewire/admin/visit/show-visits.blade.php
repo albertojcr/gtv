@@ -36,41 +36,41 @@
                 </th>
                 <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('deviceid')">
                     Device ID
-                    @if($sortField === 'id' && $sortDirection === 'asc')
+                    @if($sortField === 'deviceid' && $sortDirection === 'asc')
                         <i class="fa-solid fa-arrow-up">
-                            @elseif($sortField === 'id' && $sortDirection === 'desc')
+                            @elseif($sortField === 'deviceid' && $sortDirection === 'desc')
                                 <i class="fa-solid fa-arrow-down"></i>
                     @endif
                 </th>
                 <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('ssoo')">
                     SSOO
-                    @if($sortField === 'id' && $sortDirection === 'asc')
+                    @if($sortField === 'ssoo' && $sortDirection === 'asc')
                         <i class="fa-solid fa-arrow-up">
-                            @elseif($sortField === 'id' && $sortDirection === 'desc')
+                            @elseif($sortField === 'ssoo' && $sortDirection === 'desc')
                                 <i class="fa-solid fa-arrow-down"></i>
                     @endif
                 </th>
                 <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('ssooversion')">
                     SSOO Version
-                    @if($sortField === 'id' && $sortDirection === 'asc')
+                    @if($sortField === 'ssooversion' && $sortDirection === 'asc')
                         <i class="fa-solid fa-arrow-up">
-                            @elseif($sortField === 'id' && $sortDirection === 'desc')
+                            @elseif($sortField === 'ssooversion' && $sortDirection === 'desc')
                                 <i class="fa-solid fa-arrow-down"></i>
                     @endif
                 </th>
                 <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('point_of_interest_id')">
                     Punto de Interes
-                    @if($sortField === 'id' && $sortDirection === 'asc')
+                    @if($sortField === 'point_of_interest_id' && $sortDirection === 'asc')
                         <i class="fa-solid fa-arrow-up">
-                            @elseif($sortField === 'id' && $sortDirection === 'desc')
+                            @elseif($sortField === 'point_of_interest_id' && $sortDirection === 'desc')
                                 <i class="fa-solid fa-arrow-down"></i>
                     @endif
                 </th>
                 <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('created_at')">
                     Fecha creación
-                    @if($sortField === 'id' && $sortDirection === 'asc')
+                    @if($sortField === 'created_at' && $sortDirection === 'asc')
                         <i class="fa-solid fa-arrow-up">
-                            @elseif($sortField === 'id' && $sortDirection === 'desc')
+                            @elseif($sortField === 'created_at' && $sortDirection === 'desc')
                                 <i class="fa-solid fa-arrow-down"></i>
                     @endif
                 </th>
