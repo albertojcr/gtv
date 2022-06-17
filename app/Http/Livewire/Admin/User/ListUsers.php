@@ -88,7 +88,8 @@ class ListUsers extends Component
 
     public function render()
     {
-        $users = User::where($this->searchColumn, 'like', '%'. $this->search .'%')
+        $users = User::where('email', '<>', auth()->user()->email)
+            ->where($this->searchColumn, 'like', '%'. $this->search .'%')
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate(10);
 

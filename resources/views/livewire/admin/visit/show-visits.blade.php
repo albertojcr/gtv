@@ -21,7 +21,7 @@
                      placeholder="Buscar ..."></x-jet-input>
 
         <x-jet-button wire:click="resetFilters">Eliminar filtros</x-jet-button>
-
+    </div>
 
     @if(count($visits))
         <x-table>

@@ -28,6 +28,7 @@
                      placeholder="Buscar ..."></x-jet-input>
 
         <x-jet-button wire:click="resetFilters">Eliminar filtros</x-jet-button>
+    </div>
 
     @livewire('admin.video.create-video')
 
