@@ -248,12 +248,7 @@ class Photographies extends Component
     {
         $this->reset(['page']);
 
-        if (auth()->user()->hasRole('Profesor')){
-            $photographies = Photography::where('thematic_area_id', auth()->user()->thematic_area_id)
-                ->where($this->searchColumn, 'like', '%'. $this->search .'%')
-                ->orderBy($this->sortField, $this->sortDirection)
-                ->paginate(10);
-        } else if (auth()->user()->hasRole('Alumno')) {
+        if (auth()->user()->hasRole('Alumno')) {
             $photographies = Photography::where('creator', auth()->user()->id)
                 ->where($this->searchColumn, 'like', '%'. $this->search .'%')
                 ->orderBy($this->sortField, $this->sortDirection)
