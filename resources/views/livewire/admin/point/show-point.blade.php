@@ -25,6 +25,9 @@
                     ID
                 </th>
                 <th scope="col" class="px-6 py-3">
+                    Nombre
+                </th>
+                <th scope="col" class="px-6 py-3">
                     Distancia
                 </th>
                 <th scope="col" class="px-6 py-3">
@@ -58,6 +61,9 @@
                         </td>
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                             {{$point->id}}
+                        </td>
+                        <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                            {{$point->name}}
                         </td>
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                             {{$point->distance}}
@@ -114,6 +120,11 @@
 
         <x-slot name="content">
             <div class="space-y-3">
+                <div>
+                    <x-jet-label>
+                        Nombre: {{ $detailsModal['name']}}
+                    </x-jet-label>
+                </div>
                 <div>
                     <x-jet-label>
                         Distancia: {{ $detailsModal['distance']}}

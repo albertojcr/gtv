@@ -8,6 +8,12 @@
             <div class="space-y-6">
                 <div>
                     <x-jet-label>
+                        Nombre
+                    </x-jet-label>
+                    <input wire:model="editForm.name" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-1">
+                    <x-jet-input-error for="editForm.name" class="mt-2" />
+
+                    <x-jet-label>
                         Distancia
                     </x-jet-label>
                     <input wire:model="editForm.distance" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-1">
