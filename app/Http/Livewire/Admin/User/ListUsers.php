@@ -14,6 +14,14 @@ class ListUsers extends Component
 
     public $listeners = ['delete', 'render'];
 
+    public $search;
+    public $searchColumn = 'id';
+
+    public $sortField = 'id';
+    public $sortDirection = 'desc';
+
+    protected $queryString = ['search'];
+
     public $detailsModal = [
         'open' => false,
         'avatar' => null,
@@ -56,10 +64,32 @@ class ListUsers extends Component
         }
     }
 
+    public function sort($field)
+    {
+        if ($this->sortField === $field && $this->sortDirection !== 'desc') {
+            $this->sortDirection = 'desc';
+        } else {
+            $this->sortDirection = 'asc';
+        }
+
+        $this->sortField = $field;
+    }
+
+    public function resetFilters()
+    {
+        $this->reset(['search', 'sortField', 'sortDirection']);
+        $this->resetPage();
+    }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
-        $users = User::where('email', '<>', auth()->user()->email)
-            ->orderBy('id')
+        $users = User::where($this->searchColumn, 'like', '%'. $this->search .'%')
+            ->orderBy($this->sortField, $this->sortDirection)
             ->paginate(10);
 
         return view('livewire.admin.user.list-users', compact('users'));

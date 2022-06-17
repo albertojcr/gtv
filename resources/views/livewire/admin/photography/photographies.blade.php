@@ -17,14 +17,14 @@
                     font-medium rounded-lg text-sm py-1.5 dark:bg-blue-600 dark:hover:bg-blue-700
                     focus:outline-none dark:focus:ring-blue-800 ml-auto" wire:model="searchColumn">
                     <option value="id">ID</option>
-                    <option value="point_of_interest_id">Punto de interes</option>
+                    <option value="point_of_interest_id">PUNTO DE INTERÉS</option>
                     @role('Administrador')
-                        <option value="thematic_area_id">Área temática</option>
-                        <option value="creator">Creador</option>
-                        <option value="Updater">Actualizador</option>
+                        <option value="thematic_area_id">ÁREA TEMÁTICA</option>
+                        <option value="creator">CREADOR</option>
+                        <option value="Updater">ACTUALIZADOR</option>
                     @endrole
-                    <option value="created_at">Fecha de creación</option>
-                    <option value="updated_at">Fecha de actualización</option>
+                    <option value="created_at">FECHA DE CREACIÓN</option>
+                    <option value="updated_at">FECHA DE ACTUALIZACIÓN</option>
                 </select>
             </div>
 

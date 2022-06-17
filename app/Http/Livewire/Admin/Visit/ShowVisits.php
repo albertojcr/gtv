@@ -12,9 +12,17 @@ class ShowVisits extends Component
 {
     use WithPagination;
 
-    public $pointName;
-
     protected $listeners = ['delete', 'render'];
+
+    public $pointName;
+    public $search;
+    public $searchColumn = 'id';
+
+    public $sortField = 'id';
+    public $sortDirection = 'desc';
+
+    protected $queryString = ['search'];
+
 
     public $detailsModal = [
         'open' => false,
@@ -59,9 +67,35 @@ class ShowVisits extends Component
         $visit->delete();
     }
 
+    public function sort($field)
+    {
+        if ($this->sortField === $field && $this->sortDirection !== 'desc') {
+            $this->sortDirection = 'desc';
+        } else {
+            $this->sortDirection = 'asc';
+        }
+
+        $this->sortField = $field;
+    }
+
+    public function resetFilters()
+    {
+        $this->reset(['search', 'sortField', 'sortDirection']);
+        $this->resetPage();
+    }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
-        return view('livewire.admin.visit.show-visits', ['visits' => Visit::paginate(20)]);
+        $visits = Visit::where($this->searchColumn, 'like', '%'. $this->search .'%')
+            ->orderBy($this->sortField, $this->sortDirection)
+            ->paginate(10);
+
+        return view('livewire.admin.visit.show-visits', compact('visits'));
     }
 
 
