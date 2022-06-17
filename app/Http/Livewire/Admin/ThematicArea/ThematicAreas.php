@@ -152,21 +152,11 @@ class ThematicAreas extends Component
         if (auth()->user()->hasRole('Administrador')
             || auth()->user()->hasRole('Profesor')) {
 
-            if (auth()->user()->hasRole('Administrador')
-                || auth()->user()->hasRole('Profesor')) {
-                if (auth()->user()->hasRole('Alumno')) {
-                    $thematicAreas = ThematicArea::where('creator', auth()->user()->id)->orderByDesc('id')
-                        ->where($this->searchColumn, 'like', '%' . $this->search . '%')
-                        ->orderBy($this->sortField, $this->sortDirection)
-                        ->paginate(10);
-                } else {
-                    $thematicAreas = ThematicArea::where($this->searchColumn, 'like', '%' . $this->search . '%')
-                        ->orderBy($this->sortField, $this->sortDirection)
-                        ->paginate(10);
-                }
+            $thematicAreas = ThematicArea::where($this->searchColumn, 'like', '%' . $this->search . '%')
+                ->orderBy($this->sortField, $this->sortDirection)
+                ->paginate(10);
 
-                return view('livewire.admin.thematic-area.thematic-areas', compact('thematicAreas'));
-            }
+            return view('livewire.admin.thematic-area.thematic-areas', compact('thematicAreas'));
         }
     }
 }

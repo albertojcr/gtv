@@ -112,16 +112,12 @@ class Photographies extends Component
     {
         $this->createForm['thematicAreaId'] = '';
         $this->thematicAreas = PointOfInterest::find($this->createForm['pointOfInterestId'])->thematicAreas;
-
-        //$this->createForm['thematicAreaId'] = $this->thematicAreas[0]->id;
     }
 
     public function updatedEditFormPointOfInterestId()
     {
         $this->editForm['thematicAreaId'] = '';
         $this->thematicAreas = PointOfInterest::find($this->editForm['pointOfInterestId'])->thematicAreas;
-
-        //$this->editForm['thematicAreaId'] = $this->thematicAreas[0]->id;
     }
 
     public function save()

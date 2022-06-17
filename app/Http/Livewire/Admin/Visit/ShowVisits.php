@@ -94,7 +94,6 @@ class ShowVisits extends Component
         $visits = Visit::where($this->searchColumn, 'like', '%'. $this->search .'%')
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate(10);
-        $visits = Visit::orderByDesc('id')->paginate(10);
 
         return view('livewire.admin.visit.show-visits', compact('visits'));
     }

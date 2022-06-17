@@ -4,9 +4,12 @@ namespace App\Http\Livewire\Admin\VideoItem;
 
 use App\Models\VideoItem;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ListVideoItems extends Component
 {
+    use WithPagination;
+
     public $search;
     public $searchColumn = 'id';
 

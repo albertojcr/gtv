@@ -18,8 +18,6 @@
                     focus:outline-none dark:focus:ring-blue-800 ml-auto" wire:model="searchColumn">
                 <option value="id">ID</option>
                 <option value="name">NOMBRE</option>
-                <option value="email">EMAIL</option>
-                <option value="role">ROL</option>
                 <option value="created_at">FECHA DE CREACIÓN</option>
                 <option value="updated_at">FECHA DE CREACIÓN</option>
             </select>
@@ -42,49 +40,44 @@
                     ID
                     @if($sortField === 'id' && $sortDirection === 'asc')
                         <i class="fa-solid fa-arrow-up">
-                            @elseif($sortField === 'id' && $sortDirection === 'desc')
-                                <i class="fa-solid fa-arrow-down"></i>
+                    @elseif($sortField === 'id' && $sortDirection === 'desc')
+                        <i class="fa-solid fa-arrow-down"></i>
                     @endif
                 </th>
                 <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('name')">
                     Nombre
                     @if($sortField === 'name' && $sortDirection === 'asc')
                         <i class="fa-solid fa-arrow-up">
-                            @elseif($sortField === 'name' && $sortDirection === 'desc')
-                                <i class="fa-solid fa-arrow-down"></i>
+                    @elseif($sortField === 'name' && $sortDirection === 'desc')
+                        <i class="fa-solid fa-arrow-down"></i>
                     @endif
                 </th>
                 <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('email')">
                     Email
                     @if($sortField === 'email' && $sortDirection === 'asc')
-                            <i class="fa-solid fa-arrow-up">
-                        @elseif($sortField === 'email' && $sortDirection === 'desc')
-                            <i class="fa-solid fa-arrow-down"></i>
-                        @endif
+                        <i class="fa-solid fa-arrow-up">
+                    @elseif($sortField === 'email' && $sortDirection === 'desc')
+                        <i class="fa-solid fa-arrow-down"></i>
+                    @endif
                 </th>
-                <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('role')">
+                <th scope="col" class="px-6 py-3">
                     Rol
-                    @if($sortField === 'role' && $sortDirection === 'asc')
-                            <i class="fa-solid fa-arrow-up">
-                        @elseif($sortField === 'role' && $sortDirection === 'desc')
-                            <i class="fa-solid fa-arrow-down"></i>
-                        @endif
                 </th>
                 <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('created_at')">
                     Fecha creación
                     @if($sortField === 'created_at' && $sortDirection === 'asc')
-                            <i class="fa-solid fa-arrow-up">
-                        @elseif($sortField === 'created_at' && $sortDirection === 'desc')
-                            <i class="fa-solid fa-arrow-down"></i>
-                        @endif
+                        <i class="fa-solid fa-arrow-up">
+                    @elseif($sortField === 'created_at' && $sortDirection === 'desc')
+                        <i class="fa-solid fa-arrow-down"></i>
+                    @endif
                 </th>
                 <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('updated_at')">
                     Fecha actualización
                     @if($sortField === 'updated_at' && $sortDirection === 'asc')
-                            <i class="fa-solid fa-arrow-up">
-                        @elseif($sortField === 'updated_at' && $sortDirection === 'desc')
-                            <i class="fa-solid fa-arrow-down"></i>
-                        @endif
+                        <i class="fa-solid fa-arrow-up">
+                    @elseif($sortField === 'updated_at' && $sortDirection === 'desc')
+                        <i class="fa-solid fa-arrow-down"></i>
+                    @endif
                 </th>
                 <th scope="col" class="px-6 py-3">
                     <span class="sr-only">Actions</span>

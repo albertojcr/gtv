@@ -73,9 +73,9 @@
                 </th>
                 <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sort('updater')">
                     Actualizador
-                    @if($sortField === 'creator' && $sortDirection === 'asc')
+                    @if($sortField === 'updater' && $sortDirection === 'asc')
                         <i class="fa-solid fa-arrow-up">
-                            @elseif($sortField === 'creator' && $sortDirection === 'desc')
+                            @elseif($sortField === 'updater' && $sortDirection === 'desc')
                                 <i class="fa-solid fa-arrow-down"></i>
                     @endif
                 </th>

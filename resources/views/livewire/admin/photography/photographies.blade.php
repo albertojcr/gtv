@@ -18,11 +18,11 @@
                     focus:outline-none dark:focus:ring-blue-800 ml-auto" wire:model="searchColumn">
                     <option value="id">ID</option>
                     <option value="point_of_interest_id">PUNTO DE INTERÉS</option>
-                    @role('Administrador')
+                    @hasanyrole('Administrador|Profesor')
                         <option value="thematic_area_id">ÁREA TEMÁTICA</option>
                         <option value="creator">CREADOR</option>
                         <option value="Updater">ACTUALIZADOR</option>
-                    @endrole
+                    @endhasanyrole
                     <option value="created_at">FECHA DE CREACIÓN</option>
                     <option value="updated_at">FECHA DE ACTUALIZACIÓN</option>
                 </select>
