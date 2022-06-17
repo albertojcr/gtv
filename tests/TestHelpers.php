@@ -18,13 +18,11 @@ trait TestHelpers
     {
         $adminRole = Role::create(['name' => 'Administrador']);
 
-        $user = new User;
-        $user->login = 'admin';
-        $user->password = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'; // password
-        $user->salt = 'salt-here';
-        $user->email = 'admin@mail.com';
-        $user->profile = 'Profile description here';
-        $user->save();
+        $user = User::create([
+            'name' => 'Admin',
+            'email' => 'admin@mail.com',
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        ]);
         $user->assignRole($adminRole);
 
         return $user;

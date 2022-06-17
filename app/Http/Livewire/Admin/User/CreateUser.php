@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin\User;
 
+use App\Jobs\ProcessUser;
 use App\Mail\UserCreated;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
@@ -75,6 +76,7 @@ class CreateUser extends Component
         $role = Role::findById($this->createForm['role']);
         $user->assignRole($role);
 
+        ProcessUser::dispatch($user);
         Mail::to('admin@mail.com')->send(new UserCreated($user));
 
         $this->reset('createForm');

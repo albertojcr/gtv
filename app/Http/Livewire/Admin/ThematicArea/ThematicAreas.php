@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin\ThematicArea;
 
+use App\Jobs\ProcessThematicArea;
 use App\Models\ThematicArea;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -86,11 +87,13 @@ class ThematicAreas extends Component
     {
         $this->validate();
 
-        ThematicArea::create([
+        $thematicArea = ThematicArea::create([
             'name'        => $this->createForm['name'],
             'description' => $this->createForm['description'],
             'updated_at' => null,
         ]);
+
+        ProcessThematicArea::dispatch($thematicArea);
 
         $this->reset('createForm');
 
@@ -146,9 +149,15 @@ class ThematicAreas extends Component
 
     public function render()
     {
+
         if(auth()->user()->hasRole('Administrador')
             || auth()->user()->hasRole('Profesor')) {
-
+        if (auth()->user()->hasRole('Alumno')) {
+            $thematicAreas = ThematicArea::where('creator', auth()->user()->id)->orderByDesc('id')
+                ->where($this->searchColumn, 'like', '%'. $this->search .'%')
+                ->orderBy($this->sortField, $this->sortDirection)
+                ->paginate(10);
+        } else {
             $thematicAreas = ThematicArea::where($this->searchColumn, 'like', '%'. $this->search .'%')
                 ->orderBy($this->sortField, $this->sortDirection)
                 ->paginate(10);
